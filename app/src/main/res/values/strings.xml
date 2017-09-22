@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">chat</string>
+    <!--top-->
+    <string name="search">搜索商家</string>
+    <string name="message">消息</string>
+    <string name="collection">收藏</string>
+    <string name="search_friend">查找好友</string>
+    <string name="add_friend">添加</string>
+    <string name="set">设置</string>
+    <string name="edit">编辑</string>
+    <!--body-->
+    <string name="see_more">更多</string>
+    <string name="commo">商品</string>
+    <!--主页-->
+    <string name="announcement">学校公告</string>
+    <string name="BBS">学生论坛</string>
+    <string name="curriculum">课程表</string>
+    <string name="balance_query">余额查询</string>
+    <string name="results_query">成绩查询</string>
+    <string name="CET46">四六级</string>
+    <string name="internship">实习</string>
+    <string name="near">附近</string>
+    <!--我的-->
+    <string name="no_login">登录</string>
+    <string name="bind_qq">绑定qq号</string>
+    <string name="bind_phone">绑定手机号</string>
+    <string name="indent">我的账单</string>
+    <string name="mine">个人资料</string>
+    <string name="safe">账户安全</string>
+    <string name="mys">我卖出的</string>
+    <string name="myf">我发布的</string>
+    <string name="mym">我买到的</string>
+    <string name="myx">我喜欢的</string>
+    <!--bottom-->
+    <string name="home">主页</string>
+    <string name="classification">分类</string>
+    <string name="nearby">附近</string>>
+    <string name="friends">好友</string>
+    <string name="shop_car">购物车</string>
+    <string name="user">我的</string>
+</resources>

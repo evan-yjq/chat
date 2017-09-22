@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.FriendsActivity">
+    <!--头部-->
+    <RelativeLayout
+            android:orientation = "horizontal"
+            android:id="@+id/top"
+            android:layout_alignParentTop="true"
+            android:background="@color/themeColor"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basic_vertical_margin" android:baselineAligned="false">
+        <!--查找好友-->
+        <!--添加好友-->
+        <ImageView
+                android:src="@mipmap/add"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/add_friend"
+                android:layout_marginRight="8dp"
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"/>
+
+        <ImageView
+                android:src="@mipmap/logout"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:id="@+id/logout"/>
+
+        <ImageView
+                android:src="@mipmap/refresh"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="32dp"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:id="@+id/refresh"/>
+
+        <test.yejiaquan.com.sql.btn.SearchButton
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="56dp"
+                android:layout_marginRight="40dp"
+                android:id="@+id/search_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp32">
+        </test.yejiaquan.com.sql.btn.SearchButton>
+    </RelativeLayout>
+    <!--主体-->
+    <ScrollView
+            android:id="@+id/center"
+            android:scrollbars="none"
+            android:layout_below="@+id/top"
+            android:layout_above="@+id/bottom"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        <LinearLayout
+                android:id="@+id/all_friend"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

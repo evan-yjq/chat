@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="themeColor">#009b8b</color>
+    <color name="darkGrey">#3c3f41</color>
+    <color name="grey">#ccc</color>
+    <color name="lightGrey">#eaeaea</color>
+
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+
+    <color name="red">#f00</color>
+    <color name="green">#0f0</color>
+    <color name="blue">#00f</color>
+
+
+    <color name="yellow">#ff0</color>
+    <color name="pink">#f0f</color>
+    <color name="turquoise">#0ff</color>
+
+</resources>

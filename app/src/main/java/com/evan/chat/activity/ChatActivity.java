@@ -14,8 +14,8 @@ import com.evan.chat.R;
 import com.evan.chat.view.DialogButton;
 import com.evan.chat.view.EditButton;
 import com.evan.chat.view.TopTitleButton;
-import com.evan.chat.model.Chat;
-import com.evan.chat.model.User;
+import com.evan.chat.gen.Chat;
+import com.evan.chat.gen.User;
 import com.evan.chat.util.*;
 
 import java.util.ArrayList;

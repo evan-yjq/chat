@@ -23,11 +23,14 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
+import com.evan.chat.bus.UseUserBus;
+import com.evan.chat.bus.UserBus;
 import com.evan.chat.gen.LogUserDao;
 import com.evan.chat.gen.UserDao;
-import com.evan.chat.model.LogUser;
+import com.evan.chat.gen.LogUser;
 import com.evan.chat.model.ServerReturnValue;
-import com.evan.chat.model.User;
+import com.evan.chat.gen.User;
+import com.evan.chat.model.UserInfo;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
 import com.evan.chat.util.OkHttpClientManager;
@@ -42,9 +45,8 @@ import org.androidannotations.annotations.ViewById;
  * Time: 0:34
  */
 @EActivity(R.layout.activity_log_reg)
-public class LogReg extends AppCompatActivity{
+public class LogReg extends AppCompatActivity implements UseUserBus{
 
-    private Context context;
     private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username";
     private final String reg_url="http://"+Data.ip+":"+Data.host+"/user/register";
     private UserLogRegTask mAuthTask = null;
@@ -69,7 +71,7 @@ public class LogReg extends AppCompatActivity{
 
     @UiThread
     void init(){
-        context = this;
+        UserBus.init().add_activity("LogReg",this);
         isLogin=getIntent().getBooleanExtra("is_login",true);
         if (isLogin){
             mEmailSignInButton.setText(R.string.action_sign_in);
@@ -164,6 +166,17 @@ public class LogReg extends AppCompatActivity{
         });
     }
 
+    @UiThread
+    @Override
+    public void user_update(UserInfo userInfo) {
+        //do nothing
+    }
+
+    @Override
+    public Context get_context() {
+        return this;
+    }
+
     public class UserLogRegTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mAccount;
@@ -194,6 +207,7 @@ public class LogReg extends AppCompatActivity{
                     User user = new User(null,Integer.parseInt(va.getArg1().toString()),mAccount,"");
                     userDao.insert(user);
                     if (isLogin) {
+                        UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
                         LogUserDao logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getLogUserDao();
                         List<LogUser> logUsers = logUserDao.loadAll();
                         LogUser log_user = new LogUser();
@@ -225,7 +239,6 @@ public class LogReg extends AppCompatActivity{
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
-                showProgress(false);
                 if (isLogin) {
                     Intent intent = new Intent(LogReg.this, Test_.class);
                     intent.putExtra("show_log",true);

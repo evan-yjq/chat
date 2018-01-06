@@ -8,7 +8,7 @@ import android.os.Message;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
 import com.evan.chat.gen.LogUserDao;
-import com.evan.chat.model.LogUser;
+import com.evan.chat.gen.LogUser;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.OkHttpClientManager;
 import org.androidannotations.annotations.Background;

@@ -1,4 +1,4 @@
-package com.evan.chat.model;
+package com.evan.chat.gen;
 
 
 import org.greenrobot.greendao.annotation.Entity;

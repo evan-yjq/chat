@@ -29,7 +29,7 @@ import java.util.List;
 public class Welcome extends Activity {
 
     private LogUserDao logUserDao;
-    private final String url = "http://"+ Data.ip+":"+Data.host+"/user/sign_in_by_id";
+    private final String url = "http://"+ Data.ip+":"+Data.host+"/user/sign_in_by_id";  //id登录接口
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class Welcome extends Activity {
         }
     }
 
+    //登录操作
     @Background
     void login(long autoLoginId){
         Message msg = new Message();

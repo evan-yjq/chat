@@ -9,13 +9,7 @@
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
               android:background="@drawable/bg_log_reg"
-              tools:context="com.evan.chat.activities.Login_">
-
-    <ScrollView
-            android:paddingTop="@dimen/dp48"
-            android:id="@+id/login_form"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+              tools:context="com.evan.chat.activity.LogReg_">
 
         <LinearLayout
                 android:id="@+id/email_login_form"
@@ -29,6 +23,7 @@
                     <!--android:layout_height="wrap_content"/>-->
 
             <android.support.design.widget.TextInputLayout
+                    android:paddingTop="@dimen/dp32"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -44,6 +39,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                    android:paddingTop="@dimen/dp24"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -95,5 +91,4 @@
                     android:layout_height="wrap_content"/>
 
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>

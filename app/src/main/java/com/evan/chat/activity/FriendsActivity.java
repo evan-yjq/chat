@@ -13,7 +13,6 @@ import com.evan.chat.R;
 import com.evan.chat.view.FriendsButton;
 import com.evan.chat.view.SearchButton;
 import com.evan.chat.gen.User;
-import com.evan.chat.tmp.LoginActivity;
 import com.evan.chat.util.*;
 
 import java.io.BufferedReader;
@@ -54,10 +53,10 @@ public class FriendsActivity extends Activity {
                 String result = b.getString("result");
                 if ("true".equals(result)){
                     Bundle bundle = new Bundle();
-                    Intent intent=new Intent(FriendsActivity.this,LoginActivity.class);
-                    bundle.putSerializable("autos",autos);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+//                    Intent intent=new Intent(FriendsActivity.this,LoginActivity.class);
+//                    bundle.putSerializable("autos",autos);
+//                    intent.putExtras(bundle);
+//                    startActivity(intent);
                     finish();
                 }else if(!"false".equals(result)){
                 }

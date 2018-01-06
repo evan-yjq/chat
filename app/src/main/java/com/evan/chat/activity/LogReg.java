@@ -8,18 +8,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import com.alibaba.fastjson.JSON;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
@@ -47,32 +44,39 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_log_reg)
 public class LogReg extends AppCompatActivity implements UseUserBus{
 
-    private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username";
-    private final String reg_url="http://"+Data.ip+":"+Data.host+"/user/register";
-    private UserLogRegTask mAuthTask = null;
-    private boolean isLogin=true;
+    private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username"; //用户名登录接口
+    private final String reg_url="http://"+Data.ip+":"+Data.host+"/user/register";  //注册接口
+    private UserLogRegTask mAuthTask = null;    //登录/注册异步器
+    private boolean isLogin=true;   //是否显示为登陆界面
 
     @ViewById(R.id.account)
-    EditText mAccountView;
+    EditText mAccountView;  //用户名输入
     @ViewById(R.id.password)
-    EditText mPasswordView;
+    EditText mPasswordView; //密码输入
     @ViewById(R.id.login_progress)
-    View mProgressView;
+    View mProgressView; //加载动画
     @ViewById(R.id.switch_)
-    TextView mSwitchView;
+    TextView mSwitchView;   //更换登陆注册操作
     @ViewById(R.id.email_sign_in_button)
-    Button mEmailSignInButton;
+    Button mEmailSignInButton;  //确认按钮
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        init();
+        UserBus.init().add_activity("LogReg",this); //将界面添加到用户总线
         super.onCreate(savedInstanceState);
+        init();
     }
 
+    @Override
+    protected void onDestroy() {
+        UserBus.init().remove_activity("LogReg"); //将界面移除用户总线
+        super.onDestroy();
+    }
+
+    //初始化界面
     @UiThread
     void init(){
-        UserBus.init().add_activity("LogReg",this);
-        isLogin=getIntent().getBooleanExtra("is_login",true);
+        isLogin=getIntent().getBooleanExtra("is_login",true);   //获取该显示什么界面的标记
         if (isLogin){
             mEmailSignInButton.setText(R.string.action_sign_in);
             mSwitchView.setText(R.string.action_reg);
@@ -104,32 +108,27 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
         }
     }
 
+    //登录前各个输入框内容的判定
     private void attemptLogReg() {
         if (mAuthTask != null) {
             return;
         }
-
         mAccountView.setError(null);
         mPasswordView.setError(null);
-
         String email = mAccountView.getText().toString();
         String password = mPasswordView.getText().toString();
-
         boolean cancel = false;
         View focusView = null;
-
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
-
         if (TextUtils.isEmpty(email)) {
             mAccountView.setError(getString(R.string.error_field_required));
             focusView = mAccountView;
             cancel = true;
         }
-
         if (cancel) {
             focusView.requestFocus();
         } else {
@@ -139,10 +138,12 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
         }
     }
 
+    //设定密码长度
     private boolean isPasswordValid(String password) {
         return password.length() > 2;
     }
 
+    //加载动画的实现
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -166,22 +167,26 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
         });
     }
 
+    //实现接口方法
     @UiThread
     @Override
     public void user_update(UserInfo userInfo) {
         //do nothing
     }
 
+    //实现接口方法
     @Override
     public Context get_context() {
         return this;
     }
 
+    //登陆注册异步器类
     public class UserLogRegTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mAccount;
         private final String mPassword;
 
+        //初始化并对密码加密
         UserLogRegTask(String account, String password) {
             mAccount = account;
             mPassword = MD5Util.getMD5(password);

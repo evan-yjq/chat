@@ -36,8 +36,7 @@
         <activity android:name=".activity.UserActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activity.LogReg_"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.LogReg_"/>
 
         <activity android:name=".activity.FriendsActivity"/>
 

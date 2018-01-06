@@ -1,15 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "23.0.2"
-
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "test.yejiaquan.com.sql"
+        applicationId "com.evan.chat"
         minSdkVersion 19
-        targetSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -17,10 +19,38 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    /*针对greenDao的一些配置*/
+    greendao {
+        schemaVersion 1 //数据库版本号
+        daoPackage 'com.evan.chat.gen' //自动生成的工具类的包名
+        targetGenDir 'src/main/java' //路径
+    }
+}
+
+android {
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+
+    //弹窗alert
+    compile 'com.bigkoo:alertview:1.0.3'
+    //gson
+    compile 'com.google.code.gson:gson:2.8.0'
+    //fastjson Java上一个快速的JSON解析器/生成器
+    compile 'com.alibaba:fastjson:1.1.56.android'
+    //数据库greendao
+    compile 'org.greenrobot:greendao:3.2.0'
+    //okhttp
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    //AndroidAnotations 快速安卓开发。易于维护
+    annotationProcessor "org.androidannotations:androidannotations:4.4.0"
+    compile "org.androidannotations:androidannotations-api:4.4.0"
 }

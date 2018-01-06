@@ -1,7 +1,7 @@
 package com.evan.chat.util;
 
 
-import com.evan.chat.btn.*;
+import com.evan.chat.view.*;
 
 public class SetImageButton {
     public static boolean setDialogButton(DialogButton button,String content,int user,Integer userHead){

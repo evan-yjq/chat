@@ -1,4 +1,4 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;

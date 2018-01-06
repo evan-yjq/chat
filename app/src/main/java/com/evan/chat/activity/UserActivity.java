@@ -1,11 +1,11 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.evan.chat.R;
-import com.evan.chat.btn.TopTitleButton;
+import com.evan.chat.view.TopTitleButton;
 import com.evan.chat.util.SetImageButton;
 
 /**

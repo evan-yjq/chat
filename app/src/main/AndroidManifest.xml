@@ -19,7 +19,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".activities.Welcome_"
+                android:name=".activity.Welcome_"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,23 +27,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.Test_"
+        <activity android:name=".activity.Test_"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activities.ChatActivity"
+        <activity android:name=".activity.ChatActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activities.UserActivity"
+        <activity android:name=".activity.UserActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".tmp.RegisterActivity"/>
-
-        <activity android:name=".activities.LogReg_"
+        <activity android:name=".activity.LogReg_"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activities.FriendsActivity"/>
+        <activity android:name=".activity.FriendsActivity"/>
 
-        <activity android:name=".activities.AddFriendActivity"/>
+        <activity android:name=".activity.AddFriendActivity"/>
     </application>
 
 </manifest>

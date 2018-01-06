@@ -1,4 +1,4 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,17 +9,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.btn.EditButton;
-import com.evan.chat.btn.FriendsButton;
-import com.evan.chat.btn.TopTitleButton;
+import com.evan.chat.view.EditButton;
+import com.evan.chat.view.FriendsButton;
+import com.evan.chat.view.TopTitleButton;
 import com.evan.chat.model.User;
 import com.evan.chat.util.DynAdd;
 import com.evan.chat.util.SetImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.evan.chat.activities.Data.client;
 
 public class AddFriendActivity extends Activity {
     private LinearLayout body;
@@ -50,7 +48,7 @@ public class AddFriendActivity extends Activity {
                         @Override
                         public void run() {
                             super.run();
-                            Message msg=client.get("search-"+str);
+                            Message msg= Data.client.get("search-"+str);
                             han.sendMessage(msg);
                         }
                     }.start();

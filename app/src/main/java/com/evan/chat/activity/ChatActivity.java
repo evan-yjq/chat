@@ -1,4 +1,4 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.btn.DialogButton;
-import com.evan.chat.btn.EditButton;
-import com.evan.chat.btn.TopTitleButton;
+import com.evan.chat.view.DialogButton;
+import com.evan.chat.view.EditButton;
+import com.evan.chat.view.TopTitleButton;
 import com.evan.chat.model.Chat;
 import com.evan.chat.model.User;
 import com.evan.chat.util.*;
@@ -21,8 +21,7 @@ import com.evan.chat.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.evan.chat.activities.Data.client;
-import static com.evan.chat.activities.Data.handler;
+import static com.evan.chat.activity.Data.handler;
 
 public class ChatActivity extends Activity {
 

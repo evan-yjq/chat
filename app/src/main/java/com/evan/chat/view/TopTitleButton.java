@@ -1,4 +1,4 @@
-package com.evan.chat.btn;
+package com.evan.chat.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.evan.chat.R;
-import com.evan.chat.activities.UserActivity;
+import com.evan.chat.activity.UserActivity;
 
 public class TopTitleButton extends RelativeLayout {
 

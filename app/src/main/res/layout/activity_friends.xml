@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.FriendsActivity">
+        tools:context=".activity.FriendsActivity">
     <!--头部-->
     <RelativeLayout
             android:orientation = "horizontal"
@@ -42,7 +42,7 @@
                 android:layout_height="@dimen/dp16"
                 android:id="@+id/refresh"/>
 
-        <com.evan.chat.btn.SearchButton
+        <com.evan.chat.view.SearchButton
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="56dp"
@@ -50,7 +50,7 @@
                 android:id="@+id/search_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp32">
-        </com.evan.chat.btn.SearchButton>
+        </com.evan.chat.view.SearchButton>
     </RelativeLayout>
     <!--主体-->
     <ScrollView

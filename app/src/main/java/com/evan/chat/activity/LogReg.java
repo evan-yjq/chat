@@ -1,4 +1,4 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -32,7 +32,6 @@ import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
 import com.evan.chat.util.OkHttpClientManager;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 

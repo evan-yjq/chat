@@ -1,4 +1,4 @@
-package com.evan.chat.activities;
+package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.btn.FriendsButton;
-import com.evan.chat.btn.SearchButton;
+import com.evan.chat.view.FriendsButton;
+import com.evan.chat.view.SearchButton;
 import com.evan.chat.model.User;
 import com.evan.chat.tmp.LoginActivity;
 import com.evan.chat.util.*;
@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.evan.chat.activities.Data.*;
+import static com.evan.chat.activity.Data.*;
 
 public class FriendsActivity extends Activity {
     //top

@@ -1,4 +1,4 @@
-package com.evan.chat.btn;
+package com.evan.chat.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

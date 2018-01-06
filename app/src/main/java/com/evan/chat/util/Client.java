@@ -6,8 +6,8 @@ import android.os.Message;
 import java.io.*;
 import java.net.Socket;
 
-import static com.evan.chat.activities.Data.socket;
-import static com.evan.chat.activities.Data.socketl;
+import static com.evan.chat.activity.Data.socket;
+import static com.evan.chat.activity.Data.socketl;
 
 /**
  * Created by yejiaquan on 12/27/16.

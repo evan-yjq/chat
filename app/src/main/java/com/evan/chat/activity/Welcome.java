@@ -26,7 +26,7 @@ import java.util.List;
  */
 
 @EActivity(R.layout.activity_welcome)
-public class Welcome extends Activity {
+public class Welcome extends Base {
 
     private LogUserDao logUserDao;
     private final String url = "http://"+ Data.ip+":"+Data.host+"/user/sign_in_by_id";  //id登录接口
@@ -43,9 +43,9 @@ public class Welcome extends Activity {
         logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(this).getLogUserDao();
         long autoLoginId=autoLogin();
         if(logUserDao.count()==0&&autoLoginId==-1){
-            Intent intent = new Intent(this, LogReg_.class);
-            intent.putExtra("is_login", true);
-            startActivity(intent);
+            Bundle b = new Bundle();
+            b.putBoolean("is_login",true);
+            openActivity(LogReg_.class,RIGHT,b);
             finish();
         }else{
             h = new Handler(){

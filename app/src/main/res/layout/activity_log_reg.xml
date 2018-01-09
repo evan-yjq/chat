@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/my_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
@@ -11,6 +12,10 @@
               android:background="@drawable/bg_log_reg"
               tools:context="com.evan.chat.activity.LogReg_">
 
+    <ScrollView
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
@@ -91,4 +96,5 @@
                     android:layout_height="wrap_content"/>
 
         </LinearLayout>
+    </ScrollView>
 </LinearLayout>

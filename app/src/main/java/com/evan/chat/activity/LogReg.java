@@ -5,12 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -42,12 +44,14 @@ import org.androidannotations.annotations.ViewById;
  * Time: 0:34
  */
 @EActivity(R.layout.activity_log_reg)
-public class LogReg extends AppCompatActivity implements UseUserBus{
+public class LogReg extends Base implements UseUserBus{
 
     private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username"; //用户名登录接口
     private final String reg_url="http://"+Data.ip+":"+Data.host+"/user/register";  //注册接口
     private UserLogRegTask mAuthTask = null;    //登录/注册异步器
-    private boolean isLogin=true;   //是否显示为登陆界面
+    private Bundle bundle;
+    private boolean isLogin; //是否显示为登陆界面
+
 
     @ViewById(R.id.account)
     EditText mAccountView;  //用户名输入
@@ -59,11 +63,15 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
     TextView mSwitchView;   //更换登陆注册操作
     @ViewById(R.id.email_sign_in_button)
     Button mEmailSignInButton;  //确认按钮
+    @ViewById(R.id.login_form)
+    ScrollView myView;    //all
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UserBus.init().add_activity("LogReg",this); //将界面添加到用户总线
         super.onCreate(savedInstanceState);
+        bundle = this.getIntent().getExtras();
+        isLogin=bundle.getBoolean("is_login",true);
         init();
     }
 
@@ -76,22 +84,31 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
     //初始化界面
     @UiThread
     void init(){
-        isLogin=getIntent().getBooleanExtra("is_login",true);   //获取该显示什么界面的标记
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.color6));
+        }
+        setGestureListener();
         if (isLogin){
             mEmailSignInButton.setText(R.string.action_sign_in);
             mSwitchView.setText(R.string.action_reg);
+            mSwitchView.setText("<<<"+mSwitchView.getText());
         }else{
             mEmailSignInButton.setText(R.string.action_reg);
             mSwitchView.setText(R.string.action_sign_in);
+            mSwitchView.setText(mSwitchView.getText()+">>>");
         }
         mAccountView.setHintTextColor(Color.WHITE);
         mSwitchView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogReg.this,LogReg_.class);
-                if (isLogin) intent.putExtra("is_login", false);
-                else intent.putExtra("is_login", true);
-                startActivity(intent);
+                Bundle b = new Bundle();
+                if (isLogin) {
+                    b.putBoolean("is_login",false);
+                    openActivity(LogReg_.class,RIGHT,b);
+                } else {
+                    b.putBoolean("is_login",true);
+                    openActivity(LogReg_.class,LEFT,b);
+                }
                 finish();
             }
         });
@@ -102,8 +119,8 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
                 attemptLogReg();
             }
         });
-        if(getIntent().getBooleanExtra("show_log",false)){
-            new AlertView("服务器返回结果", getIntent().getStringExtra("log_value"), null,
+        if(bundle.getBoolean("show_log",false)){
+            new AlertView("服务器返回结果", bundle.getString("log_value"), null,
                     new String[]{"确定"}, null, this, AlertView.Style.Alert, null).show();
         }
     }
@@ -163,6 +180,42 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
             @Override
             public void onAnimationEnd(Animator animation) {
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
+
+
+    //左右滑动作监听器
+    private void setGestureListener(){
+        myView.setOnTouchListener(new View.OnTouchListener() {
+            float mStartX=0,mStartY=0,mEndX=0,mEndY=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mStartX = event.getX();
+                        mStartY = event.getY();
+                        System.out.println("down"+mStartX);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mEndX = event.getX();
+                        mEndY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        System.out.println("up"+mEndX);
+                        Bundle b = new Bundle();
+                        if (!isLogin && mEndX - mStartX > 0 && (Math.abs(mEndX - mStartX) > 25)) {
+                            //向右
+                            b.putBoolean("is_login",true);
+                            openActivity(LogReg_.class,LEFT,b);
+                        } else if (isLogin && mEndX - mStartX < 0 && (Math.abs(mEndX - mStartX) > 25)) {
+                            //向左
+                            b.putBoolean("is_login",false);
+                            openActivity(LogReg_.class,RIGHT,b);
+                        }
+                        break;
+                }
+                return true;
             }
         });
     }
@@ -244,20 +297,18 @@ public class LogReg extends AppCompatActivity implements UseUserBus{
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             if (success) {
+                Bundle b = new Bundle();
                 if (isLogin) {
-                    Intent intent = new Intent(LogReg.this, Test_.class);
-                    intent.putExtra("show_log",true);
-                    intent.putExtra("log_value","登录成功");
-                    startActivity(intent);
-                    finish();
+                    b.putBoolean("show_log",true);
+                    b.putString("log_value","登录成功");
+                    openActivity(Test_.class,RIGHT,b);
                 }else{
-                    Intent intent = new Intent(LogReg.this, LogReg_.class);
-                    intent.putExtra("is_login",true);
-                    intent.putExtra("show_log",true);
-                    intent.putExtra("log_value","注册成功");
-                    startActivity(intent);
-                    finish();
+                    b.putBoolean("is_login",true);
+                    b.putBoolean("show_log",true);
+                    b.putString("log_value","注册成功");
+                    openActivity(LogReg_.class,LEFT,b);
                 }
+                finish();
             } else {
                 showProgress(false);
                 if (isLogin) {

@@ -91,7 +91,7 @@ public class LogReg extends Base implements UseUserBus{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.color6));
         }
-        setGestureListener();
+//        setGestureListener();
         if (isLogin){
             mEmailSignInButton.setText(R.string.action_sign_in);
             mSwitchView.setText(R.string.action_reg);

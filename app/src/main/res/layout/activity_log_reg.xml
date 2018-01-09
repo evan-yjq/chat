@@ -63,6 +63,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <TextView
+                    android:id="@+id/forget"
                     android:textColor="@color/white"
                     android:layout_marginTop="16dp"
                     android:text="忘记密码"

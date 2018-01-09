@@ -65,6 +65,10 @@ public class LogReg extends Base implements UseUserBus{
     Button mEmailSignInButton;  //确认按钮
     @ViewById(R.id.login_form)
     ScrollView myView;    //all
+    @ViewById(R.id.forget)
+    TextView mForgetView;   //忘记密码
+    @ViewById(R.id.email_login_form)
+    LinearLayout mFormView; //为了删除忘记密码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,7 @@ public class LogReg extends Base implements UseUserBus{
             mEmailSignInButton.setText(R.string.action_reg);
             mSwitchView.setText(R.string.action_sign_in);
             mSwitchView.setText(mSwitchView.getText()+">>>");
+            mFormView.removeView(mForgetView);
         }
         mAccountView.setHintTextColor(Color.WHITE);
         mSwitchView.setOnClickListener(new OnClickListener() {
@@ -195,21 +200,17 @@ public class LogReg extends Base implements UseUserBus{
                     case MotionEvent.ACTION_DOWN:
                         mStartX = event.getX();
                         mStartY = event.getY();
-                        System.out.println("down"+mStartX);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         mEndX = event.getX();
                         mEndY = event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
-                        System.out.println("up"+mEndX);
                         Bundle b = new Bundle();
-                        if (!isLogin && mEndX - mStartX > 0 && (Math.abs(mEndX - mStartX) > 25)) {
-                            //向右
+                        if (!isLogin && mEndX - mStartX > 0 && (Math.abs(mEndX - mStartX) > 25)) {//向右
                             b.putBoolean("is_login",true);
                             openActivity(LogReg_.class,LEFT,b);
-                        } else if (isLogin && mEndX - mStartX < 0 && (Math.abs(mEndX - mStartX) > 25)) {
-                            //向左
+                        } else if (isLogin && mEndX - mStartX < 0 && (Math.abs(mEndX - mStartX) > 25)) {//向左
                             b.putBoolean("is_login",false);
                             openActivity(LogReg_.class,RIGHT,b);
                         }

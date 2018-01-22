@@ -1,4 +1,4 @@
-package com.evan.chat.model;
+package com.evan.chat.json;
 
 import com.evan.chat.gen.User;
 
@@ -16,7 +16,7 @@ public class UserInfo {
     private String profile;
     private List<User>friends;
 
-    public UserInfo(int id,String username,String profile,List<User>friends){
+    public UserInfo(int id, String username, String profile, List<User>friends){
         this.friends = friends;
         this.id = id;
         this.profile = profile;

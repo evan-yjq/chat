@@ -1,6 +1,6 @@
 package com.evan.chat.bus;
 
-import com.evan.chat.model.UserInfo;
+import com.evan.chat.json.UserInfo;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -88,8 +88,8 @@ public class FriendsActivity extends Activity {
                     @Override
                     public void run() {
                         super.run();
-                        Message msg=client.get("logout-"+id);
-                        h.sendMessage(msg);
+//                        Message msg=client.get("logout-"+id);
+//                        h.sendMessage(msg);
                     }
                 }.start();
             }
@@ -188,8 +188,8 @@ public class FriendsActivity extends Activity {
             @Override
             public void run() {
                 super.run();
-                Message msg=client.get("friend-"+id);
-                h2.sendMessage(msg);
+//                Message msg=client.get("friend-"+id);
+//                h2.sendMessage(msg);
             }
         }.start();
     }

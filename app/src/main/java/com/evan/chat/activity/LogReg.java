@@ -5,9 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,9 +25,9 @@ import com.evan.chat.bus.UserBus;
 import com.evan.chat.gen.LogUserDao;
 import com.evan.chat.gen.UserDao;
 import com.evan.chat.gen.LogUser;
-import com.evan.chat.model.ServerReturnValue;
+import com.evan.chat.json.ServerReturnValue;
 import com.evan.chat.gen.User;
-import com.evan.chat.model.UserInfo;
+import com.evan.chat.json.UserInfo;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
 import com.evan.chat.util.OkHttpClientManager;
@@ -263,7 +261,7 @@ public class LogReg extends Base implements UseUserBus{
                 ServerReturnValue va = JSON.parseObject(result,ServerReturnValue.class);
                 if (va.isSucceed()) {
                     UserDao userDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getUserDao();
-                    User user = new User(null,Integer.parseInt(va.getArg1().toString()),mAccount,"");
+                    User user = new User(null,(int)va.getArg1(),mAccount,"");
                     userDao.insert(user);
                     if (isLogin) {
                         UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
@@ -272,14 +270,14 @@ public class LogReg extends Base implements UseUserBus{
                         LogUser log_user = new LogUser();
                         boolean is_new = true;
                         for (LogUser logUser : logUsers) {
-                            if (logUser.getUser_id() == Integer.parseInt(va.getArg1().toString())) {
-                                log_user = new LogUser(null, Integer.parseInt(va.getArg1().toString()), mPassword, new Date(), 1);
+                            if (logUser.getUser_id() == (int)va.getArg1()) {
+                                log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
                                 is_new = false;
                                 break;
                             }
                         }
                         if (is_new) {
-                            log_user = new LogUser(null, Integer.parseInt(va.getArg1().toString()), mPassword, new Date(), 1);
+                            log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
                             logUserDao.insert(log_user);
                         } else {
                             logUserDao.update(log_user);

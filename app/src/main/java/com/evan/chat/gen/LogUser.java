@@ -7,7 +7,7 @@ import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class LogUser extends User {
+public class LogUser {
 
     @Id(autoincrement = true)
     private Long id;
@@ -32,22 +32,18 @@ public class LogUser extends User {
     }
 
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Override
     public int getUser_id() {
         return user_id;
     }
 
-    @Override
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }

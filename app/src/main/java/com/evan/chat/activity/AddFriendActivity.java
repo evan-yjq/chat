@@ -48,8 +48,8 @@ public class AddFriendActivity extends Activity {
                         @Override
                         public void run() {
                             super.run();
-                            Message msg= Data.client.get("search-"+str);
-                            han.sendMessage(msg);
+//                            Message msg= Data.client.get("search-"+str);
+//                            han.sendMessage(msg);
                         }
                     }.start();
                 }

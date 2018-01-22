@@ -16,10 +16,8 @@ public class Base extends AppCompatActivity {
     public static final int RIGHT = 0;
     public static final int LEFT = 1;
 
-    private int w;
     protected void openActivity(Class<?> cls, int w, Bundle b){
         openActivity(this,cls,b);
-        this.w=w;
         if (w==RIGHT){
             overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
         }else if(w==LEFT){

@@ -1,7 +1,7 @@
 package com.evan.chat.bus;
 
 import android.content.Context;
-import com.evan.chat.model.UserInfo;
+import com.evan.chat.json.UserInfo;
 
 /**
  * Created by IntelliJ IDEA

@@ -11,7 +11,6 @@ import com.evan.chat.gen.LogUserDao;
 import com.evan.chat.gen.LogUser;
 import com.evan.chat.gen.RequestUrl;
 import com.evan.chat.gen.RequestUrlDao;
-import com.evan.chat.json.ServerReturnValue;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.OkHttpClientManager;
 import org.androidannotations.annotations.Background;
@@ -32,25 +31,28 @@ import java.util.List;
 public class Welcome extends Base {
 
     private LogUserDao logUserDao;
-    private final String url = "http://"+ Data.ip+":"+Data.host+"/user/sign_in_by_id";  //id登录接口
+    private RequestUrlDao requestUrlDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        getUrl();
     }
 
     @Background
     void getUrl(){
+        requestUrlDao = GreenDaoUtils.getSingleTon().getmDaoSession(this).getRequestUrlDao();
         String route;
         Message msg = new Message();
         msg.arg1 = 1;
-        RequestUrlDao requestUrlDao = GreenDaoUtils.getSingleTon().getmDaoSession(this).getRequestUrlDao();
-        if (requestUrlDao.count()==0){
+
+        if (requestUrlDao.count() <= 2){
             Data.ip = "115.28.216.244";
             Data.host = "3000";
             route = "/get_request_url";
+            requestUrlDao.insert(new RequestUrl(null,"ip",Data.ip));
+            requestUrlDao.insert(new RequestUrl(null,"host",Data.host));
+            requestUrlDao.insert(new RequestUrl(null,"get_request_url",route));
         }else{
             Data.ip = requestUrlDao.queryBuilder().where(RequestUrlDao.Properties.Key
                     .eq("ip")).build().unique().getValue();
@@ -62,14 +64,17 @@ public class Welcome extends Base {
         String url = "http://" + Data.ip + ":" + Data.host + route;
         try {
             String re =OkHttpClientManager.getAsString(url);
-            JSON.parseArray(re, ServerReturnValue.class);
-
+            List<RequestUrl> list = JSON.parseArray(re, RequestUrl.class);
+            for (RequestUrl aList : list) {
+                requestUrlDao.update(aList);
+            }
             msg.obj = true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             msg.obj = false;
         }
         h.sendMessage(msg);
     }
+
 
     private void tryLogin(){
         logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(this).getLogUserDao();
@@ -115,16 +120,19 @@ public class Welcome extends Base {
                 }
             }
         };
+        getUrl();
     }
 
     //登录操作
     @Background
     void login(long autoLoginId){
+        String route = requestUrlDao.queryBuilder().where(RequestUrlDao.Properties.Key
+                .eq("sign_in_by_id")).build().unique().getValue();
         Message msg = new Message();
         msg.arg1 = 0;
         try {
             LogUser user = logUserDao.load(autoLoginId);
-            msg.obj=OkHttpClientManager.postAsString(url,
+            msg.obj=OkHttpClientManager.postAsString("http://" + Data.ip + ":" + Data.host + route,
                     new OkHttpClientManager.Param("id",user.getUser_id()+""),
                     new OkHttpClientManager.Param("password",user.getPassword()));
 

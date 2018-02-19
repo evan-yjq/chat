@@ -3,7 +3,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.evan.chat"
         minSdkVersion 19
@@ -22,8 +22,17 @@ android {
     /*针对greenDao的一些配置*/
     greendao {
         schemaVersion 1 //数据库版本号
-        daoPackage 'com.evan.chat.gen' //自动生成的工具类的包名
+        daoPackage 'com.evan.chat.data.source.dao' //自动生成的工具类的包名
         targetGenDir 'src/main/java' //路径
+    }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/layouts/welcome',
+                    'src/main/res/layouts/logreg',
+                    'src/main/res'
+            ]
+        }
     }
 }
 
@@ -31,13 +40,18 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
+def AAVersion = "4.4.0" // change this to your desired version, for example the latest stable: 4.4.0
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.1'
-    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support:cardview-v7:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
 
     //弹窗alert
@@ -52,6 +66,6 @@ dependencies {
     //okhttp
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     //AndroidAnotations 快速安卓开发。易于维护
-    annotationProcessor "org.androidannotations:androidannotations:4.4.0"
-    compile "org.androidannotations:androidannotations-api:4.4.0"
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
 }

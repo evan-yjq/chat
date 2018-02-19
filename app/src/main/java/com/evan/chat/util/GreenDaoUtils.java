@@ -2,8 +2,8 @@ package com.evan.chat.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import com.evan.chat.gen.DaoMaster;
-import com.evan.chat.gen.DaoSession;
+import com.evan.chat.data.source.dao.DaoMaster;
+import com.evan.chat.data.source.dao.DaoSession;
 
 public class GreenDaoUtils {
 

@@ -22,12 +22,12 @@ import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
 import com.evan.chat.bus.UseUserBus;
 import com.evan.chat.bus.UserBus;
-import com.evan.chat.gen.LogUserDao;
-import com.evan.chat.gen.UserDao;
+import com.evan.chat.data.source.dao.LogUserDao;
+import com.evan.chat.data.source.dao.UserDao;
 import com.evan.chat.gen.LogUser;
 import com.evan.chat.json.ServerReturnValue;
-import com.evan.chat.gen.User;
 import com.evan.chat.json.UserInfo;
+import com.evan.chat.logreg.domain.model.User;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
 import com.evan.chat.util.OkHttpClientManager;
@@ -261,10 +261,10 @@ public class LogReg extends Base implements UseUserBus{
                 ServerReturnValue va = JSON.parseObject(result,ServerReturnValue.class);
                 if (va.isSucceed()) {
                     UserDao userDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getUserDao();
-                    User user = new User(null,(int)va.getArg1(),mAccount,"");
-                    userDao.insert(user);
+//                    User user = new User(null,(int)va.getArg1(),mAccount,"");
+//                    userDao.insert(user);
                     if (isLogin) {
-                        UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
+//                        UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
                         LogUserDao logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getLogUserDao();
                         List<LogUser> logUsers = logUserDao.loadAll();
                         LogUser log_user = new LogUser();

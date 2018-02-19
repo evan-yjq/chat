@@ -1,6 +1,5 @@
 package com.evan.chat.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
@@ -12,7 +11,7 @@ import org.androidannotations.annotations.EActivity;
  * Date: 2018/1/6
  * Time: 1:29
  */
-@EActivity(R.layout.activity_welcome)
+@EActivity(R.layout.welcome_frag)
 public class Test extends Base {
     private Bundle bundle;
     @Override

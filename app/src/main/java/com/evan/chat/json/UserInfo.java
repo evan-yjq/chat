@@ -1,6 +1,6 @@
 package com.evan.chat.json;
 
-import com.evan.chat.gen.User;
+import com.evan.chat.logreg.domain.model.User;
 
 import java.util.List;
 

@@ -3,16 +3,8 @@ package com.evan.chat.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import com.evan.chat.R;
-import com.evan.chat.util.OkHttpClientManager;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EActivity;
-
-import java.io.IOError;
-import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA

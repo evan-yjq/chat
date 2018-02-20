@@ -27,10 +27,12 @@ import com.evan.chat.data.source.dao.UserDao;
 import com.evan.chat.gen.LogUser;
 import com.evan.chat.json.ServerReturnValue;
 import com.evan.chat.json.UserInfo;
-import com.evan.chat.logreg.domain.model.User;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
-import com.evan.chat.util.OkHttpClientManager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.PostFormBuilder;
+import com.zhy.http.okhttp.callback.StringCallback;
+import okhttp3.Call;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -246,49 +248,52 @@ public class LogReg extends Base implements UseUserBus{
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            try {
-                String result;
-                if (isLogin) {
-                    result = OkHttpClientManager.postAsString(login_url,
-                            new OkHttpClientManager.Param("username", mAccount),
-                            new OkHttpClientManager.Param("password", mPassword));
-                }else{
-                    result = OkHttpClientManager.postAsString(reg_url,
-                            new OkHttpClientManager.Param("username", mAccount),
-                            new OkHttpClientManager.Param("password", mPassword));
-                }
-                System.out.println("LogReg:"+result);
-                ServerReturnValue va = JSON.parseObject(result,ServerReturnValue.class);
-                if (va.isSucceed()) {
-                    UserDao userDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getUserDao();
-//                    User user = new User(null,(int)va.getArg1(),mAccount,"");
-//                    userDao.insert(user);
-                    if (isLogin) {
-//                        UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
-                        LogUserDao logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getLogUserDao();
-                        List<LogUser> logUsers = logUserDao.loadAll();
-                        LogUser log_user = new LogUser();
-                        boolean is_new = true;
-                        for (LogUser logUser : logUsers) {
-                            if (logUser.getUser_id() == (int)va.getArg1()) {
-                                log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
-                                is_new = false;
-                                break;
+            final String[] result = new String[1];
+            PostFormBuilder builder;
+            if (isLogin) {
+                builder= OkHttpUtils.post().url(login_url);
+            }else{
+                builder = OkHttpUtils.post().url(reg_url);
+            }
+            builder.addParams("username", mAccount)
+                    .addParams("password", mPassword)
+                    .build().execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                        }
+                        @Override
+                        public void onResponse(String response, int id) {
+                            result[0] = response;
+                            System.out.println("LogReg:"+ result[0]);
+                            ServerReturnValue va = JSON.parseObject(result[0],ServerReturnValue.class);
+                            if (va.isSucceed()) {
+                                UserDao userDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getUserDao();
+//                                  User user = new User(null,(int)va.getArg1(),mAccount,"");
+//                                  userDao.insert(user);
+                                if (isLogin) {
+//                                      UserBus.init().update_user_info(new UserInfo(user.getUser_id(),mAccount,"",null));
+                                    LogUserDao logUserDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getLogUserDao();
+                                    List<LogUser> logUsers = logUserDao.loadAll();
+                                    LogUser log_user = new LogUser();
+                                    boolean is_new = true;
+                                    for (LogUser logUser : logUsers) {
+                                        if (logUser.getUser_id() == (int)va.getArg1()) {
+                                            log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
+                                            is_new = false;
+                                            break;
+                                        }
+                                    }
+                                    if (is_new) {
+                                        log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
+                                        logUserDao.insert(log_user);
+                                    } else {
+                                        logUserDao.update(log_user);
+                                    }
+                                }
                             }
                         }
-                        if (is_new) {
-                            log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
-                            logUserDao.insert(log_user);
-                        } else {
-                            logUserDao.update(log_user);
-                        }
-                    }
-                }else{
-                    return false;
-                }
-            } catch (IOException e) {
-                return false;
-            }
+                    });
             return true;
         }
 

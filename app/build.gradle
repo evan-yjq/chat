@@ -54,6 +54,9 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
 
+    //工具类
+    compile 'com.blankj:utilcode:1.12.6'
+    compile 'com.zhy:okhttputils:2.6.2'
     //弹窗alert
     compile 'com.bigkoo:alertview:1.0.3'
     //gson
@@ -63,8 +66,8 @@ dependencies {
     //数据库greendao
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
-    //okhttp
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    //okhttp3
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
     //AndroidAnotations 快速安卓开发。易于维护
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"

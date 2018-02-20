@@ -1,6 +1,7 @@
 package com.evan.chat.welcome;
 
 
+import android.graphics.Bitmap;
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
 
@@ -13,7 +14,12 @@ import com.evan.chat.BaseView;
 public interface WelcomeContract {
 
     interface View extends BaseView<Presenter> {
+
         void setTitle(String title);
+
+        void setWelcomeIV(Bitmap bitmap);
+
+        void showMessage(String msg);
     }
 
     interface Presenter extends BasePresenter {

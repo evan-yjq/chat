@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.logreg.domain.model.User;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.FriendsButton;
 import com.evan.chat.view.SearchButton;
 import com.evan.chat.util.*;
@@ -42,7 +42,7 @@ public class FriendsActivity extends Activity {
         buttonInit();
         autos=(String[]) getIntent().getSerializableExtra("autos");
         final String id=getIntent().getStringExtra("id");
-        InOutPut.writeFile(this,"friends.txt","",MODE_APPEND,"好友列表初始化");
+//        InOutPut.writeFile(this,"friends.txt","",MODE_APPEND,"好友列表初始化");
 
         h=new Handler() {
             @Override
@@ -76,7 +76,7 @@ public class FriendsActivity extends Activity {
                 String result = b.getString("result");
                 System.out.println(result);
                 if (!"".equals(result)&&result!=null){
-                    InOutPut.writeFile(FriendsActivity.this,"friends.txt",result,null,"写入好友列表");
+//                    InOutPut.writeFile(FriendsActivity.this,"friends.txt",result,null,"写入好友列表");
                     friend();
                 }
             }
@@ -195,30 +195,30 @@ public class FriendsActivity extends Activity {
     }
 
     private void friend(){
-        String f=InOutPut.readFile(FriendsActivity.this,"friends.txt","读取好友列表");
-        if (!"".equals(f)) {
-            for (int i = 0; i < arrayList.size(); i++) {
-                ((LinearLayout) findViewById(R.id.all_friend)).removeView(arrayList.get(i));
-            }
-            List<User> allFriend = JSON.parseArray(f, User.class);
-            for (final User friend : allFriend) {
-                FriendsButton friendBtn = new FriendsButton(FriendsActivity.this, null);
-                arrayList.add(friendBtn);
-//                SetImageButton.setFriendsButton(friendBtn, R.mipmap.logo, friend.getUsername(), friend.getSignature(), friend.getState());
-                DynAdd.addLayout((LinearLayout) findViewById(R.id.all_friend), friendBtn);
-                friendBtn.getButton().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        Intent intent = new Intent(FriendsActivity.this, ChatActivity.class);
-//                        bundle.putSerializable("friend", friend);
-                        bundle.putSerializable("autos", autos);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-            }
-        }
+//        String f=InOutPut.readFile(FriendsActivity.this,"friends.txt","读取好友列表");
+//        if (!"".equals(f)) {
+//            for (int i = 0; i < arrayList.size(); i++) {
+//                ((LinearLayout) findViewById(R.id.all_friend)).removeView(arrayList.get(i));
+//            }
+//            List<User> allFriend = JSON.parseArray(f, User.class);
+//            for (final User friend : allFriend) {
+//                FriendsButton friendBtn = new FriendsButton(FriendsActivity.this, null);
+//                arrayList.add(friendBtn);
+////                SetImageButton.setFriendsButton(friendBtn, R.mipmap.logo, friend.getUsername(), friend.getSignature(), friend.getState());
+//                DynAdd.addLayout((LinearLayout) findViewById(R.id.all_friend), friendBtn);
+//                friendBtn.getButton().setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Bundle bundle = new Bundle();
+//                        Intent intent = new Intent(FriendsActivity.this, ChatActivity.class);
+////                        bundle.putSerializable("friend", friend);
+//                        bundle.putSerializable("autos", autos);
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                    }
+//                });
+//            }
+//        }
     }
 
     //返回键方法

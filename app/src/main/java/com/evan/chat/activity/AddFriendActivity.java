@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.logreg.domain.model.User;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.EditButton;
 import com.evan.chat.view.FriendsButton;
 import com.evan.chat.view.TopTitleButton;

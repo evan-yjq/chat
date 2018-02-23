@@ -20,13 +20,9 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
-import com.evan.chat.bus.UseUserBus;
-import com.evan.chat.bus.UserBus;
 import com.evan.chat.data.source.dao.LogUserDao;
 import com.evan.chat.data.source.dao.UserDao;
 import com.evan.chat.gen.LogUser;
-import com.evan.chat.json.ServerReturnValue;
-import com.evan.chat.json.UserInfo;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.util.MD5Util;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -44,7 +40,7 @@ import org.androidannotations.annotations.ViewById;
  * Time: 0:34
  */
 @EActivity(R.layout.activity_log_reg)
-public class LogReg extends Base implements UseUserBus{
+public class LogReg extends Base {
 
     private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username"; //用户名登录接口
     private final String reg_url="http://"+Data.ip+":"+Data.host+"/user/register";  //注册接口
@@ -72,7 +68,6 @@ public class LogReg extends Base implements UseUserBus{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UserBus.init().add_activity("LogReg",this); //将界面添加到用户总线
         super.onCreate(savedInstanceState);
         bundle = this.getIntent().getExtras();
         isLogin=bundle.getBoolean("is_login",true);
@@ -81,7 +76,6 @@ public class LogReg extends Base implements UseUserBus{
 
     @Override
     protected void onDestroy() {
-        UserBus.init().remove_activity("LogReg"); //将界面移除用户总线
         super.onDestroy();
     }
 
@@ -221,18 +215,6 @@ public class LogReg extends Base implements UseUserBus{
         });
     }
 
-    //实现接口方法
-    @UiThread
-    @Override
-    public void user_update(UserInfo userInfo) {
-        //do nothing
-    }
-
-    //实现接口方法
-    @Override
-    public Context get_context() {
-        return this;
-    }
 
     //登陆注册异步器类
     public class UserLogRegTask extends AsyncTask<Void, Void, Boolean> {
@@ -266,8 +248,8 @@ public class LogReg extends Base implements UseUserBus{
                         public void onResponse(String response, int id) {
                             result[0] = response;
                             System.out.println("LogReg:"+ result[0]);
-                            ServerReturnValue va = JSON.parseObject(result[0],ServerReturnValue.class);
-                            if (va.isSucceed()) {
+//                            ServerReturnValue va = JSON.parseObject(result[0],ServerReturnValue.class);
+//                            if (va.isSucceed()) {
                                 UserDao userDao = GreenDaoUtils.getSingleTon().getmDaoSession(LogReg.this).getUserDao();
 //                                  User user = new User(null,(int)va.getArg1(),mAccount,"");
 //                                  userDao.insert(user);
@@ -277,21 +259,21 @@ public class LogReg extends Base implements UseUserBus{
                                     List<LogUser> logUsers = logUserDao.loadAll();
                                     LogUser log_user = new LogUser();
                                     boolean is_new = true;
-                                    for (LogUser logUser : logUsers) {
-                                        if (logUser.getUser_id() == (int)va.getArg1()) {
-                                            log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
-                                            is_new = false;
-                                            break;
-                                        }
-                                    }
-                                    if (is_new) {
-                                        log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
-                                        logUserDao.insert(log_user);
-                                    } else {
-                                        logUserDao.update(log_user);
-                                    }
+//                                    for (LogUser logUser : logUsers) {
+//                                        if (logUser.getUser_id() == (int)va.getArg1()) {
+//                                            log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
+//                                            is_new = false;
+//                                            break;
+//                                        }
+//                                    }
+//                                    if (is_new) {
+//                                        log_user = new LogUser(null, (int)va.getArg1(), mPassword, new Date(), 1);
+//                                        logUserDao.insert(log_user);
+//                                    } else {
+//                                        logUserDao.update(log_user);
+//                                    }
                                 }
-                            }
+//                            }
                         }
                     });
             return true;

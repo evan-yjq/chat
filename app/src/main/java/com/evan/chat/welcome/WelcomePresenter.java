@@ -2,10 +2,10 @@ package com.evan.chat.welcome;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import com.evan.chat.util.PropertiesUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import okhttp3.Call;
-import okhttp3.Request;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
@@ -28,7 +28,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     @Override
     public void start() {
         view.setTitle("跳过");
-        getWelcome("http://115.28.216.244/6p.jpg");
+        getWelcome(PropertiesUtils.getInstance().getProperty("welcome_background_url"));
     }
 
     private void getWelcome(String url){
@@ -36,7 +36,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
                 .build().execute(new BitmapCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        view.showMessage(e.getMessage());
+                        view.showMessage("当前网络不可用，请检查您的网络设置");
                     }
 
                     @Override

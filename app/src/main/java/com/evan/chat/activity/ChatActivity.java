@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.logreg.domain.model.User;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.DialogButton;
 import com.evan.chat.view.EditButton;
 import com.evan.chat.view.TopTitleButton;
@@ -39,7 +39,7 @@ public class ChatActivity extends Activity {
         ScrollView center = (ScrollView) findViewById(R.id.center);
         TopTitleButton top = (TopTitleButton) findViewById(R.id.top);
         body=(LinearLayout) findViewById(R.id.body);
-        SetImageButton.setTopTitleButton(top,R.mipmap.back,friend.getUsername(),R.mipmap.category);
+//        SetImageButton.setTopTitleButton(top,R.mipmap.back,friend.getUsername(),R.mipmap.category);
         top.onClickBack(this);
         top.onClickSeeMore(this);
         top.setTitleTextSize(18);
@@ -48,14 +48,14 @@ public class ChatActivity extends Activity {
         final EditButton editChat=new EditButton(this,null);
         editChat.setSendText("发送");
 
-        InOutPut.writeFile(ChatActivity.this,friend.getUsername()+".txt","",MODE_APPEND,friend.getUsername()+"聊天记录初始化");
-        String chats= InOutPut.readFile(ChatActivity.this,friend.getUsername()+".txt","读取"+friend.getUsername()+"聊天记录");
-        if (!"".equals(chats)) {
-            chats ="["+chats.substring(0, chats.lastIndexOf(","))+"]";
-            allChat = JSON.parseArray(chats, Chat.class);
-        }else {
-            allChat=null;
-        }
+//        InOutPut.writeFile(ChatActivity.this,friend.getUsername()+".txt","",MODE_APPEND,friend.getUsername()+"聊天记录初始化");
+//        String chats= InOutPut.readFile(ChatActivity.this,friend.getUsername()+".txt","读取"+friend.getUsername()+"聊天记录");
+//        if (!"".equals(chats)) {
+//            chats ="["+chats.substring(0, chats.lastIndexOf(","))+"]";
+//            allChat = JSON.parseArray(chats, Chat.class);
+//        }else {
+//            allChat=null;
+//        }
         if (allChat != null) {
             int i = allChat.size() - 7;
             for (Chat chat : allChat) {

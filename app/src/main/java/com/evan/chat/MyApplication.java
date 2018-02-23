@@ -1,9 +1,11 @@
 package com.evan.chat;
 
 import android.app.Application;
+import com.evan.chat.util.PropertiesUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import okhttp3.OkHttpClient;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,5 +25,11 @@ public class MyApplication extends Application{
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);
+
+        try {
+            PropertiesUtils.getInstance().setPath(getApplicationContext().getAssets().open("request_url.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

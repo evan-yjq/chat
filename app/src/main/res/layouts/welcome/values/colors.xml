@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+     <color name="welcome_background">#00a0bf</color>
      <color name="welcome_text_color">@color/darkGrey</color>
      <color name="welcome_text_background">@color/AlphaGrey</color>
      <color name="welcome_text_stroke">@color/lightGrey</color>

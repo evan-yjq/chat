@@ -1,10 +1,11 @@
-package com.evan.chat.logreg.domain.model;
+package com.evan.chat.data.source.User.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 
 import java.util.Date;
 import java.util.Objects;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * Created by IntelliJ IDEA
@@ -15,24 +16,26 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class User {
 
-    //用户id
+    @Id
     private Long id;
-    //用户名
-    private String username;
+    private String account;
+    private String nickname;
+    private String email;
     private String password;
     private Date login_time;
-    //个人简介
     private String profile;
 
-    public User(Long id, String username, String password, String profile) {
-        this(id,username,password,new Date(),profile);
+    public User(Long id, String account, String nickname, String email, String password, String profile) {
+        this(id,account,nickname,email,password,new Date(),profile);
     }
 
-    @Generated(hash = 2016033953)
-    public User(Long id, String username, String password, Date login_time,
-            String profile) {
+    @Generated(hash = 1592699865)
+    public User(Long id, String account, String nickname, String email, String password,
+            Date login_time, String profile) {
         this.id = id;
-        this.username = username;
+        this.account = account;
+        this.nickname = nickname;
+        this.email = email;
         this.password = password;
         this.login_time = login_time;
         this.profile = profile;
@@ -46,7 +49,9 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", account='" + account + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", login_time=" + login_time +
                 ", profile='" + profile + '\'' +
@@ -59,7 +64,9 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
-                Objects.equals(username, user.username) &&
+                Objects.equals(account, user.account) &&
+                Objects.equals(nickname, user.nickname) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(login_time, user.login_time) &&
                 Objects.equals(profile, user.profile);
@@ -67,7 +74,8 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, login_time, profile);
+
+        return Objects.hash(id, account, nickname, email, password, login_time, profile);
     }
 
     public Long getId() {
@@ -78,12 +86,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

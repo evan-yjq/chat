@@ -40,8 +40,6 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
-def AAVersion = "4.4.0" // change this to your desired version, for example the latest stable: 4.4.0
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -69,6 +67,11 @@ dependencies {
     //okhttp3
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     //AndroidAnotations 快速安卓开发。易于维护
-    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
-    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    annotationProcessor "org.androidannotations:androidannotations:4.4.0"
+    compile "org.androidannotations:androidannotations-api:4.4.0"
+
+    compile ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
 }

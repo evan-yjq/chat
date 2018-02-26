@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -51,7 +51,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
-
     //工具类
     compile 'com.blankj:utilcode:1.12.6'
     compile 'com.zhy:okhttputils:2.6.2'
@@ -60,7 +59,7 @@ dependencies {
     //gson
     compile 'com.google.code.gson:gson:2.8.0'
     //fastjson Java上一个快速的JSON解析器/生成器
-    compile 'com.alibaba:fastjson:1.1.56.android'
+//    compile 'com.alibaba:fastjson:1.1.56.android'
     //数据库greendao
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
@@ -68,9 +67,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     //AndroidAnotations 快速安卓开发。易于维护
     annotationProcessor "org.androidannotations:androidannotations:4.4.0"
-    compile "org.androidannotations:androidannotations-api:4.4.0"
-
-    compile ('io.socket:socket.io-client:1.0.0') {
+    compile 'org.androidannotations:androidannotations-api:4.4.0'
+    compile('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }

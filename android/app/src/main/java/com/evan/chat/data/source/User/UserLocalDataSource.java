@@ -114,15 +114,20 @@ public class UserLocalDataSource implements UserDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                User user = mUserDao.queryBuilder().whereOr(UserDao.Properties.Account.eq(account),UserDao.Properties.Email.eq(account)).unique();
-                if (user == null) {
-                    callback.onCheckFail("该账户不存在");
-                }else {
-                    if (user.getPassword().equals(password))
-                        callback.onCheckSuccess();
-                    else
-                        callback.onCheckFail("账户名或密码错误");
-                }
+                final User user = mUserDao.queryBuilder().whereOr(UserDao.Properties.Account.eq(account),UserDao.Properties.Email.eq(account)).unique();
+                mAppExecutors.mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (user == null) {
+                            callback.onCheckFail("该账户不存在");
+                        }else {
+                            if (user.getPassword().equals(password))
+                                callback.onCheckSuccess(user);
+                            else
+                                callback.onCheckFail("账户名或密码错误");
+                        }
+                    }
+                });
             }
         });
     }

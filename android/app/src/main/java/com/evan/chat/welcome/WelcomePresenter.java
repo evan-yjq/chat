@@ -28,7 +28,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     @Override
     public void start() {
         view.setTitle("跳过");
-        getWelcome(PropertiesUtils.getInstance().getProperty("welcome_background_url"));
+        getWelcome(PropertiesUtils.getInstance().getProperty("welcome_background_url",false));
     }
 
     private void getWelcome(String url){

@@ -4,10 +4,9 @@ var conn = require('./conn');
 var pool = mysql.createPool(conn);
 
 var sql = {
-    SELECT: 'select * from user WHERE username=?',
-    INSERT: 'insert into user(username, password, email) values(?, ?, ?)',
-    DELETE: 'delete form user where username=?',
-    SELECT2: 'select * from user WHERE username = ? and id != ?'
+    SELECT: 'select * from user WHERE account=?',
+    INSERT: 'insert into user(account, password, login_time) values(?, ?, ?)',
+    DELETE: 'delete form user where account=?'
 };
 
 //异步操作
@@ -28,39 +27,29 @@ function promiseQuery(sql, sqlParams) {
 
 //根据关键词模糊查找用户
 function search(keyword) {
-    var sql = "select * from user where username like '%" + keyword + "%'";
+    var sql = "select * from user where account like '%" + keyword + "%'";
     return promiseQuery(sql);
 }
 
 //新增用户
-function put(username, password, email) {
-    return promiseQuery(sql.SELECT, username)
-        .then(function (data) {
-            return promiseQuery(sql.INSERT, [username, password, email]);
-        });
+function put(account, password, login_time) {
+    return promiseQuery(sql.INSERT, [account, password, login_time]);
 }
 
 //删除用户
-function del(username) {
-    return promiseQuery(sql.DELETE, username)
+function del(account) {
+    return promiseQuery(sql.DELETE, account)
 }
 
 //验证登录
-function verify(username, password) {
-    return promiseQuery(sql.SELECT, username)
-        .then(function (data) {
-            if (data.length > 0 && data[0].password === password) {
-                return Promise.resolve(data[0].id);
-            } else {
-                return Promise.reject('用户名密码错误');
-            }
-        });
+function verify(account) {
+    return promiseQuery(sql.SELECT, account)
 }
 
 //更新用户资料
-function update(id, username, password, email) {
+function update(id, account, password, email) {
     var a = '';
-    if (username !== '') a = a + "username='" + username + "'";
+    if (account !== '') a = a + "account='" + account + "'";
     if (password !== '') {
         if (a !== '') a = a + ',';
         a = a + "password='" + password + "'";

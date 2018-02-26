@@ -29,7 +29,7 @@ public interface UserDataSource {
 
     interface CheckCallback{
 
-        void onCheckSuccess();
+        void onCheckSuccess(User user);
 
         void onCheckFail(String log);
     }

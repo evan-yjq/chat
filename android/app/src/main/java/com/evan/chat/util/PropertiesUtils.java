@@ -33,7 +33,13 @@ public class PropertiesUtils {
         path.close();
     }
 
-    public String getProperty(String key) {
+    public String getProperty(String key, boolean isMine) {
+        if (isMine){
+            return properties.getProperty("protocol")+
+                    properties.getProperty("ip")+
+                    properties.getProperty("host")+
+                    properties.getProperty(key);
+        }
         return properties.getProperty(key);
     }
 }

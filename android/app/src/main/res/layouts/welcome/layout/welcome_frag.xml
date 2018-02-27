@@ -14,6 +14,7 @@
     <TextView
             android:id="@+id/welcome_title"
             android:background="@drawable/rounded_welcome"
+            android:text="@string/action_jump_over"
             android:textSize="@dimen/welcome_text_size"
             android:textColor="@color/welcome_text_color"
             android:layout_width="wrap_content"

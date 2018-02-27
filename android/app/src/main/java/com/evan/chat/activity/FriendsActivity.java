@@ -7,20 +7,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
-import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.FriendsButton;
 import com.evan.chat.view.SearchButton;
-import com.evan.chat.util.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.evan.chat.activity.Data.*;
 

@@ -2,8 +2,6 @@ package com.evan.chat.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -14,10 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-import com.alibaba.fastjson.JSON;
 import com.bigkoo.alertview.AlertView;
 import com.evan.chat.R;
 import com.evan.chat.data.source.dao.LogUserDao;
@@ -39,7 +34,7 @@ import org.androidannotations.annotations.ViewById;
  * Date: 2018/1/6
  * Time: 0:34
  */
-@EActivity(R.layout.activity_log_reg)
+@EActivity(R.layout.log_frag)
 public class LogReg extends Base {
 
     private final String login_url="http://"+Data.ip+":"+Data.host+"/user/sign_in_by_username"; //用户名登录接口
@@ -57,7 +52,7 @@ public class LogReg extends Base {
     View mProgressView; //加载动画
     @ViewById(R.id.switch_)
     TextView mSwitchView;   //更换登陆注册操作
-    @ViewById(R.id.email_sign_in_button)
+    @ViewById(R.id.sign_in_button)
     Button mEmailSignInButton;  //确认按钮
     @ViewById(R.id.login_form)
     ScrollView myView;    //all
@@ -158,7 +153,6 @@ public class LogReg extends Base {
     }
 
     //加载动画的实现
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -296,7 +290,7 @@ public class LogReg extends Base {
             } else {
                 showProgress(false);
                 if (isLogin) {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.setError(getString(R.string.error_incorrect));
                     mPasswordView.requestFocus();
                 }else{
                     mAccountView.setError(getString(R.string.error_invalid_email));

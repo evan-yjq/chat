@@ -31,8 +31,8 @@ public class UserRepository implements UserDataSource {
         mUserRemoteDataSource = checkNotNull(userRemoteDataSource);
     }
 
-    public static UserRepository getInstance(@NonNull UserDataSource userLocalDataSource,
-                                             @NonNull UserDataSource userRemoteDataSource){
+    public static UserRepository getInstance(@NonNull UserDataSource userRemoteDataSource,
+                                             @NonNull UserDataSource userLocalDataSource){
         if (INSTANCE == null){
             INSTANCE = new UserRepository(userLocalDataSource,userRemoteDataSource);
         }

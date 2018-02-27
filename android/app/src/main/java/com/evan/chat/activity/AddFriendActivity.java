@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
 import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.EditButton;
@@ -63,22 +62,22 @@ public class AddFriendActivity extends Activity {
                 super.handleMessage(msg);
                 Bundle b = msg.getData();
                 String result = b.getString("result");
-                if (result != null && !result.equals("")) {
-                    List<User> frds= JSON.parseArray(result,User.class);
-                    for (User frd : frds) {
-                        FriendsButton fbtn = new FriendsButton(AddFriendActivity.this, null);
+//                if (result != null && !result.equals("")) {
+//                    List<User> frds= JSON.parseArray(result,User.class);
+//                    for (User frd : frds) {
+//                        FriendsButton fbtn = new FriendsButton(AddFriendActivity.this, null);
 //                        SetImageButton.setFriendsButton(fbtn, R.mipmap.logo, frd.getUsername(), frd.getSignature(), frd.getState());
-                        DynAdd.addView(body, fbtn);
-                        arrayList.add(fbtn);
-                        fbtn.getButton().setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(AddFriendActivity.this, UserActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-                }
+//                        DynAdd.addView(body, fbtn);
+//                        arrayList.add(fbtn);
+//                        fbtn.getButton().setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(AddFriendActivity.this, UserActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
+//                }
             }
         };
     }

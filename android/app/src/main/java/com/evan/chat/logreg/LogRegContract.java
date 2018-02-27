@@ -10,11 +10,27 @@ import com.evan.chat.BaseView;
  * Time: 下午8:58
  */
 public interface LogRegContract {
-    interface View extends BaseView<Presenter>{
+    interface LogView extends BaseView<Presenter>{
+
+        void showPasswordError(int errorRes);
+
+        void showAccountError(int errorRes);
+
+        void signInSuccess();
+
+        void showSignInError();
+
+        void showProgress(boolean show);
+    }
+
+    interface RegView extends BaseView<Presenter>{
 
     }
 
     interface Presenter extends BasePresenter{
 
+        void attemptLog(String account, String password);
     }
+
+
 }

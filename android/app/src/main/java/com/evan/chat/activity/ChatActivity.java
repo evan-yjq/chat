@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
-import com.alibaba.fastjson.JSON;
 import com.evan.chat.R;
 import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.DialogButton;
@@ -132,12 +131,12 @@ public class ChatActivity extends Activity {
         button.setBackground(R.drawable.dialog_my);
 //        SetImageButton.setDialogButton(button, chat.getContent(), chat.getUser().equals(autos[0]) ? 0 : 1, R.mipmap.logo);
         DynAdd.addView(body, button);
-        String str=JSON.toJSONString(chat);
-        if (allChat==null||str.equals("")) {
-            allChat=new ArrayList<>();
-            allChat.add(chat);
-        }
-        System.out.println(str);
+//        String str=JSON.toJSONString(chat);
+//        if (allChat==null||str.equals("")) {
+//            allChat=new ArrayList<>();
+//            allChat.add(chat);
+//        }
+//        System.out.println(str);
 //        InOutPut.writeFile(ChatActivity.this, chat.getUser() + ".txt", str + ",", MODE_APPEND, "写入" + chat.getUser() + "聊天记录");
     }
 

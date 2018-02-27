@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".logreg.LogRegActivity_"/>
+
         <activity android:name=".activity.Test_"/>
 
         <activity android:name=".activity.ChatActivity"/>

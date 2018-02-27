@@ -80,7 +80,11 @@ public class UserRemoteDataSource implements UserDataSource {
 
                             @Override
                             public void onResponse(String response, int id) {
-                                callback.onCheckSuccess(parseJsonWithGson(response,User.class));
+                                if (!"".equals(response)) {
+                                    callback.onCheckSuccess(parseJsonWithGson(response, User.class));
+                                }else {
+                                    callback.onCheckFail("");
+                                }
                             }
                         });
             }

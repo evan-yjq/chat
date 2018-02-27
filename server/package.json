@@ -1,5 +1,5 @@
 {
-  "name": "chat_backstage",
+  "name": "chat_server",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,7 +14,6 @@
     "express": "~4.15.5",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
-    "jade": "~1.11.0",
     "jquery": "^3.2.1",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",

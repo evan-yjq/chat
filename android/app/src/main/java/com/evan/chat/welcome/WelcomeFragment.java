@@ -1,5 +1,6 @@
 package com.evan.chat.welcome;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.evan.chat.R;
+import com.evan.chat.logreg.LogRegActivity;
+import com.evan.chat.logreg.LogRegActivity_;
 
 import java.util.Objects;
 
@@ -52,6 +55,12 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
         View root = inflater.inflate(R.layout.welcome_frag,container,false);
         welcomeIV = root.findViewById(R.id.welcome_image);
         titleTV = root.findViewById(R.id.welcome_title);
+        titleTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.timeStop();
+            }
+        });
         return root;
     }
 
@@ -63,6 +72,14 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
     @Override
     public void showMessage(String msg) {
         Snackbar.make(Objects.requireNonNull(getView()),msg,Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLogView() {
+        Intent intent = new Intent(getContext(), LogRegActivity_.class);
+        intent.putExtra(LogRegActivity.EXTRA_USER_ID, presenter.getAutoUserId());
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

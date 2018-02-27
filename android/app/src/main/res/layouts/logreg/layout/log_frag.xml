@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/my_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -9,8 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              android:background="@drawable/bg_log_reg"
-              tools:context="com.evan.chat.activity.LogReg_">
+              android:background="@drawable/bg_log_reg">
 
     <ScrollView
             android:id="@+id/login_form"
@@ -27,6 +25,7 @@
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"/>-->
 
+            <!--account输入-->
             <android.support.design.widget.TextInputLayout
                     android:paddingTop="@dimen/dp32"
                     android:layout_width="match_parent"
@@ -43,6 +42,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <!--password输入-->
             <android.support.design.widget.TextInputLayout
                     android:paddingTop="@dimen/dp24"
                     android:layout_width="match_parent"
@@ -55,31 +55,35 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_password"
                         android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeActionLabel="@string/action_sign_in"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"/>
 
             </android.support.design.widget.TextInputLayout>
 
+            <!--action forget password-->
             <TextView
                     android:id="@+id/forget"
                     android:textColor="@color/white"
                     android:layout_marginTop="16dp"
-                    android:text="忘记密码"
+                    android:text="@string/action_forget_password"
                     android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+            <!--action sign_in-->
             <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/sign_in_button"
                     style="?android:textAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
+                    android:text="@string/action_sign_in"
                     android:background="@drawable/log_reg_btn"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
+
             <!-- Login progress -->
             <ProgressBar
                     android:id="@+id/login_progress"
@@ -92,6 +96,7 @@
                     android:id="@+id/switch_"
                     android:textColor="@color/white"
                     android:layout_marginTop="16dp"
+                    android:text="@string/action_no_account"
                     android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

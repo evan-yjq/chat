@@ -20,9 +20,14 @@ public interface WelcomeContract {
         void setWelcomeIV(Bitmap bitmap);
 
         void showMessage(String msg);
+
+        void showLogView();
     }
 
     interface Presenter extends BasePresenter {
 
+        int getAutoUserId();
+
+        void timeStop();
     }
 }

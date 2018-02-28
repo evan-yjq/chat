@@ -6,7 +6,8 @@ var pool = mysql.createPool(conn);
 var sql = {
     SELECT: 'select * from user WHERE account=?',
     INSERT: 'insert into user(account, password, login_time) values(?, ?, ?)',
-    DELETE: 'delete form user where account=?'
+    DELETE: 'delete form user where account=?',
+    CHECK: 'select * from user where account=? or email=?'
 };
 
 //异步操作
@@ -43,7 +44,7 @@ function del(account) {
 
 //验证登录
 function verify(account) {
-    return promiseQuery(sql.SELECT, account)
+    return promiseQuery(sql.CHECK, [account, account])
 }
 
 //更新用户资料

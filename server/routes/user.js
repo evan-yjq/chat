@@ -16,20 +16,20 @@ router.route('/sign_in').post(function (req, res) {
         });
 });
 
-router.route('/register').post(function (req, res, next) {
-    userDB.PUT(req.body.username, req.body.password, req.body.email)
-    .then(function () {
-        // res.render('login', {log: "注册成功"});
-        var out = {'result': true, 'log': '注册成功'};
-        res.send(out);
-    }).catch(function (result) {
-        // res.render('login', {log: result});
-        var out = {'result': false, 'log': result};
-        res.send(out);
-    });
+router.route('/register').post(function (req, res) {
+    userDB.PUT(req.body.account, req.body.password)
+        .then(function (data) {
+            if (data !== undefined){
+                res.send(data.insertId+"");
+            }else{
+                res.send(null);
+            }
+        }).catch(function () {
+            res.send(null);
+        });
 });
 
-router.route('/update').post(function (req, res, next) {
+router.route('/update').post(function (req, res) {
     if (!req.session.isLogin) {
         var out = {'result': false};
         res.send(out);

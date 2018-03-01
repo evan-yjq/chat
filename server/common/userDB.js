@@ -5,7 +5,7 @@ var pool = mysql.createPool(conn);
 
 var sql = {
     SELECT: 'select * from user WHERE account=?',
-    INSERT: 'insert into user(account, password, login_time) values(?, ?, ?)',
+    INSERT: 'insert into user(account, password) values(?, ?)',
     DELETE: 'delete form user where account=?',
     CHECK: 'select * from user where account=? or email=?'
 };
@@ -33,8 +33,15 @@ function search(keyword) {
 }
 
 //新增用户
-function put(account, password, login_time) {
-    return promiseQuery(sql.INSERT, [account, password, login_time]);
+function put(account, password) {
+    return promiseQuery(sql.CHECK,[account,account])
+        .then(function (re) {
+            if (re === undefined || re.length === 0){
+                return promiseQuery(sql.INSERT, [account, password]);
+            }else {
+                return Promise.rejected();
+            }
+        });
 }
 
 //删除用户

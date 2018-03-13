@@ -96,10 +96,10 @@ public class LogReg extends Base {
                 Bundle b = new Bundle();
                 if (isLogin) {
                     b.putBoolean("is_login",false);
-                    openActivity(LogReg_.class,RIGHT,b);
+//                    openActivity(LogReg_.class,RIGHT,b);
                 } else {
                     b.putBoolean("is_login",true);
-                    openActivity(LogReg_.class,LEFT,b);
+//                    openActivity(LogReg_.class,LEFT,b);
                 }
                 finish();
             }
@@ -141,7 +141,7 @@ public class LogReg extends Base {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            showProgress(true);
+//            showProgress(true);
             mAuthTask = new UserLogRegTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -153,27 +153,27 @@ public class LogReg extends Base {
     }
 
     //加载动画的实现
-    private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
-        mEmailSignInButton.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
+//    private void showProgress(final boolean show) {
+//        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//
+//        mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
+//        mEmailSignInButton.animate().setDuration(shortAnimTime).alpha(
+//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                mEmailSignInButton.setVisibility(show ? View.GONE : View.VISIBLE);
+//            }
+//        });
+//
+//        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//        mProgressView.animate().setDuration(shortAnimTime).alpha(
+//                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            }
+//        });
+//    }
 
 
     //左右滑动作监听器
@@ -195,10 +195,10 @@ public class LogReg extends Base {
                         Bundle b = new Bundle();
                         if (!isLogin && mEndX - mStartX > 0 && (Math.abs(mEndX - mStartX) > 25)) {//向右
                             b.putBoolean("is_login",true);
-                            openActivity(LogReg_.class,LEFT,b);
+//                            openActivity(LogReg_.class,LEFT,b);
                         } else if (isLogin && mEndX - mStartX < 0 && (Math.abs(mEndX - mStartX) > 25)) {//向左
                             b.putBoolean("is_login",false);
-                            openActivity(LogReg_.class,RIGHT,b);
+//                            openActivity(LogReg_.class,RIGHT,b);
                         }
                         break;
                 }
@@ -279,16 +279,16 @@ public class LogReg extends Base {
                 if (isLogin) {
                     b.putBoolean("show_log",true);
                     b.putString("log_value","登录成功");
-                    openActivity(Test_.class,RIGHT,b);
+//                    openActivity(Test_.class,RIGHT,b);
                 }else{
                     b.putBoolean("is_login",true);
                     b.putBoolean("show_log",true);
                     b.putString("log_value","注册成功");
-                    openActivity(LogReg_.class,LEFT,b);
+//                    openActivity(LogReg_.class,LEFT,b);
                 }
                 finish();
             } else {
-                showProgress(false);
+//                showProgress(false);
                 if (isLogin) {
                     mPasswordView.setError(getString(R.string.error_incorrect));
                     mPasswordView.requestFocus();
@@ -302,7 +302,7 @@ public class LogReg extends Base {
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+//            showProgress(false);
         }
     }
     @Override

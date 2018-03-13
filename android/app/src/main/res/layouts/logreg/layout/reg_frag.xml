@@ -1,7 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/my_view"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:background="@drawable/bg_log_reg">
+    <ScrollView
+            android:id="@+id/reg_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:id="@+id/email_reg_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+            <!--<ImageView-->
+            <!--android:src="@mipmap/logo"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+            <!--account输入-->
+            <android.support.design.widget.TextInputLayout
+                    android:paddingTop="@dimen/dp32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:textColor="@color/white"
+                        android:id="@+id/account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_account"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--email输入-->
+            <android.support.design.widget.TextInputLayout
+                    android:paddingTop="@dimen/dp32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:textColor="@color/white"
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_account"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--password输入-->
+            <android.support.design.widget.TextInputLayout
+                    android:paddingTop="@dimen/dp24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:textColor="@color/white"
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="@string/action_reg"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--action reg-->
+            <Button
+                    android:id="@+id/reg_button"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/action_reg"
+                    android:background="@drawable/log_reg_btn"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"/>
+
+            <!-- reg progress -->
+            <ProgressBar
+                    android:id="@+id/reg_progress"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

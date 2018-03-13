@@ -25,10 +25,10 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
 
     private LogRegContract.Presenter presenter;
 
-    EditText mAccountView;  //用户名输入
-    EditText mPasswordView; //密码输入
-    View mProgressView; //加载动画
-    Button mSignInButton;  //确认按钮
+    private EditText mAccountView;  //用户名输入
+    private EditText mPasswordView; //密码输入
+    private View mProgressView; //加载动画
+    private Button mSignInButton;  //确认按钮
 
     public LogFragment(){
 
@@ -46,7 +46,6 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.start();
     }
 
     @Nullable

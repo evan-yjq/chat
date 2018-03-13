@@ -25,6 +25,7 @@ public interface LogRegContract {
 
     interface RegView extends BaseView<Presenter>{
 
+        void attemptReg(String account, String password);
     }
 
     interface Presenter extends BasePresenter{

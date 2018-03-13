@@ -25,12 +25,22 @@ public interface LogRegContract {
 
     interface RegView extends BaseView<Presenter>{
 
-        void attemptReg(String account, String password);
+        void showPasswordError(int errorRes);
+
+        void showAccountError(int errorRes);
+
+        void showRegSuccess();
+
+        void showRegError();
+
+        void showProgress(boolean show);
     }
 
     interface Presenter extends BasePresenter{
 
         void attemptLog(String account, String password);
+
+        void attemptReg(String account, String password);
     }
 
 

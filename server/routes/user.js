@@ -19,7 +19,7 @@ router.route('/sign_in').post(function (req, res) {
 
 //注册接口
 router.route('/register').post(function (req, res) {
-    userDB.PUT(req.body.account, req.body.password)
+    userDB.PUT(req.body.account, req.body.password, req.body.email)
         .then(function (data) {
             if (data !== undefined){
                 res.send(data.insertId+"");

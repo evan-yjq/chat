@@ -33,11 +33,11 @@ function search(keyword) {
 }
 
 //新增用户
-function put(account, password) {
-    return promiseQuery(sql.CHECK,[account,account])
+function put(account, password, email) {
+    return promiseQuery(sql.CHECK,[account,email])
         .then(function (re) {
             if (re === undefined || re.length === 0){
-                return promiseQuery(sql.INSERT, [account, password]);
+                return promiseQuery(sql.INSERT, [account, password, email]);
             }else {
                 return Promise.rejected();
             }

@@ -35,7 +35,9 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     @Override
     public void start() {
         appExecutors = new AppExecutors();
-        getWelcome(PropertiesUtils.getInstance().getProperty("welcome_background_url",false));
+        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520965076956&di=c53829d253740050f70fd9809632adb3&imgtype=0&src=http%3A%2F%2Fpic.yesky.com%2FuploadImages%2F2015%2F156%2F57%2F37C269GMH87H.jpg";
+//        getWelcome(PropertiesUtils.getInstance().getProperty("welcome_background_url",false));
+        getWelcome(url);
         appExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {

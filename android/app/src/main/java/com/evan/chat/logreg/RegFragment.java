@@ -61,7 +61,7 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
         mRegButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.attemptReg(mAccountView.getText().toString(),mPasswordView.getText().toString());
+                presenter.attemptReg(mAccountView.getText().toString(),mPasswordView.getText().toString(),mEmailView.getText().toString());
             }
         });
         return root;
@@ -85,6 +85,11 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
     @Override
     public void showAccountError(int errorRes) {
         showError(mAccountView,getString(errorRes));
+    }
+
+    @Override
+    public void showEmailError(int errorRes) {
+        showError(mEmailView,getString(errorRes));
     }
 
     private void showError(EditText et, String error) {

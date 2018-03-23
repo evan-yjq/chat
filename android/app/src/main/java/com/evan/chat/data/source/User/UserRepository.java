@@ -26,15 +26,15 @@ public class UserRepository implements UserDataSource {
     private boolean mCacheIsDirty = false;
 
     private UserRepository(@NonNull UserDataSource userLocalDataSource,
-                           @NonNull UserDataSource userRemoteDataSource){
+                           @NonNull UserDataSource userRemoteDataSource) {
         mUserLocalDataSource = checkNotNull(userLocalDataSource);
         mUserRemoteDataSource = checkNotNull(userRemoteDataSource);
     }
 
     public static UserRepository getInstance(@NonNull UserDataSource userRemoteDataSource,
-                                             @NonNull UserDataSource userLocalDataSource){
-        if (INSTANCE == null){
-            INSTANCE = new UserRepository(userLocalDataSource,userRemoteDataSource);
+                                             @NonNull UserDataSource userLocalDataSource) {
+        if (INSTANCE == null) {
+            INSTANCE = new UserRepository(userLocalDataSource, userRemoteDataSource);
         }
         return INSTANCE;
     }
@@ -65,15 +65,34 @@ public class UserRepository implements UserDataSource {
     }
 
     @Override
-    public void check(@NonNull final String account, @NonNull final String password, @NonNull final CheckCallback callback) {
+    public void check(@NonNull final String account, @NonNull final String password, @NonNull final Callback callback) {
         checkNotNull(account);
         checkNotNull(password);
         checkNotNull(callback);
         if (true) {
             mUserRemoteDataSource.check(account, password, callback);
-        }else {
+        } else {
             mUserLocalDataSource.check(account, password, callback);
         }
+    }
+
+    @Override
+    public void register(@NonNull String account, @NonNull String password, @NonNull String email, @NonNull final Callback callback) {
+        checkNotNull(account);
+        checkNotNull(password);
+        checkNotNull(callback);
+        mUserRemoteDataSource.register(account, password, email, new Callback() {
+            @Override
+            public void onSuccess(User user) {
+                mUserLocalDataSource.saveUser(user);
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onFail(String log) {
+                callback.onFail(log);
+            }
+        });
     }
 
     @Override

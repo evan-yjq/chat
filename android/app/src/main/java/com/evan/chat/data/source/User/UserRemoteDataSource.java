@@ -35,7 +35,7 @@ public class UserRemoteDataSource implements UserDataSource {
         return INSTANCE;
     }
 
-    private UserRemoteDataSource(@NonNull AppExecutors appExecutors){
+    private UserRemoteDataSource(@NonNull AppExecutors appExecutors) {
         mAppExecutors = appExecutors;
     }
 
@@ -65,25 +65,56 @@ public class UserRemoteDataSource implements UserDataSource {
     }
 
     @Override
-    public void check(@NonNull final String account, @NonNull final String password, @NonNull final CheckCallback callback) {
+    public void register(@NonNull final String account, @NonNull final String password, @NonNull final String email,
+                         @NonNull final Callback callback) {
         mAppExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
                 OkHttpUtils.post()
-                        .url(PropertiesUtils.getInstance().getProperty("sign_in",true))
-                        .addParams("account",account).addParams("password",password).build()
+                        .url("http://115.28.216.244:3000/user/register")
+                        .addParams("account", account).addParams("password", password)
+                        .addParams("email", email).build()
                         .execute(new StringCallback() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-                                callback.onCheckFail(e.getMessage());
+                                callback.onFail(e.getMessage());
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
                                 if (!"".equals(response)) {
-                                    callback.onCheckSuccess(parseJsonWithGson(response, User.class));
-                                }else {
-                                    callback.onCheckFail("");
+                                    User user = new User();
+                                    user.setId(Long.parseLong(response));
+                                    callback.onSuccess(user);
+                                } else {
+                                    callback.onFail("");
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    @Override
+    public void check(@NonNull final String account, @NonNull final String password, @NonNull final Callback callback) {
+        mAppExecutors.networkIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpUtils.post()
+                        .url(PropertiesUtils.getInstance().getProperty("sign_in", true))
+                        .addParams("account", account).addParams("password", password).build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                callback.onFail(e.getMessage());
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                if (!"".equals(response)) {
+                                    callback.onSuccess(parseJsonWithGson(response, User.class));
+                                } else {
+                                    callback.onFail("");
                                 }
                             }
                         });

@@ -26,14 +26,14 @@ public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.Resp
     protected void executeUseCase(RequestValues requestValues) {
         String account = requestValues.getAccount();
         String password = requestValues.getPassword();
-        userRepository.check(account, password, new UserDataSource.CheckCallback() {
+        userRepository.check(account, password, new UserDataSource.Callback() {
             @Override
-            public void onCheckSuccess(User user) {
+            public void onSuccess(User user) {
                 getUseCaseCallback().onSuccess(new ResponseValue(user));
             }
 
             @Override
-            public void onCheckFail(String log) {
+            public void onFail(String log) {
                 getUseCaseCallback().onError();
             }
         });

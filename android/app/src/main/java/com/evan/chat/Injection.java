@@ -22,6 +22,7 @@ import com.evan.chat.data.source.User.UserLocalDataSource;
 import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
+import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.GreenDaoUtils;
@@ -41,6 +42,10 @@ public class Injection {
 
     public static UseCaseHandler provideUseCaseHandler() {
         return UseCaseHandler.getInstance();
+    }
+
+    public static RegisterUser provideRegUser(@NonNull Context context){
+        return new RegisterUser(provideUserRepository(context));
     }
 
     public static SignInUser provideSignInUser(@NonNull Context context){

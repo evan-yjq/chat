@@ -5,7 +5,11 @@ import android.text.TextUtils;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
+import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
@@ -20,17 +24,19 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     private final LogRegContract.LogView logView;
     private final LogRegContract.RegView regView;
     private final SignInUser signInUser;
+    private final RegisterUser registerUser;
 
     private final UseCaseHandler mUseCaseHandler;
 
     private final int userId;
 
     public LogRegPresenter(@NonNull LogRegContract.LogView logView, @NonNull LogRegContract.RegView regView,
-                           @NonNull SignInUser signInUser, @NonNull UseCaseHandler useCaseHandler,
-                           @NonNull int userId) {
+                           @NonNull SignInUser signInUser, @NonNull RegisterUser registerUser,
+                           @NonNull UseCaseHandler useCaseHandler, @NonNull int userId) {
         this.logView = checkNotNull(logView,"LogView cannot be null!");
         this.regView = checkNotNull(regView,"RegView cannot be null!");
         this.signInUser = checkNotNull(signInUser,"signInUser cannot be null!");
+        this.registerUser = checkNotNull(registerUser,"registerUser cannot be null!");
         mUseCaseHandler = checkNotNull(useCaseHandler,"useCaseHandler cannot be null!");
         this.userId = checkNotNull(userId,"userId cannot be null!");
         logView.setPresenter(this);
@@ -48,7 +54,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     @Override
     public void attemptLog(String account, String password) {
         boolean cancel = false;
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             logView.showPasswordError(R.string.error_invalid_password);
             cancel = true;
         }
@@ -61,6 +67,29 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                 logView.showProgress(true);
             }
             signIn(account, password);
+        }
+    }
+
+    @Override
+    public void attemptReg(String account, String password, String email) {
+        boolean cancel = false;
+        if (!isPasswordValid(password)) {
+            regView.showPasswordError(R.string.error_invalid_password);
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(account)) {
+            regView.showAccountError(R.string.error_field_required);
+            cancel = true;
+        }
+        if(!TextUtils.isEmpty(email)&&!isEmail(email)){
+            regView.showEmailError(R.string.error_invalid_email);
+            cancel = true;
+        }
+        if (!cancel) {
+            if (regView.isActive()) {
+                regView.showProgress(true);
+            }
+            register(account, password, email);
         }
     }
 
@@ -85,8 +114,40 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                 });
     }
 
+    private void register(String account, String password, String email){
+        mUseCaseHandler.execute(registerUser, new RegisterUser.RequestValues(account, password, email),
+                new UseCase.UseCaseCallback<RegisterUser.ResponseValue>() {
+                    @Override
+                    public void onSuccess(RegisterUser.ResponseValue response) {
+                        if (regView.isActive()){
+                            regView.showRegSuccess();
+                            regView.showProgress(false);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        if (regView.isActive()){
+                            regView.showRegError();
+                            regView.showProgress(false);
+                        }
+                    }
+                });
+    }
+
     //设定密码长度
     private boolean isPasswordValid(String password) {
         return password.length() > 2;
+    }
+
+    private boolean isEmail(String string) {
+        if (string == null)
+            return false;
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(string);
+        return m.matches();
     }
 }

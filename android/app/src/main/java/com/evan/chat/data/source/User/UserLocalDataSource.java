@@ -110,7 +110,7 @@ public class UserLocalDataSource implements UserDataSource {
     }
 
     @Override
-    public void check(@NonNull final String account, @NonNull final String password, @NonNull final CheckCallback callback) {
+    public void check(@NonNull final String account, @NonNull final String password, @NonNull final Callback callback) {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -119,17 +119,22 @@ public class UserLocalDataSource implements UserDataSource {
                     @Override
                     public void run() {
                         if (user == null) {
-                            callback.onCheckFail("该账户不存在");
+                            callback.onFail("该账户不存在");
                         }else {
                             if (user.getPassword().equals(password))
-                                callback.onCheckSuccess(user);
+                                callback.onSuccess(user);
                             else
-                                callback.onCheckFail("账户名或密码错误");
+                                callback.onFail("账户名或密码错误");
                         }
                     }
                 });
             }
         });
+    }
+
+    @Override
+    public void register(@NonNull String account, @NonNull String password, @NonNull String email, @NonNull Callback callback) {
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.evan.chat.data.source.User;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.logreg.domain.usecase.RegisterUser;
 
 import java.util.List;
 
@@ -27,11 +28,11 @@ public interface UserDataSource {
         void onDataNotAvailable();
     }
 
-    interface CheckCallback{
+    interface Callback{
 
-        void onCheckSuccess(User user);
+        void onSuccess(User user);
 
-        void onCheckFail(String log);
+        void onFail(String log);
     }
 
     void getUsers(@NonNull LoadAllUserCallback callback);
@@ -44,7 +45,9 @@ public interface UserDataSource {
 
     void deleteAllUser();
 
-    void check(@NonNull String account, @NonNull String password, @NonNull CheckCallback callback);
+    void check(@NonNull String account, @NonNull String password, @NonNull Callback callback);
+
+    void register(@NonNull String account, @NonNull String password, @NonNull String email, @NonNull Callback callback);
 
     void refreshUsers();
 }

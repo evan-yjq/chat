@@ -29,6 +29,8 @@ public interface LogRegContract {
 
         void showAccountError(int errorRes);
 
+        void showEmailError(int errorRes);
+
         void showRegSuccess();
 
         void showRegError();
@@ -40,7 +42,7 @@ public interface LogRegContract {
 
         void attemptLog(String account, String password);
 
-        void attemptReg(String account, String password);
+        void attemptReg(String account, String password, String email);
     }
 
 

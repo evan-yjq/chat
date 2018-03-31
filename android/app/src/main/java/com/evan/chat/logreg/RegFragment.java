@@ -111,12 +111,15 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
 
     @Override
     public void showRegSuccess() {
-        showMessage("验证成功");
+        showMessage("注册成功");
+        mPasswordView.setText(null);
+        mAccountView.setText(null);
+        mEmailView.setText(null);
     }
 
     @Override
     public void showRegError() {
-        showMessage("");
+        showMessage(getString(R.string.error_invalid_account_or_email));
     }
 
     private void showMessage(String msg){

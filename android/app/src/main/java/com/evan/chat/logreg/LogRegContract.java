@@ -38,7 +38,13 @@ public interface LogRegContract {
         void showProgress(boolean show);
     }
 
+    interface View extends RegView,LogView{
+
+    }
+
     interface Presenter extends BasePresenter{
+
+        void Switching(String key);
 
         void attemptLog(String account, String password);
 

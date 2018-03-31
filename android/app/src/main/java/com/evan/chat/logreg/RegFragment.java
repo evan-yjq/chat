@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.evan.chat.R;
 
 import java.util.Objects;
+
+import static com.evan.chat.logreg.LogRegActivity.LOG_FRAG;
 
 /**
  * Created by IntelliJ IDEA
@@ -30,6 +33,7 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
     private EditText mEmailView; //邮箱输入
     private View mProgressView; //加载动画
     private Button mRegButton;  //确认按钮
+    private TextView mSwitchLogView;//跳转登录界面
 
     public RegFragment(){
 
@@ -58,10 +62,18 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
         mEmailView = root.findViewById(R.id.email);
         mProgressView = root.findViewById(R.id.reg_progress);
         mRegButton = root.findViewById(R.id.reg_button);
+        mSwitchLogView = root.findViewById(R.id.switch_);
+
         mRegButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.attemptReg(mAccountView.getText().toString(),mPasswordView.getText().toString(),mEmailView.getText().toString());
+            }
+        });
+        mSwitchLogView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.Switching(LOG_FRAG);
             }
         });
         return root;

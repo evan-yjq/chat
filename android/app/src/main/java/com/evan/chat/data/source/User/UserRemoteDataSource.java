@@ -71,7 +71,7 @@ public class UserRemoteDataSource implements UserDataSource {
             @Override
             public void run() {
                 OkHttpUtils.post()
-                        .url("http://115.28.216.244:3000/user/register")
+                        .url(PropertiesUtils.getInstance().getProperty("register", true))
                         .addParams("account", account).addParams("password", password)
                         .addParams("email", email).build()
                         .execute(new StringCallback() {

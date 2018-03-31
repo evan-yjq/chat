@@ -2,7 +2,6 @@ package com.evan.chat.logreg;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,6 +13,8 @@ import android.widget.*;
 import com.evan.chat.R;
 
 import java.util.Objects;
+
+import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
 
 /**
  * Created by IntelliJ IDEA
@@ -29,6 +30,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     private EditText mPasswordView; //密码输入
     private View mProgressView; //加载动画
     private Button mSignInButton;  //确认按钮
+    private TextView mSwitchRegView;//跳转注册界面
 
     public LogFragment(){
 
@@ -56,10 +58,17 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
         mPasswordView = root.findViewById(R.id.password);
         mProgressView = root.findViewById(R.id.login_progress);
         mSignInButton = root.findViewById(R.id.sign_in_button);
+        mSwitchRegView = root.findViewById(R.id.switch_);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.attemptLog(mAccountView.getText().toString(),mPasswordView.getText().toString());
+            }
+        });
+        mSwitchRegView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.Switching(REG_FRAG);
             }
         });
         return root;

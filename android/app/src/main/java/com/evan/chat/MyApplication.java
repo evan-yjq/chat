@@ -26,10 +26,10 @@ public class MyApplication extends Application{
 
         OkHttpUtils.initClient(okHttpClient);
 
-//        try {
-//            PropertiesUtils.getInstance().setPath(getApplicationContext().getAssets().open("request_url.properties"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            PropertiesUtils.getInstance().setPath(getApplicationContext().getAssets().open("request_url.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

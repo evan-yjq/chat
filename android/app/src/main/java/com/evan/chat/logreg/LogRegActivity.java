@@ -18,6 +18,10 @@ import org.androidannotations.annotations.EActivity;
  */
 @EActivity(R.layout.log_reg_act)
 public class LogRegActivity extends AppCompatActivity {
+
+    public static final String LOG_FRAG = "LOG_FRAG";
+    public static final String REG_FRAG = "REG_FRAG";
+
     //当前视图
     private static final String LOG_REG_KEY = "LOG_REG_KEY";
 
@@ -33,21 +37,13 @@ public class LogRegActivity extends AppCompatActivity {
         }
 
         int userId = getIntent().getIntExtra(EXTRA_USER_ID, 0);
-        RegFragment regFragment = null;
-        LogFragment logFragment = null;
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (f != null && "RegFragment".equals(f.getClass().getSimpleName())) {
-            regFragment = (RegFragment) f;
-        } else {
-            logFragment = (LogFragment) f;
-        }
 
-        if (logFragment == null) {
-            logFragment = LogFragment.newInstance();
-        }
-        if (regFragment == null) {
-            regFragment = RegFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), regFragment, R.id.contentFrame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        RegFragment regFragment = RegFragment.newInstance();
+        LogFragment logFragment = LogFragment.newInstance();
+        if (fragment == null) {
+            fragment = logFragment;
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
 
         logRegPresenter = new LogRegPresenter(

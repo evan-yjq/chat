@@ -1,6 +1,9 @@
 package com.evan.chat.logreg;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
@@ -11,6 +14,8 @@ import com.evan.chat.logreg.domain.usecase.SignInUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.evan.chat.logreg.LogRegActivity.LOG_FRAG;
+import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
 import static com.evan.chat.util.Objects.checkNotNull;
 
 /**
@@ -50,6 +55,24 @@ public class LogRegPresenter implements LogRegContract.Presenter{
         }
     }
 
+    //切换登陆注册界面
+    @Override
+    public void Switching(String key){
+        if (LOG_FRAG.equals(key)){
+            FragmentManager mManager = ((Fragment)regView).getFragmentManager();
+            FragmentTransaction ft = mManager.beginTransaction();
+            ft.setCustomAnimations(R.anim.in_from_left,R.anim.out_to_right);
+            ft.replace(R.id.contentFrame, (Fragment) logView);
+            ft.commit();
+        }else if(REG_FRAG.equals(key)){
+            FragmentManager mManager = ((Fragment)logView).getFragmentManager();
+            FragmentTransaction ft = mManager.beginTransaction();
+            ft.setCustomAnimations(R.anim.in_from_right,R.anim.out_to_left);
+            ft.replace(R.id.contentFrame, (Fragment) regView);
+            ft.commit();
+        }
+    }
+
     //登录前各个输入框内容的判定
     @Override
     public void attemptLog(String account, String password) {
@@ -70,6 +93,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
         }
     }
 
+    //注册前各个输入框内容的判定
     @Override
     public void attemptReg(String account, String password, String email) {
         boolean cancel = false;
@@ -93,6 +117,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
         }
     }
 
+    //登录操作
     private void signIn(String account, String password){
         mUseCaseHandler.execute(signInUser, new SignInUser.RequestValues(account, password),
                 new UseCase.UseCaseCallback<SignInUser.ResponseValue>() {
@@ -114,6 +139,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                 });
     }
 
+    //注册操作
     private void register(String account, String password, String email){
         mUseCaseHandler.execute(registerUser, new RegisterUser.RequestValues(account, password, email),
                 new UseCase.UseCaseCallback<RegisterUser.ResponseValue>() {
@@ -140,6 +166,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
         return password.length() > 2;
     }
 
+    //检测邮箱格式
     private boolean isEmail(String string) {
         if (string == null)
             return false;

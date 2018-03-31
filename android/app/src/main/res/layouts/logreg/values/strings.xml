@@ -8,6 +8,8 @@
     <string name="action_reg">注册</string>
     <string name="action_forget_password">忘记密码</string>
     <string name="action_no_account">没有账号？去注册</string>
+    <string name="action_have_account">已有账号？去登录</string>
+
 
     <string name="error_invalid_email">此电子邮件地址无效</string>
     <string name="error_invalid_account">该账号已被注册</string>

@@ -69,11 +69,11 @@ public class UserRepository implements UserDataSource {
         checkNotNull(account);
         checkNotNull(password);
         checkNotNull(callback);
-        if (true) {
+//        if () {
             mUserRemoteDataSource.check(account, password, callback);
-        } else {
-            mUserLocalDataSource.check(account, password, callback);
-        }
+//        } else {
+//            mUserLocalDataSource.check(account, password, callback);
+//        }
     }
 
     @Override

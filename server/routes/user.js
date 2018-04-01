@@ -4,16 +4,15 @@ var userDB = require('../common/userDB');
 
 //登录接口
 router.route('/sign_in').post(function (req, res) {
-    console.log(req.body.account);
     userDB.VERIFY(req.body.account)
         .then(function (data) {
             if (data.length > 0 && data[0].password === req.body.password) {
-                res.send(data[0]);
+                res.send(data[0])
             } else {
                 res.send(null)
             }
         }).catch(function () {
-            res.send(null);
+            res.send(null)
         });
 });
 
@@ -22,13 +21,26 @@ router.route('/register').post(function (req, res) {
     userDB.PUT(req.body.account, req.body.password, req.body.email)
         .then(function (data) {
             if (data !== undefined){
-                res.send(data.insertId+"");
+                res.send(data.insertId+"")
             }else{
-                res.send(null);
+                res.send(null)
             }
         }).catch(function () {
-            res.send(null);
-        });
+            res.send(null)
+        })
+});
+
+router.route('/get_friends').post(function (req, res) {
+    userDB.FRIENDS(req.body.id)
+        .then(function (data) {
+            if (data !== undefined && data.length > 0){
+                res.send(data)
+            }else{
+                res.send(null)
+            }
+        }).catch(function () {
+            res.send(null)
+        })
 });
 
 // router.route('/update').post(function (req, res) {

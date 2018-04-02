@@ -33,7 +33,7 @@ public class FriendsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+        setContentView(R.layout.friends_frag);
         buttonInit();
         autos=(String[]) getIntent().getSerializableExtra("autos");
         final String id=getIntent().getStringExtra("id");

@@ -31,8 +31,8 @@ public class FriendRepository implements FriendDataSource {
         this.mFriendRemoteDataSource = mFriendRemoteDataSource;
     }
 
-    public static FriendRepository getInstance(@NonNull FriendDataSource mFriendLocalDataSource,
-                                               @NonNull FriendDataSource mFriendRemoteDataSource) {
+    public static FriendRepository getInstance(@NonNull FriendDataSource mFriendRemoteDataSource,
+                                               @NonNull FriendDataSource mFriendLocalDataSource) {
         if (INSTANCE == null) {
             INSTANCE = new FriendRepository(mFriendLocalDataSource, mFriendRemoteDataSource);
         }

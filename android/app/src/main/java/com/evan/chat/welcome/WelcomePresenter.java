@@ -69,8 +69,8 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     }
 
     @Override
-    public int getAutoUserId() {
-        return 0;
+    public Long getAutoUserId() {
+        return (long)0;
     }
 
     static int curSec;

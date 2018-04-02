@@ -19,15 +19,12 @@ import org.androidannotations.annotations.EActivity;
 @EActivity(R.layout.log_reg_act)
 public class LogRegActivity extends AppCompatActivity {
 
-    public static final String LOG_FRAG = "LOG_FRAG";
-    public static final String REG_FRAG = "REG_FRAG";
+    static final String LOG_FRAG = "LOG_FRAG";
+    static final String REG_FRAG = "REG_FRAG";
 
-    //当前视图
-    private static final String LOG_REG_KEY = "LOG_REG_KEY";
+    static Fragment LOG_REG_SWITCH;
 
     public static final String EXTRA_USER_ID = "EXTRA_USER_ID";
-
-    private LogRegPresenter logRegPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,17 +33,28 @@ public class LogRegActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.color6));
         }
 
-        int userId = getIntent().getIntExtra(EXTRA_USER_ID, 0);
+        Long userId = getIntent().getLongExtra(EXTRA_USER_ID, 0);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        RegFragment regFragment = RegFragment.newInstance();
-        LogFragment logFragment = LogFragment.newInstance();
+        RegFragment regFragment;
+        LogFragment logFragment;
         if (fragment == null) {
+            regFragment = RegFragment.newInstance();
+            logFragment = LogFragment.newInstance();
             fragment = logFragment;
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
+            LOG_REG_SWITCH = regFragment;
+        }else{
+            if ("RegFragment".equals(fragment.getClass().getSimpleName())) {
+                regFragment = (RegFragment) fragment;
+                logFragment = (LogFragment) LOG_REG_SWITCH;
+            } else {
+                logFragment = (LogFragment) fragment;
+                regFragment = (RegFragment) LOG_REG_SWITCH;
+            }
         }
 
-        logRegPresenter = new LogRegPresenter(
+        new LogRegPresenter(
                 logFragment,
                 regFragment,
                 Injection.provideSignInUser(getApplicationContext()),

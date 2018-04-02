@@ -29,13 +29,13 @@
 
         <activity android:name=".logreg.LogRegActivity_"/>
 
+        <activity android:name=".friends.FriendsActivity_"/>
+
         <activity android:name=".activity.Test_"/>
 
         <activity android:name=".activity.ChatActivity"/>
 
         <activity android:name=".activity.UserActivity"/>
-
-        <activity android:name=".activity.LogReg_"/>
 
         <activity android:name=".activity.FriendsActivity"/>
 

@@ -33,7 +33,6 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
     private EditText mEmailView; //邮箱输入
     private View mProgressView; //加载动画
     private Button mRegButton;  //确认按钮
-    private TextView mSwitchLogView;//跳转登录界面
 
     public RegFragment(){
 
@@ -62,7 +61,7 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
         mEmailView = root.findViewById(R.id.email);
         mProgressView = root.findViewById(R.id.reg_progress);
         mRegButton = root.findViewById(R.id.reg_button);
-        mSwitchLogView = root.findViewById(R.id.switch_);
+        TextView mSwitchLogView = root.findViewById(R.id.switch_);
 
         mRegButton.setOnClickListener(new View.OnClickListener() {
             @Override

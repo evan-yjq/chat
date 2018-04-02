@@ -2,6 +2,7 @@ package com.evan.chat.logreg;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.evan.chat.R;
+import com.evan.chat.friends.FriendsActivity;
+import com.evan.chat.friends.FriendsActivity_;
 
 import java.util.Objects;
 
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
 
 /**
@@ -30,7 +34,6 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     private EditText mPasswordView; //密码输入
     private View mProgressView; //加载动画
     private Button mSignInButton;  //确认按钮
-    private TextView mSwitchRegView;//跳转注册界面
 
     public LogFragment(){
 
@@ -58,7 +61,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
         mPasswordView = root.findViewById(R.id.password);
         mProgressView = root.findViewById(R.id.login_progress);
         mSignInButton = root.findViewById(R.id.sign_in_button);
-        mSwitchRegView = root.findViewById(R.id.switch_);
+        TextView mSwitchRegView = root.findViewById(R.id.switch_);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,8 +98,12 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     }
 
     @Override
-    public void signInSuccess() {
-        showMessage("验证成功");
+    public void signInSuccess(Long id) {
+        Intent intent = new Intent(getContext(), FriendsActivity_.class);
+        intent.putExtra(EXTRA_USER_ID, id);
+        startActivity(intent);
+        getActivity().finish();
+//        showMessage("验证成功");
     }
 
     @Override

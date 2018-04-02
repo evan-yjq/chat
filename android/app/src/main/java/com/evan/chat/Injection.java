@@ -18,10 +18,14 @@ package com.evan.chat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.evan.chat.data.source.Friend.FriendLocalDataSource;
+import com.evan.chat.data.source.Friend.FriendRemoteDataSource;
+import com.evan.chat.data.source.Friend.FriendRepository;
 import com.evan.chat.data.source.User.UserLocalDataSource;
 import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
+import com.evan.chat.friends.domain.usecase.GetFriends;
 import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
@@ -40,6 +44,14 @@ public class Injection {
                         database.getUserDao()));
     }
 
+    public static FriendRepository provideFriendRepository(@NonNull Context context) {
+        checkNotNull(context);
+        DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
+        return FriendRepository.getInstance(FriendRemoteDataSource.getInstance(new AppExecutors()),
+                FriendLocalDataSource.getInstance(new AppExecutors(),
+                        database.getFriendDao()));
+    }
+
     public static UseCaseHandler provideUseCaseHandler() {
         return UseCaseHandler.getInstance();
     }
@@ -50,5 +62,9 @@ public class Injection {
 
     public static SignInUser provideSignInUser(@NonNull Context context){
         return new SignInUser(provideUserRepository(context));
+    }
+
+    public static GetFriends provideGetFriends(@NonNull Context context){
+        return new GetFriends(provideFriendRepository(context));
     }
 }

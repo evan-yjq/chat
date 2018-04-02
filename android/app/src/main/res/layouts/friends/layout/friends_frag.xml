@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <!--头部-->
+    <RelativeLayout
+            android:orientation = "horizontal"
+            android:id="@+id/top"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basic_vertical_margin" android:baselineAligned="false">
+        <!--查找好友-->
+        <!--添加好友-->
+        <ImageView
+                android:src="@mipmap/add"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/add_friend"
+                android:layout_marginRight="8dp"
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"/>
+
+        <ImageView
+                android:src="@mipmap/logout"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:id="@+id/logout"/>
+
+        <ImageView
+                android:src="@mipmap/refresh"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="32dp"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:id="@+id/refresh"/>
+
+        <com.evan.chat.view.SearchButton
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="56dp"
+                android:layout_marginRight="40dp"
+                android:id="@+id/search_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp32">
+        </com.evan.chat.view.SearchButton>
+    </RelativeLayout>
+    <!--主体-->
+    <com.evan.chat.friends.ScrollChildSwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_below="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/friendsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:id="@+id/friendsLL"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ExpandableListView
+                        android:id="@+id/expandable_friends_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@drawable/list_item_divider_left_15_right_15"
+                        android:dividerHeight="1px"
+                        android:childDivider="@drawable/list_item_divider_left_15_right_15"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/noFriends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:id="@+id/noFriendsIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_person_add_black_24dp" />
+
+                <TextView
+                        android:id="@+id/noFriendsMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/no_friends"
+                        android:layout_marginBottom="@dimen/list_item_padding" />
+
+                <TextView
+                        android:id="@+id/noFriendsAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/add_friend" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </com.evan.chat.friends.ScrollChildSwipeRefreshLayout>
+</RelativeLayout>

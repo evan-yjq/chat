@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import static com.evan.chat.logreg.LogRegActivity.LOG_FRAG;
 import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
+import static com.evan.chat.logreg.LogRegActivity.LOG_REG_SWITCH;
 import static com.evan.chat.util.Objects.checkNotNull;
 
 /**
@@ -33,11 +34,11 @@ public class LogRegPresenter implements LogRegContract.Presenter{
 
     private final UseCaseHandler mUseCaseHandler;
 
-    private final int userId;
+    private final Long userId;
 
-    public LogRegPresenter(@NonNull LogRegContract.LogView logView, @NonNull LogRegContract.RegView regView,
-                           @NonNull SignInUser signInUser, @NonNull RegisterUser registerUser,
-                           @NonNull UseCaseHandler useCaseHandler, @NonNull int userId) {
+    LogRegPresenter(@NonNull LogRegContract.LogView logView, @NonNull LogRegContract.RegView regView,
+                    @NonNull SignInUser signInUser, @NonNull RegisterUser registerUser,
+                    @NonNull UseCaseHandler useCaseHandler, Long userId) {
         this.logView = checkNotNull(logView,"LogView cannot be null!");
         this.regView = checkNotNull(regView,"RegView cannot be null!");
         this.signInUser = checkNotNull(signInUser,"signInUser cannot be null!");
@@ -50,9 +51,9 @@ public class LogRegPresenter implements LogRegContract.Presenter{
 
     @Override
     public void start() {
-        if (userId != 0){
+//        if (userId != 0){
             // todo 1.从本地获取账号信息 2.if(联网){然后执行attemptLog()}，else{登陆本地账号}
-        }
+//        }
     }
 
     //切换登陆注册界面
@@ -64,12 +65,14 @@ public class LogRegPresenter implements LogRegContract.Presenter{
             ft.setCustomAnimations(R.anim.in_from_left,R.anim.out_to_right);
             ft.replace(R.id.contentFrame, (Fragment) logView);
             ft.commit();
+            LOG_REG_SWITCH = (Fragment) regView;
         }else if(REG_FRAG.equals(key)){
             FragmentManager mManager = ((Fragment)logView).getFragmentManager();
             FragmentTransaction ft = mManager.beginTransaction();
             ft.setCustomAnimations(R.anim.in_from_right,R.anim.out_to_left);
             ft.replace(R.id.contentFrame, (Fragment) regView);
             ft.commit();
+            LOG_REG_SWITCH = (Fragment) logView;
         }
     }
 
@@ -124,7 +127,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                     @Override
                     public void onSuccess(SignInUser.ResponseValue response) {
                         if (logView.isActive()){
-                            logView.signInSuccess();
+                            logView.signInSuccess(response.getUser().getId());
                             logView.showProgress(false);
                         }
                     }
@@ -170,7 +173,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     private boolean isEmail(String string) {
         if (string == null)
             return false;
-        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        String regEx1 = "^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         Pattern p;
         Matcher m;
         p = Pattern.compile(regEx1);

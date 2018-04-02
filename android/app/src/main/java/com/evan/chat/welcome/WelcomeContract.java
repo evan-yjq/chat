@@ -26,7 +26,7 @@ public interface WelcomeContract {
 
     interface Presenter extends BasePresenter {
 
-        int getAutoUserId();
+        Long getAutoUserId();
 
         void timeStop();
     }

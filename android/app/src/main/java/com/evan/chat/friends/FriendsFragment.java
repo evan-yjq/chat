@@ -138,6 +138,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         }
 
         public void replaceData(List<Friend>friends){
+            mFriends.clear();
             setFriends(friends);
             notifyDataSetChanged();
         }
@@ -146,13 +147,13 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
             for (Friend friend : friends) {
                 String classify = friend.getClassification();
                 if (classify == null) classify = "默认";
-                List<Friend>f;
+                List<Friend>f = null;
                 if (classification.contains(classify)) {
                     f = mFriends.get(classify);
                 }else{
                     classification.add(classify);
-                    f = new ArrayList<>();
                 }
+                if (f == null) f = new ArrayList<>();
                 f.add(friend);
                 mFriends.put(classify,f);
             }

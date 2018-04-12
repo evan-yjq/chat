@@ -18,14 +18,14 @@ package com.evan.chat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.FriendLocalDataSource;
-import com.evan.chat.data.source.Friend.FriendRemoteDataSource;
-import com.evan.chat.data.source.Friend.FriendRepository;
+import com.evan.chat.data.source.Follow.FollowLocalDataSource;
+import com.evan.chat.data.source.Follow.FollowRemoteDataSource;
+import com.evan.chat.data.source.Follow.FollowRepository;
 import com.evan.chat.data.source.User.UserLocalDataSource;
 import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
-import com.evan.chat.friends.domain.usecase.GetFriends;
+import com.evan.chat.follows.domain.usecase.GetFollows;
 import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
@@ -44,12 +44,12 @@ public class Injection {
                         database.getUserDao()));
     }
 
-    public static FriendRepository provideFriendRepository(@NonNull Context context) {
+    public static FollowRepository provideFriendRepository(@NonNull Context context) {
         checkNotNull(context);
         DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
-        return FriendRepository.getInstance(FriendRemoteDataSource.getInstance(new AppExecutors()),
-                FriendLocalDataSource.getInstance(new AppExecutors(),
-                        database.getFriendDao()));
+        return FollowRepository.getInstance(FollowRemoteDataSource.getInstance(new AppExecutors()),
+                FollowLocalDataSource.getInstance(new AppExecutors(),
+                        database.getFollowDao()));
     }
 
     public static UseCaseHandler provideUseCaseHandler() {
@@ -64,7 +64,7 @@ public class Injection {
         return new SignInUser(provideUserRepository(context));
     }
 
-    public static GetFriends provideGetFriends(@NonNull Context context){
-        return new GetFriends(provideFriendRepository(context));
+    public static GetFollows provideGetFriends(@NonNull Context context){
+        return new GetFollows(provideFriendRepository(context));
     }
 }

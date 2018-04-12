@@ -1,7 +1,7 @@
-package com.evan.chat.data.source.Friend;
+package com.evan.chat.data.source.Follow;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.model.Follow;
 
 import java.util.List;
 
@@ -13,28 +13,28 @@ import static com.evan.chat.util.Objects.checkNotNull;
  * Date: 2018/4/1
  * Time: 16:37
  */
-public class FriendRepository implements FriendDataSource {
+public class FollowRepository implements FollowDataSource {
 
-    private static FriendRepository INSTANCE = null;
+    private static FollowRepository INSTANCE = null;
 
-    private final FriendDataSource mFriendLocalDataSource;
+    private final FollowDataSource mFriendLocalDataSource;
 
-    private final FriendDataSource mFriendRemoteDataSource;
+    private final FollowDataSource mFriendRemoteDataSource;
 
-    private List<Friend>friends;
+    private List<Follow> follows;
 
     private boolean mCacheIsDirty = false;
 
-    private FriendRepository(@NonNull FriendDataSource mFriendLocalDataSource,
-                             @NonNull FriendDataSource mFriendRemoteDataSource){
+    private FollowRepository(@NonNull FollowDataSource mFriendLocalDataSource,
+                             @NonNull FollowDataSource mFriendRemoteDataSource){
         this.mFriendLocalDataSource = mFriendLocalDataSource;
         this.mFriendRemoteDataSource = mFriendRemoteDataSource;
     }
 
-    public static FriendRepository getInstance(@NonNull FriendDataSource mFriendRemoteDataSource,
-                                               @NonNull FriendDataSource mFriendLocalDataSource) {
+    public static FollowRepository getInstance(@NonNull FollowDataSource mFriendRemoteDataSource,
+                                               @NonNull FollowDataSource mFriendLocalDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new FriendRepository(mFriendLocalDataSource, mFriendRemoteDataSource);
+            INSTANCE = new FollowRepository(mFriendLocalDataSource, mFriendRemoteDataSource);
         }
         return INSTANCE;
     }
@@ -54,7 +54,7 @@ public class FriendRepository implements FriendDataSource {
     }
 
     @Override
-    public void saveFriend(@NonNull Friend friend) {
+    public void saveFriend(@NonNull Follow follow) {
 
     }
 

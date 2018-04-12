@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_follows">你还没有关注任何人</string>
+
+    <string name="add_follow">添加关注</string>
+</resources>

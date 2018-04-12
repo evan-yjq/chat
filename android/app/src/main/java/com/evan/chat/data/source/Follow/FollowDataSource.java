@@ -1,7 +1,7 @@
-package com.evan.chat.data.source.Friend;
+package com.evan.chat.data.source.Follow;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.model.Follow;
 
 import java.util.List;
 
@@ -11,18 +11,18 @@ import java.util.List;
  * Date: 2018/4/1
  * Time: 16:20
  */
-public interface FriendDataSource {
+public interface FollowDataSource {
 
     interface LoadAllFriendsCallback{
 
-        void onAllFriendLoaded(List<Friend> friends);
+        void onAllFriendLoaded(List<Follow> follows);
 
         void onDataNotAvailable();
     }
 
     interface LoadFriendCallback{
 
-        void onFriendLoaded(Friend friend);
+        void onFriendLoaded(Follow follow);
 
         void onDataNotAvailable();
     }
@@ -31,7 +31,7 @@ public interface FriendDataSource {
 
     void getFriend(@NonNull Long id, @NonNull LoadFriendCallback callback);
 
-    void saveFriend(@NonNull Friend friend);
+    void saveFriend(@NonNull Follow follow);
 
     void deleteFriend(@NonNull Long id);
 

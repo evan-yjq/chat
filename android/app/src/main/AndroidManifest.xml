@@ -29,7 +29,7 @@
 
         <activity android:name=".logreg.LogRegActivity_"/>
 
-        <activity android:name=".friends.FriendsActivity_"/>
+        <activity android:name=".follows.FollowsActivity_"/>
 
         <activity android:name=".activity.Test_"/>
 

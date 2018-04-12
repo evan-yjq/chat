@@ -1,10 +1,10 @@
-package com.evan.chat.friends.domain.usecase;
+package com.evan.chat.follows.domain.usecase;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
-import com.evan.chat.data.source.Friend.FriendDataSource;
-import com.evan.chat.data.source.Friend.FriendRepository;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.FollowDataSource;
+import com.evan.chat.data.source.Follow.FollowRepository;
+import com.evan.chat.data.source.Follow.model.Follow;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import static com.evan.chat.util.Objects.checkNotNull;
  * Date: 2018/4/2
  * Time: 15:05
  */
-public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.ResponseValue>{
+public class GetFollows extends UseCase<GetFollows.RequestValues,GetFollows.ResponseValue>{
 
-    private final FriendRepository friendRepository;
+    private final FollowRepository friendRepository;
 
-    public GetFriends(@NonNull FriendRepository friendRepository){
+    public GetFollows(@NonNull FollowRepository friendRepository){
         this.friendRepository = checkNotNull(friendRepository,"friendRepository cannot be null!");
     }
 
@@ -30,10 +30,10 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
             friendRepository.refreshFriends();
         }
         Long id = requestValues.getId();
-        friendRepository.getFriends(id, new FriendDataSource.LoadAllFriendsCallback() {
+        friendRepository.getFriends(id, new FollowDataSource.LoadAllFriendsCallback() {
             @Override
-            public void onAllFriendLoaded(List<Friend> friends) {
-                getUseCaseCallback().onSuccess(new ResponseValue(friends));
+            public void onAllFriendLoaded(List<Follow> follows) {
+                getUseCaseCallback().onSuccess(new ResponseValue(follows));
             }
 
             @Override
@@ -63,14 +63,14 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
         }
     }
     public static final class ResponseValue implements UseCase.ResponseValue {
-        private final List<Friend>friends;
+        private final List<Follow> follows;
 
-        public ResponseValue(List<Friend>friends){
-            this.friends = friends;
+        public ResponseValue(List<Follow> follows){
+            this.follows = follows;
         }
 
-        public List<Friend> getFriends() {
-            return friends;
+        public List<Follow> getFollows() {
+            return follows;
         }
     }
 

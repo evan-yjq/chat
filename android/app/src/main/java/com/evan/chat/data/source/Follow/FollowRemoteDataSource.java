@@ -1,7 +1,7 @@
-package com.evan.chat.data.source.Friend;
+package com.evan.chat.data.source.Follow;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.model.Follow;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.PropertiesUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -16,21 +16,21 @@ import static com.evan.chat.util.GsonUtil.parseJsonArrayWithGson;
  * Date: 2018/4/1
  * Time: 16:36
  */
-public class FriendRemoteDataSource implements FriendDataSource {
+public class FollowRemoteDataSource implements FollowDataSource {
 
-    private static  FriendRemoteDataSource INSTANCE;
+    private static FollowRemoteDataSource INSTANCE;
 
     private AppExecutors mAppExecutors;
 
-    private FriendRemoteDataSource(@NonNull AppExecutors appExecutors){
+    private FollowRemoteDataSource(@NonNull AppExecutors appExecutors){
         mAppExecutors = appExecutors;
     }
 
-    public static FriendRemoteDataSource getInstance(@NonNull AppExecutors appExecutors){
+    public static FollowRemoteDataSource getInstance(@NonNull AppExecutors appExecutors){
         if (INSTANCE == null){
-            synchronized (FriendRemoteDataSource.class){
+            synchronized (FollowRemoteDataSource.class){
                 if (INSTANCE == null){
-                    INSTANCE = new FriendRemoteDataSource(appExecutors);
+                    INSTANCE = new FollowRemoteDataSource(appExecutors);
                 }
             }
         }
@@ -56,7 +56,7 @@ public class FriendRemoteDataSource implements FriendDataSource {
                                 if ("".equals(s)){
                                     callback.onDataNotAvailable();
                                 }else{
-                                    callback.onAllFriendLoaded(parseJsonArrayWithGson(s,Friend.class));
+                                    callback.onAllFriendLoaded(parseJsonArrayWithGson(s,Follow.class));
                                 }
                             }
                         });
@@ -70,7 +70,7 @@ public class FriendRemoteDataSource implements FriendDataSource {
     }
 
     @Override
-    public void saveFriend(@NonNull Friend friend) {
+    public void saveFriend(@NonNull Follow follow) {
 
     }
 

@@ -51,7 +51,7 @@
         </com.evan.chat.view.SearchButton>
     </RelativeLayout>
     <!--主体-->
-    <com.evan.chat.friends.ScrollChildSwipeRefreshLayout
+    <com.evan.chat.follows.ScrollChildSwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_below="@+id/top"
             android:layout_width="match_parent"
@@ -111,5 +111,5 @@
 
             </LinearLayout>
         </RelativeLayout>
-    </com.evan.chat.friends.ScrollChildSwipeRefreshLayout>
+    </com.evan.chat.follows.ScrollChildSwipeRefreshLayout>
 </RelativeLayout>

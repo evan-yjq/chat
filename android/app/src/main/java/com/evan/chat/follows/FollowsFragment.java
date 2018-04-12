@@ -1,4 +1,4 @@
-package com.evan.chat.friends;
+package com.evan.chat.follows;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.evan.chat.R;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.model.Follow;
 import com.evan.chat.view.CircleImageView;
 
 import java.util.*;
@@ -25,9 +25,9 @@ import java.util.*;
  * Date: 2018/4/2
  * Time: 13:50
  */
-public class FriendsFragment extends Fragment implements FriendsContract.View {
+public class FollowsFragment extends Fragment implements FollowsContract.View {
 
-    private FriendsContract.Presenter presenter;
+    private FollowsContract.Presenter presenter;
 
     private FriendsExpandableListAdapter mExpandableListAdapter;
 
@@ -36,18 +36,18 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
     private ExpandableListView expandableListView;
 
-    public FriendsFragment(){
+    public FollowsFragment(){
 
     }
 
-    public static FriendsFragment newInstance(){
-        return new FriendsFragment();
+    public static FollowsFragment newInstance(){
+        return new FollowsFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mExpandableListAdapter = new FriendsExpandableListAdapter(new ArrayList<Friend>(0));
+        mExpandableListAdapter = new FriendsExpandableListAdapter(new ArrayList<Follow>(0));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.friends_frag,container,false);
+        View root = inflater.inflate(R.layout.follows_frag,container,false);
 
         mNoFriendView = root.findViewById(R.id.noFriends);
         mFriendsView = root.findViewById(R.id.friendsLL);
@@ -87,7 +87,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     }
 
     @Override
-    public void setPresenter(FriendsContract.Presenter presenter) {
+    public void setPresenter(FollowsContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -115,8 +115,8 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     }
 
     @Override
-    public void showFriends(List<Friend> friends) {
-        mExpandableListAdapter.replaceData(friends);
+    public void showFriends(List<Follow> follows) {
+        mExpandableListAdapter.replaceData(follows);
         mFriendsView.setVisibility(View.VISIBLE);
         mNoFriendView.setVisibility(View.GONE);
     }
@@ -128,33 +128,33 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
     private static class FriendsExpandableListAdapter extends BaseExpandableListAdapter{
 
-        private Map<String,List<Friend>>mFriends;
+        private Map<String,List<Follow>>mFriends;
         private List<String>classification;
 
-        public FriendsExpandableListAdapter(List<Friend>friends){
+        public FriendsExpandableListAdapter(List<Follow> follows){
             mFriends = new HashMap<>();
             classification = new ArrayList<>();
-            setFriends(friends);
+            setFriends(follows);
         }
 
-        public void replaceData(List<Friend>friends){
+        public void replaceData(List<Follow> follows){
             mFriends.clear();
-            setFriends(friends);
+            setFriends(follows);
             notifyDataSetChanged();
         }
 
-        private void setFriends(List<Friend>friends){
-            for (Friend friend : friends) {
-                String classify = friend.getClassification();
+        private void setFriends(List<Follow> follows){
+            for (Follow follow : follows) {
+                String classify = follow.getClassification();
                 if (classify == null) classify = "默认";
-                List<Friend>f = null;
+                List<Follow>f = null;
                 if (classification.contains(classify)) {
                     f = mFriends.get(classify);
                 }else{
                     classification.add(classify);
                 }
                 if (f == null) f = new ArrayList<>();
-                f.add(friend);
+                f.add(follow);
                 mFriends.put(classify,f);
             }
         }
@@ -170,12 +170,12 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         }
 
         @Override
-        public List<Friend> getGroup(int i) {
+        public List<Follow> getGroup(int i) {
             return mFriends.get(classification.get(i));
         }
 
         @Override
-        public Friend getChild(int i, int i1) {
+        public Follow getChild(int i, int i1) {
             return mFriends.get(classification.get(i)).get(i1);
         }
 
@@ -211,21 +211,21 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
             View rowView = view;
             if (rowView == null){
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                rowView = inflater.inflate(R.layout.friend_item,viewGroup,false);
+                rowView = inflater.inflate(R.layout.follow_item,viewGroup,false);
             }
-            final Friend friend = getChild(i, i1);
+            final Follow follow = getChild(i, i1);
             CircleImageView head = rowView.findViewById(R.id.user_head);
             TextView nickname = rowView.findViewById(R.id.nickname);
             TextView profile = rowView.findViewById(R.id.profile);
             TextView state = rowView.findViewById(R.id.state);
 
             head.setImageResource(R.mipmap.logo);
-            if ("".equals(friend.getNickname())){
-                nickname.setText(friend.getAccount());
+            if ("".equals(follow.getNickname())){
+                nickname.setText(follow.getAccount());
             }else{
-                nickname.setText(friend.getNickname());
+                nickname.setText(follow.getNickname());
             }
-            profile.setText(friend.getProfile());
+            profile.setText(follow.getProfile());
             state.setText("不在线");
             state.setTextColor(Color.RED);
 

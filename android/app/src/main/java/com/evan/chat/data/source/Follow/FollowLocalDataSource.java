@@ -1,10 +1,9 @@
-package com.evan.chat.data.source.Friend;
+package com.evan.chat.data.source.Follow;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.model.Friend;
-import com.evan.chat.data.source.dao.FriendDao;
+import com.evan.chat.data.source.Follow.model.Follow;
+import com.evan.chat.data.source.dao.FollowDao;
 import com.evan.chat.util.AppExecutors;
-import org.greenrobot.greendao.annotation.Id;
 
 import java.util.List;
 
@@ -14,26 +13,26 @@ import java.util.List;
  * Date: 2018/4/1
  * Time: 16:36
  */
-public class FriendLocalDataSource implements FriendDataSource {
+public class FollowLocalDataSource implements FollowDataSource {
 
-    private static volatile FriendLocalDataSource INSTANCE;
+    private static volatile FollowLocalDataSource INSTANCE;
 
-    private FriendDao mFriendDao;
+    private FollowDao mFollowDao;
 
     private AppExecutors mAppExecutors;
 
-    private FriendLocalDataSource(@NonNull AppExecutors appExecutors,
-                                  @NonNull FriendDao friendDao){
+    private FollowLocalDataSource(@NonNull AppExecutors appExecutors,
+                                  @NonNull FollowDao followDao){
         mAppExecutors = appExecutors;
-        mFriendDao = friendDao;
+        mFollowDao = followDao;
     }
 
-    public static FriendLocalDataSource getInstance(@NonNull AppExecutors appExecutors,
-                                                    @NonNull FriendDao friendDao){
+    public static FollowLocalDataSource getInstance(@NonNull AppExecutors appExecutors,
+                                                    @NonNull FollowDao followDao){
         if (INSTANCE == null){
-            synchronized (FriendLocalDataSource.class){
+            synchronized (FollowLocalDataSource.class){
                 if (INSTANCE == null){
-                    INSTANCE = new FriendLocalDataSource(appExecutors,friendDao);
+                    INSTANCE = new FollowLocalDataSource(appExecutors, followDao);
                 }
             }
         }
@@ -45,14 +44,14 @@ public class FriendLocalDataSource implements FriendDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                final List<Friend>friends = mFriendDao.loadAll();
+                final List<Follow> follows = mFollowDao.loadAll();
                 mAppExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (friends.isEmpty()){
+                        if (follows.isEmpty()){
                             callback.onDataNotAvailable();
                         }else{
-                            callback.onAllFriendLoaded(friends);
+                            callback.onAllFriendLoaded(follows);
                         }
                     }
                 });
@@ -65,14 +64,14 @@ public class FriendLocalDataSource implements FriendDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                final Friend friend = mFriendDao.load(id);
+                final Follow follow = mFollowDao.load(id);
                 mAppExecutors.mainThread().execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (friend == null){
+                        if (follow == null){
                             callback.onDataNotAvailable();
                         }else{
-                            callback.onFriendLoaded(friend);
+                            callback.onFriendLoaded(follow);
                         }
                     }
                 });
@@ -81,11 +80,11 @@ public class FriendLocalDataSource implements FriendDataSource {
     }
 
     @Override
-    public void saveFriend(@NonNull final Friend friend) {
+    public void saveFriend(@NonNull final Follow follow) {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mFriendDao.save(friend);
+                mFollowDao.save(follow);
             }
         });
     }
@@ -95,7 +94,7 @@ public class FriendLocalDataSource implements FriendDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mFriendDao.deleteByKey(id);
+                mFollowDao.deleteByKey(id);
             }
         });
     }
@@ -105,7 +104,7 @@ public class FriendLocalDataSource implements FriendDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mFriendDao.deleteAll();
+                mFollowDao.deleteAll();
             }
         });
     }

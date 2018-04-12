@@ -1,11 +1,9 @@
-package com.evan.chat.friends;
+package com.evan.chat.follows;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.friends.domain.usecase.GetFriends;
-import com.evan.chat.util.AppExecutors;
-import com.zhy.http.okhttp.OkHttpUtils;
+import com.evan.chat.follows.domain.usecase.GetFollows;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
@@ -15,20 +13,20 @@ import static com.evan.chat.util.Objects.checkNotNull;
  * Date: 2018/4/2
  * Time: 13:51
  */
-public class FriendsPresenter implements FriendsContract.Presenter{
+public class FollowsPresenter implements FollowsContract.Presenter{
 
-    private final FriendsContract.View view;
+    private final FollowsContract.View view;
     private boolean mFirstStart = true;
 
-    private final GetFriends getFriends;
+    private final GetFollows getFollows;
     private final UseCaseHandler mUseCaseHandler;
     private final Long userId;
 
-    public FriendsPresenter(@NonNull FriendsContract.View view, @NonNull UseCaseHandler mUseCaseHandler,
-                            @NonNull GetFriends getFriends, Long userId){
+    public FollowsPresenter(@NonNull FollowsContract.View view, @NonNull UseCaseHandler mUseCaseHandler,
+                            @NonNull GetFollows getFollows, Long userId){
         this.view = checkNotNull(view,"view cannot be null!");
         this.mUseCaseHandler = checkNotNull(mUseCaseHandler,"mUseCaseHandler cannot be null!");
-        this.getFriends = checkNotNull(getFriends,"getFriends cannot be null!");
+        this.getFollows = checkNotNull(getFollows,"getFollows cannot be null!");
         this.userId = checkNotNull(userId,"userId cannot be null!");
         view.setPresenter(this);
     }
@@ -49,12 +47,12 @@ public class FriendsPresenter implements FriendsContract.Presenter{
             view.setLoadingIndicator(true);
         }
 
-        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate, userId),
-                new UseCase.UseCaseCallback<GetFriends.ResponseValue>() {
+        mUseCaseHandler.execute(getFollows, new GetFollows.RequestValues(forceUpdate, userId),
+                new UseCase.UseCaseCallback<GetFollows.ResponseValue>() {
                     @Override
-                    public void onSuccess(GetFriends.ResponseValue response) {
+                    public void onSuccess(GetFollows.ResponseValue response) {
                         if (view.isActive()){
-                            view.showFriends(response.getFriends());
+                            view.showFriends(response.getFollows());
                         }
                         if (showLoadingUI){
                             view.setLoadingIndicator(false);

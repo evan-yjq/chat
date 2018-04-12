@@ -1,4 +1,4 @@
-package com.evan.chat.friends;
+package com.evan.chat.follows;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
  * Date: 2018/4/2
  * Time: 13:50
  */
-@EActivity(R.layout.friends_act)
-public class FriendsActivity extends AppCompatActivity{
+@EActivity(R.layout.follows_act)
+public class FollowsActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +28,14 @@ public class FriendsActivity extends AppCompatActivity{
         }
 
         Long userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
-        FriendsFragment friendsFragment = (FriendsFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        FollowsFragment followsFragment = (FollowsFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
-        if (friendsFragment == null){
-            friendsFragment = FriendsFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),friendsFragment,R.id.contentFrame);
+        if (followsFragment == null){
+            followsFragment = FollowsFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), followsFragment,R.id.contentFrame);
         }
 
-        new FriendsPresenter(friendsFragment,
+        new FollowsPresenter(followsFragment,
                 Injection.provideUseCaseHandler(),
                 Injection.provideGetFriends(getApplicationContext()),
                 userId);

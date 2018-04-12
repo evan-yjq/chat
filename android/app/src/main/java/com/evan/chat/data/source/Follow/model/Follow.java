@@ -1,4 +1,4 @@
-package com.evan.chat.data.source.Friend.model;
+package com.evan.chat.data.source.Follow.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -14,7 +14,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * Time: 16:19
  */
 @Entity
-public class Friend {
+public class Follow {
     @Id
     private Long id;
     private String account;
@@ -24,12 +24,12 @@ public class Friend {
     private String classification;
     private String profile;
 
-    public Friend(Long id, String account, String nickname, String relationship, String classification) {
+    public Follow(Long id, String account, String nickname, String relationship, String classification) {
         this(id,account,nickname,null,relationship,classification,null);
     }
 
     @Generated(hash = 1528662446)
-    public Friend(Long id, String account, String nickname, String email, String relationship,
+    public Follow(Long id, String account, String nickname, String email, String relationship,
                   String classification, String profile) {
         this.id = id;
         this.account = account;
@@ -41,12 +41,12 @@ public class Friend {
     }
 
     @Generated(hash = 287143722)
-    public Friend() {
+    public Follow() {
     }
 
     @Override
     public String toString() {
-        return "Friend{" +
+        return "Follow{" +
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", nickname='" + nickname + '\'' +
@@ -61,14 +61,14 @@ public class Friend {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Friend friend = (Friend) o;
-        return Objects.equals(id, friend.id) &&
-                Objects.equals(account, friend.account) &&
-                Objects.equals(nickname, friend.nickname) &&
-                Objects.equals(email, friend.email) &&
-                Objects.equals(relationship, friend.relationship) &&
-                Objects.equals(classification, friend.classification) &&
-                Objects.equals(profile, friend.profile);
+        Follow follow = (Follow) o;
+        return Objects.equals(id, follow.id) &&
+                Objects.equals(account, follow.account) &&
+                Objects.equals(nickname, follow.nickname) &&
+                Objects.equals(email, follow.email) &&
+                Objects.equals(relationship, follow.relationship) &&
+                Objects.equals(classification, follow.classification) &&
+                Objects.equals(profile, follow.profile);
     }
 
     @Override

@@ -1,8 +1,8 @@
-package com.evan.chat.friends;
+package com.evan.chat.follows;
 
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.Follow.model.Follow;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import java.util.List;
  * Date: 2018/4/2
  * Time: 13:50
  */
-public interface FriendsContract {
+public interface FollowsContract {
 
     interface View extends BaseView<Presenter>{
         void setLoadingIndicator(boolean active);
         void showNoFriends();
-        void showFriends(List<Friend>friends);
+        void showFriends(List<Follow> follows);
         void showAddFriends();
     }
 

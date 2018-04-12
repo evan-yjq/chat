@@ -33,7 +33,7 @@ public class FriendsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.friends_frag);
+        setContentView(R.layout.follows_frag);
         buttonInit();
         autos=(String[]) getIntent().getSerializableExtra("autos");
         final String id=getIntent().getStringExtra("id");
@@ -48,7 +48,7 @@ public class FriendsActivity extends Activity {
                 String result = b.getString("result");
                 if ("true".equals(result)){
                     Bundle bundle = new Bundle();
-//                    Intent intent=new Intent(FriendsActivity.this,LoginActivity.class);
+//                    Intent intent=new Intent(FollowsActivity.this,LoginActivity.class);
 //                    bundle.putSerializable("autos",autos);
 //                    intent.putExtras(bundle);
 //                    startActivity(intent);
@@ -71,7 +71,7 @@ public class FriendsActivity extends Activity {
                 String result = b.getString("result");
                 System.out.println(result);
                 if (!"".equals(result)&&result!=null){
-//                    InOutPut.writeFile(FriendsActivity.this,"friends.txt",result,null,"写入好友列表");
+//                    InOutPut.writeFile(FollowsActivity.this,"friends.txt",result,null,"写入好友列表");
                     friend();
                 }
             }
@@ -140,9 +140,9 @@ public class FriendsActivity extends Activity {
                 String result = b.getString("result");
                 if(result!=null&&result!="") {
 //                    Chat chat = JSON.parseObject(result, Chat.class);
-//                    InOutPut.writeFile(FriendsActivity.this,chat.getUser()+".txt","",MODE_APPEND,chat.getUser()+"聊天记录初始化");
-//                    String chats= InOutPut.readFile(FriendsActivity.this,chat.getUser()+".txt","读取"+chat.getUser()+"聊天记录");
-//                    InOutPut.writeFile(FriendsActivity.this, chat.getUser() + ".txt", result + ",", MODE_APPEND, "写入" + chat.getUser() + "聊天记录");
+//                    InOutPut.writeFile(FollowsActivity.this,chat.getUser()+".txt","",MODE_APPEND,chat.getUser()+"聊天记录初始化");
+//                    String chats= InOutPut.readFile(FollowsActivity.this,chat.getUser()+".txt","读取"+chat.getUser()+"聊天记录");
+//                    InOutPut.writeFile(FollowsActivity.this, chat.getUser() + ".txt", result + ",", MODE_APPEND, "写入" + chat.getUser() + "聊天记录");
 
                 }
             }
@@ -190,14 +190,14 @@ public class FriendsActivity extends Activity {
     }
 
     private void friend(){
-//        String f=InOutPut.readFile(FriendsActivity.this,"friends.txt","读取好友列表");
+//        String f=InOutPut.readFile(FollowsActivity.this,"friends.txt","读取好友列表");
 //        if (!"".equals(f)) {
 //            for (int i = 0; i < arrayList.size(); i++) {
 //                ((LinearLayout) findViewById(R.id.all_friend)).removeView(arrayList.get(i));
 //            }
 //            List<User> allFriend = JSON.parseArray(f, User.class);
 //            for (final User friend : allFriend) {
-//                FriendsButton friendBtn = new FriendsButton(FriendsActivity.this, null);
+//                FriendsButton friendBtn = new FriendsButton(FollowsActivity.this, null);
 //                arrayList.add(friendBtn);
 ////                SetImageButton.setFriendsButton(friendBtn, R.mipmap.logo, friend.getUsername(), friend.getSignature(), friend.getState());
 //                DynAdd.addLayout((LinearLayout) findViewById(R.id.all_friend), friendBtn);
@@ -205,7 +205,7 @@ public class FriendsActivity extends Activity {
 //                    @Override
 //                    public void onClick(View v) {
 //                        Bundle bundle = new Bundle();
-//                        Intent intent = new Intent(FriendsActivity.this, ChatActivity.class);
+//                        Intent intent = new Intent(FollowsActivity.this, ChatActivity.class);
 ////                        bundle.putSerializable("friend", friend);
 //                        bundle.putSerializable("autos", autos);
 //                        intent.putExtras(bundle);

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.evan.chat.R;
 import com.evan.chat.friends.FriendsActivity;
-import com.evan.chat.friends.FriendsActivity_;
 
 import java.util.Objects;
 
@@ -99,7 +98,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
 
     @Override
     public void signInSuccess(Long id) {
-        Intent intent = new Intent(getContext(), FriendsActivity_.class);
+        Intent intent = new Intent(getContext(), FriendsActivity.class);
         intent.putExtra(EXTRA_USER_ID, id);
         startActivity(intent);
         getActivity().finish();

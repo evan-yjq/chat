@@ -2,25 +2,16 @@ package com.evan.chat.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import com.evan.chat.R;
 import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.view.DialogButton;
-import com.evan.chat.view.EditButton;
-import com.evan.chat.view.TopTitleButton;
 import com.evan.chat.gen.Chat;
 import com.evan.chat.util.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.evan.chat.activity.Data.handler;
 
 public class ChatActivity extends Activity {
 
@@ -31,21 +22,15 @@ public class ChatActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_general);
+//        setContentView(R.layout.activity_general);
         super.onCreate(savedInstanceState);
         friend=(User)getIntent().getSerializableExtra("friend");
         autos=(String[]) getIntent().getSerializableExtra("autos");
-        ScrollView center = findViewById(R.id.center);
-        TopTitleButton top = findViewById(R.id.top);
         body= findViewById(R.id.body);
-//        SetImageButton.setTopTitleButton(top,R.mipmap.back,friend.getUsername(),R.mipmap.category);
-        top.onClickBack(this);
-        top.onClickSeeMore(this);
-        top.setTitleTextSize(18);
 
         final ScrollView mScrollView = findViewById(R.id.center);
-        final EditButton editChat=new EditButton(this,null);
-        editChat.setSendText("发送");
+//        final EditButton editChat=new EditButton(this,null);
+//        editChat.setSendText("发送");
 
 //        InOutPut.writeFile(ChatActivity.this,friend.getUsername()+".txt","",MODE_APPEND,friend.getUsername()+"聊天记录初始化");
 //        String chats= InOutPut.readFile(ChatActivity.this,friend.getUsername()+".txt","读取"+friend.getUsername()+"聊天记录");
@@ -63,7 +48,7 @@ public class ChatActivity extends Activity {
                     continue;
                 }
                 if (i == 0) {
-                    DialogButton button = new DialogButton(ChatActivity.this, null);
+                    DialogButton button = new DialogButton(ChatActivity.this);
                     button.setBackground(R.drawable.title_small);
                     SetImageButton.setDialogButton(button, "聊天记录", 2, null);
                     DynAdd.addView(body, button);
@@ -75,41 +60,41 @@ public class ChatActivity extends Activity {
                 DynAdd.addView(body, button);
             }
         }
-        editChat.getSend().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if((!editChat.getChat().getText().toString().equals(""))&&editChat.getChat().getText()!=null) {
-                    DialogButton button = new DialogButton(ChatActivity.this, null);
-                    button.setBackground(R.drawable.dialog_my);
-                    SetImageButton.setDialogButton(button,editChat.getChat().getText().toString(),0,R.mipmap.logo);
-                    DynAdd.addView(body, button);
+//        editChat.getSend().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if((!editChat.getChat().getText().toString().equals(""))&&editChat.getChat().getText()!=null) {
+//                    DialogButton button = new DialogButton(ChatActivity.this, null);
+//                    button.setBackground(R.drawable.dialog_my);
+//                    SetImageButton.setDialogButton(button,editChat.getChat().getText().toString(),0,R.mipmap.logo);
+//                    DynAdd.addView(body, button);
 //                    Chat chat=new Chat();
 //                    chat.setUser(autos[0]);
 //                    chat.setTime(GetTime.getFormatTime());
 //                    chat.setContent(editChat.getChat().getText().toString());
-                    final String str;
+//                    final String str;
 //                    str =JSON.toJSONString(chat);
-                    new Thread() {
-                        @Override
-                        public void run() {
+//                    new Thread() {
+//                        @Override
+//                        public void run() {
 //                            client.get("chat-"+friend.getUsername()+"-"+str);
-                        }
-                    }.start();
+//                        }
+//                    }.start();
 //                    InOutPut.writeFile(ChatActivity.this,friend.getUsername()+".txt",str+",",MODE_APPEND,"读取"+friend.getUsername()+"聊天记录");
-                    editChat.getChat().setText("");
-                    mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                }else{showToast("发送的消息不能为空");}
-            }
-        });
+//                    editChat.getChat().setText("");
+//                    mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+//                }else{showToast("发送的消息不能为空");}
+//            }
+//        });
 
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg){
-                super.handleMessage(msg);
-                // 此处可以更新UI
-                Bundle b = msg.getData();
-                String result = b.getString("result");
-                if(result!=null&&result!="") {
+//        handler=new Handler(){
+//            @Override
+//            public void handleMessage(Message msg){
+//                super.handleMessage(msg);
+//                 此处可以更新UI
+//                Bundle b = msg.getData();
+//                String result = b.getString("result");
+//                if(result!=null&&result!="") {
 //                    Chat chat = JSON.parseObject(result, Chat.class);
 //                    if (chat.getUser().equals(friend.getUsername())) {
 //                        write(chat);
@@ -118,16 +103,16 @@ public class ChatActivity extends Activity {
 //                        String chats= InOutPut.readFile(ChatActivity.this,chat.getUser()+".txt","读取"+chat.getUser()+"聊天记录");
 //                        InOutPut.writeFile(ChatActivity.this, chat.getUser() + ".txt", result + ",", MODE_APPEND, "写入" + chat.getUser() + "聊天记录");
 //                    }
-                }
-            }
-        };
+//                }
+//            }
+//        };
 
-        DynAdd.addLayout((RelativeLayout)findViewById(R.id.bottom),editChat);
+//        DynAdd.addLayout((RelativeLayout)findViewById(R.id.bottom),editChat);
 
     }
 
     private void write(Chat chat){
-        DialogButton button = new DialogButton(ChatActivity.this, null);
+        DialogButton button = new DialogButton(ChatActivity.this);
         button.setBackground(R.drawable.dialog_my);
 //        SetImageButton.setDialogButton(button, chat.getContent(), chat.getUser().equals(autos[0]) ? 0 : 1, R.mipmap.logo);
         DynAdd.addView(body, button);

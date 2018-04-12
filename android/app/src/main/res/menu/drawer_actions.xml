@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sign_out_menu_item"
+        android:icon="@drawable/ic_sign_out_black_24dp"
+        android:title="@string/sign_out" />
+    <!--<item-->
+        <!--android:id="@+id/all_classify_navigation_menu_item"-->
+        <!--android:icon="@drawable/ic_classify"-->
+        <!--android:title="@string/all_classify_list_title" />-->
+    <!--<item-->
+        <!--android:id="@+id/settings_navigation_menu_item"-->
+        <!--android:icon="@drawable/ic_settings"-->
+        <!--android:title="@string/settings_list_title" />-->
+</menu>

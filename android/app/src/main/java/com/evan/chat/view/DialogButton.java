@@ -17,7 +17,7 @@ public class DialogButton extends RelativeLayout {
 
 
     public DialogButton(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public DialogButton(Context context, AttributeSet attrs) {
@@ -41,6 +41,7 @@ public class DialogButton extends RelativeLayout {
             hd.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             dl.addRule(RelativeLayout.LEFT_OF,R.id.head);
             dl.leftMargin=160;
+            setBackground(R.drawable.dialog_my);
         }else if(i==1){
             hd.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             dl.addRule(RelativeLayout.RIGHT_OF,R.id.head);

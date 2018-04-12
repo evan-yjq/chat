@@ -6,8 +6,6 @@ import android.os.Message;
 import java.io.*;
 import java.net.Socket;
 
-import static com.evan.chat.activity.Data.socket;
-import static com.evan.chat.activity.Data.socketl;
 
 /**
  * Created by yejiaquan on 12/27/16.
@@ -19,12 +17,12 @@ public class Client implements Serializable {
     private BufferedReader br;
 
     public Client(){
-        try {
-            socket=new Socket("115.28.216.244",10086);
-            socketl=new Socket("115.28.216.244",10086);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            socket=new Socket("115.28.216.244",10086);
+//            socketl=new Socket("115.28.216.244",10086);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public Message login(String username, String password) {
@@ -32,11 +30,11 @@ public class Client implements Serializable {
         String id = "";
         try {
             //2、获取输出流，向服务器端发送信息
-            pw = new PrintWriter(socket.getOutputStream());//将输出流包装成打印流
+//            pw = new PrintWriter(socket.getOutputStream());//将输出流包装成打印流
             pw.write("login-" + username + "-" + password + "\nend\n");
             pw.flush();
             //3、获取输入流，并读取服务器端的响应信息
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String info;
             while (true) {
                 info = br.readLine();
@@ -66,12 +64,12 @@ public class Client implements Serializable {
         String key = content.split("-")[0];
         try {
             //2、获取输出流，向服务器端发送信息
-            pw = new PrintWriter(socket.getOutputStream());//将输出流包装成打印流
+//            pw = new PrintWriter(socket.getOutputStream());//将输出流包装成打印流
             pw.write(content + "\nend\n");
             pw.flush();
             if (!key.equals("chat")) {
                 //3、获取输入流，并读取服务器端的响应信息
-                br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//                br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String info;
                 while (true) {
                     info = br.readLine();

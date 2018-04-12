@@ -3,4 +3,6 @@
     <string name="no_friends">你还没有任何好友</string>
 
     <string name="add_friend">添加好友</string>
+
+    <string name="friends_list_title">好友列表</string>
 </resources>

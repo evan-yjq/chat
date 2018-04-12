@@ -8,7 +8,7 @@ var sql = {
     INSERT: 'insert into user(account, password) values(?, ?)',
     DELETE: 'delete form user where account=?',
     CHECK: 'select * from user where account=? or email=?',
-    GETFRIENDS:'select u.id,u.account,u.nickname,f.relationship,c.classification from c_friends f ' +
+    GETFRIENDS:'select u.id,u.account,u.nickname,u.profile,f.relationship,c.classification from c_friends f ' +
                 'left join c_classification c on f.user_id=c.user_id and f.classification_id=c.id ' +
                 'left join chat.user u on f.friend_id=u.id where f.user_id=?'
 };

@@ -1,5 +1,6 @@
 package com.evan.chat.logreg;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import org.androidannotations.annotations.EActivity;
  * Date: 2018/2/19
  * Time: 下午1:28
  */
+@SuppressLint("Registered")
 @EActivity(R.layout.log_reg_act)
 public class LogRegActivity extends AppCompatActivity {
 

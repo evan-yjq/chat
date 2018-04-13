@@ -114,6 +114,7 @@ public class RegFragment extends Fragment implements LogRegContract.RegView{
         mPasswordView.setText(null);
         mAccountView.setText(null);
         mEmailView.setText(null);
+        presenter.Switching(LOG_FRAG);
     }
 
     @Override

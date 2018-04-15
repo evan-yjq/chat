@@ -2,19 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <ScrollView
-            android:id="@+id/center"
+    <com.evan.chat.friends.ScrollChildSwipeRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_above="@+id/bottom"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
-                android:id="@+id/body"
+                android:id="@+id/chatsLL"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="match_parent">
+            <ExpandableListView
+                    android:id="@+id/chats_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/list_item_divider_left_15_right_15"
+                    android:dividerHeight="1px"
+                    android:childDivider="@drawable/list_item_divider_left_15_right_15"/>
         </LinearLayout>
-    </ScrollView>
+    </com.evan.chat.friends.ScrollChildSwipeRefreshLayout>
     <LinearLayout
             android:layout_alignParentBottom="true"
             android:id="@+id/bottom"
@@ -36,20 +42,27 @@
                         android:background="@null"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="text"/>
             </RelativeLayout>
         </RelativeLayout>
-        <Button
-                android:id="@+id/send"
-                android:layout_weight="1"
-                android:textSize="12sp"
-                android:background="@android:color/transparent"
-                android:text="发送"
+        <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            <Button
+                    android:id="@+id/send"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="16sp"
+                    android:background="@drawable/rounded_corners"
+                    android:text="发送"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

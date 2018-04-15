@@ -31,7 +31,7 @@
 
         <activity android:name=".friends.FriendsActivity"/>
 
-        <activity android:name=".activity.ChatActivity"/>
+        <activity android:name=".chat.ChatActivity"/>
 
     </application>
 

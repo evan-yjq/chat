@@ -26,7 +26,7 @@ public class ChatActivity extends Activity {
         super.onCreate(savedInstanceState);
         friend=(User)getIntent().getSerializableExtra("friend");
         autos=(String[]) getIntent().getSerializableExtra("autos");
-        body= findViewById(R.id.body);
+//        body= findViewById(R.id.body);
 
         final ScrollView mScrollView = findViewById(R.id.center);
 //        final EditButton editChat=new EditButton(this,null);

@@ -1,5 +1,6 @@
 package com.evan.chat.friends;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.evan.chat.R;
+import com.evan.chat.chat.ChatActivity;
 import com.evan.chat.data.source.Friend.model.Friend;
 import com.evan.chat.view.CircleImageView;
 
@@ -47,7 +49,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mExpandableListAdapter = new FriendsExpandableListAdapter(new ArrayList<Friend>(0));
+        mExpandableListAdapter = new FriendsExpandableListAdapter(new ArrayList<Friend>(0),friendListItem);
     }
 
     @Override
@@ -123,18 +125,20 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
     @Override
     public void showAddFriends() {
-
+        //todo
     }
 
     private static class FriendsExpandableListAdapter extends BaseExpandableListAdapter{
 
         private Map<String,List<Friend>>mFriends;
         private List<String>classification;
+        private FriendListItem friendListItem;
 
-        public FriendsExpandableListAdapter(List<Friend>friends){
+        public FriendsExpandableListAdapter(List<Friend>friends,FriendListItem friendListItem){
             mFriends = new HashMap<>();
             classification = new ArrayList<>();
             setFriends(friends);
+            this.friendListItem = friendListItem;
         }
 
         public void replaceData(List<Friend>friends){
@@ -229,6 +233,13 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
             state.setText("不在线");
             state.setTextColor(Color.RED);
 
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    friendListItem.onClick(friend);
+                }
+            });
+
             return rowView;
         }
 
@@ -236,5 +247,21 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         public boolean isChildSelectable(int i, int i1) {
             return true;
         }
+    }
+
+    private FriendListItem friendListItem = new FriendListItem() {
+        @Override
+        public void onClick(Friend friend) {
+            Intent intent = new Intent(getActivity(),ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("friend",friend);
+            intent.putExtra("friend",bundle);
+            startActivity(intent);
+        }
+    };
+
+    interface FriendListItem{
+
+        void onClick(Friend friend);
     }
 }

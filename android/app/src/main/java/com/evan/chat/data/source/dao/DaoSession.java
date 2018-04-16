@@ -10,7 +10,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.evan.chat.data.source.Friend.model.Friend;
 import com.evan.chat.data.source.User.model.User;
-import com.evan.chat.gen.Chat;
+import com.evan.chat.data.source.Chat.model.Chat;
 
 import com.evan.chat.data.source.dao.FriendDao;
 import com.evan.chat.data.source.dao.UserDao;

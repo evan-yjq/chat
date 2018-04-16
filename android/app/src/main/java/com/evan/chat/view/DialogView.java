@@ -7,7 +7,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.evan.chat.R;
 
-public class DialogButton extends RelativeLayout {
+public class DialogView extends RelativeLayout {
+
+    public static final int MY = 0;
+    public static final int FRIEND = 1;
+    public static final int PROMPT = 2;
+
 
     private CircleImageView userHead;
     private TextView dialogContent;
@@ -16,11 +21,11 @@ public class DialogButton extends RelativeLayout {
     private RelativeLayout dialog;
 
 
-    public DialogButton(Context context) {
+    public DialogView(Context context) {
         this(context, null);
     }
 
-    public DialogButton(Context context, AttributeSet attrs) {
+    public DialogView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.dialog, this,true);
 
@@ -34,19 +39,19 @@ public class DialogButton extends RelativeLayout {
         this.setFocusable(true);
     }
 
-    public void setUser(int i){
+    public void setUser(int rule){
         LayoutParams hd= (LayoutParams) this.head.getLayoutParams();
         LayoutParams dl= (LayoutParams) this.dialog.getLayoutParams();
-        if(i==0){
+        if(rule==MY){
             hd.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             dl.addRule(RelativeLayout.LEFT_OF,R.id.head);
             dl.leftMargin=160;
             setBackground(R.drawable.dialog_my);
-        }else if(i==1){
+        }else if(rule==FRIEND){
             hd.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             dl.addRule(RelativeLayout.RIGHT_OF,R.id.head);
             dl.rightMargin=160;
-        }else if(i==2){
+        }else if(rule==PROMPT){
             dl.addRule(RelativeLayout.CENTER_IN_PARENT);
         }
     }

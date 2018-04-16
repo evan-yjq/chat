@@ -5,7 +5,7 @@ import com.evan.chat.view.*;
 
 public class SetImageButton {
 
-    public static void setDialogButton(DialogButton button,String content,int user,Integer userHead){
+    public static void setDialogButton(DialogView button, String content, int user, Integer userHead){
         button.setContent(content);
         button.setUser(user);
         if(userHead!=null)

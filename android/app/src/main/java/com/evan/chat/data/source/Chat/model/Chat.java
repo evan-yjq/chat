@@ -1,4 +1,4 @@
-package com.evan.chat.gen;
+package com.evan.chat.data.source.Chat.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -12,20 +12,30 @@ public class Chat{
     private String send_time;
     private int from_user_id;
     private int to_user_id;
+    private int sender;
     private String content;
 
-    @Generated(hash = 214656087)
+    @Generated(hash = 611331526)
     public Chat(Long chat_id, String send_time, int from_user_id, int to_user_id,
-            String content) {
+            int sender, String content) {
         this.chat_id = chat_id;
         this.send_time = send_time;
         this.from_user_id = from_user_id;
         this.to_user_id = to_user_id;
+        this.sender = sender;
         this.content = content;
     }
 
     @Generated(hash = 519536279)
     public Chat() {
+    }
+
+    public int getSender() {
+        return sender;
+    }
+
+    public void setSender(int sender) {
+        this.sender = sender;
     }
 
     public Long getChat_id() {

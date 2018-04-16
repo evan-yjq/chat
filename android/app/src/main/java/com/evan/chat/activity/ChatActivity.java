@@ -7,8 +7,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import com.evan.chat.R;
 import com.evan.chat.data.source.User.model.User;
-import com.evan.chat.view.DialogButton;
-import com.evan.chat.gen.Chat;
+import com.evan.chat.view.DialogView;
+import com.evan.chat.data.source.Chat.model.Chat;
 import com.evan.chat.util.*;
 
 import java.util.List;
@@ -48,13 +48,13 @@ public class ChatActivity extends Activity {
                     continue;
                 }
                 if (i == 0) {
-                    DialogButton button = new DialogButton(ChatActivity.this);
+                    DialogView button = new DialogView(ChatActivity.this);
                     button.setBackground(R.drawable.title_small);
                     SetImageButton.setDialogButton(button, "聊天记录", 2, null);
                     DynAdd.addView(body, button);
                     i--;
                 }
-                DialogButton button = new DialogButton(ChatActivity.this, null);
+                DialogView button = new DialogView(ChatActivity.this, null);
                 button.setBackground(R.drawable.dialog_my);
 //                SetImageButton.setDialogButton(button, chat.getContent(),chat.getUser().equals(autos[0])?0:1, R.mipmap.logo);
                 DynAdd.addView(body, button);
@@ -112,7 +112,7 @@ public class ChatActivity extends Activity {
     }
 
     private void write(Chat chat){
-        DialogButton button = new DialogButton(ChatActivity.this);
+        DialogView button = new DialogView(ChatActivity.this);
         button.setBackground(R.drawable.dialog_my);
 //        SetImageButton.setDialogButton(button, chat.getContent(), chat.getUser().equals(autos[0]) ? 0 : 1, R.mipmap.logo);
         DynAdd.addView(body, button);

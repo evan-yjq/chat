@@ -18,7 +18,7 @@ import static com.evan.chat.util.GsonUtil.parseJsonArrayWithGson;
  */
 public class FriendRemoteDataSource implements FriendDataSource {
 
-    private static  FriendRemoteDataSource INSTANCE;
+    private static FriendRemoteDataSource INSTANCE;
 
     private AppExecutors mAppExecutors;
 

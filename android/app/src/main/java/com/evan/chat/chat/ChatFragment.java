@@ -44,7 +44,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
         mChatListAdapter = new ChatListAdapter(new ArrayList<Chat>(0));
     }
 
-    public static ChatFragment newInstance(){
+    static ChatFragment newInstance(){
         return new ChatFragment();
     }
 
@@ -68,7 +68,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (presenter.send(sendContext.getText().toString()))
+                if (!sendContext.getText().toString().trim().equals("") && presenter.send(sendContext.getText().toString()))
                     sendContext.setText("");
             }
         });
@@ -114,7 +114,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
             setList(chats);
         }
 
-        public void addData(Chat chat){
+        void addData(Chat chat){
             mChats.add(chat);
             notifyDataSetChanged();
         }

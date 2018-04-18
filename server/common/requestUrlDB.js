@@ -15,12 +15,12 @@ function promiseQuery(sql, sqlParams) {
     return new Promise(function (resolve, reject) {
         pool.getConnection(function (err, connection) {
             connection.query(sql, sqlParams, function (err, results) {
-                console.log('sql:\n',sql,'/',sqlParams,'\nresults:\n',results);
                 if (err) {
                     reject('[ERROR]' + err.message);
                 } else {
                     resolve(results);
                 }
+                connection.release();
             });
         });
     });

@@ -18,12 +18,12 @@ function promiseQuery(sql, sqlParams) {
     return new Promise(function (resolve, reject) {
         pool.getConnection(function (err, connection) {
             connection.query(sql, sqlParams, function (err, results) {
-                console.log('sql:\n',sql,'/',sqlParams,'\nresults:\n',results);
                 if (err) {
                     reject('[ERROR]' + err.message);
                 } else {
                     resolve(results);
                 }
+                connection.release();
             });
         });
     });
@@ -37,7 +37,7 @@ function search(keyword) {
 
 //新增用户
 function put(account, password, email) {
-    return promiseQuery(sql.CHECK,[account,email])
+    promiseQuery(sql.CHECK,[account,email])
         .then(function (re) {
             if (re === undefined || re.length === 0){
                 return promiseQuery(sql.INSERT, [account, password, email]);
@@ -72,7 +72,7 @@ function update(id, account, password, email) {
     if (a === '') {
         return Promise.reject('未作任何修改');
     } else {
-        return promiseQuery(sql.SELECT2, [username, id])
+        promiseQuery(sql.SELECT2, [username, id])
             .then(function (data) {
                 if (data.length > 0) {
                     return Promise.reject('用户名已存在');

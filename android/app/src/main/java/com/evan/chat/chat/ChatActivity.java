@@ -6,9 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.data.source.Friend.model.Friend;
 import com.evan.chat.util.ActivityUtils;
+
+import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND_ID;
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 
 /**
  * Created by IntelliJ IDEA
@@ -28,6 +32,9 @@ public class ChatActivity extends AppCompatActivity {
 
         Friend friend = (Friend) getIntent().getBundleExtra("friend").getSerializable("friend");
 
+        Long userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
+        Long friendID = getIntent().getLongExtra(EXTRA_FRIEND_ID,0);
+
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,7 +52,9 @@ public class ChatActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),chatFragment,R.id.contentFrame);
         }
 
-        new ChatPresenter(chatFragment);
+        new ChatPresenter(chatFragment, userId, friendID,
+                Injection.provideSendMessage(getApplicationContext()),
+                Injection.provideUseCaseHandler());
 
     }
 

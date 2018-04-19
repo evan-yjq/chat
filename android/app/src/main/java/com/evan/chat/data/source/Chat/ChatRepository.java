@@ -28,7 +28,7 @@ public class ChatRepository implements ChatDataSource {
         this.remote = remote;
     }
 
-    public static ChatRepository getInstance(@NonNull ChatDataSource local, @NonNull ChatDataSource remote){
+    public static ChatRepository getInstance(@NonNull ChatDataSource remote, @NonNull ChatDataSource local){
         if (INSTANCE == null){
             INSTANCE = new ChatRepository(local, remote);
         }
@@ -47,7 +47,7 @@ public class ChatRepository implements ChatDataSource {
 
     @Override
     public void saveChat(@NonNull Chat chat) {
-
+        remote.saveChat(chat);
     }
 
     @Override

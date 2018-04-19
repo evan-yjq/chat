@@ -2,16 +2,16 @@ package com.evan.chat.util;
 
 import android.text.TextUtils;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class test {
     public static void main(String[] args) {
-        String email = "123@qq.com";
-        if(isEmail(email)){
-            System.out.println(isEmail(email));
-        }
-
+//        String email = "123@qq.com";
+//        if(isEmail(email)){
+//            System.out.println(isEmail(email));
+//        }
     }
     private static boolean isEmail(String string) {
         if (string == null)

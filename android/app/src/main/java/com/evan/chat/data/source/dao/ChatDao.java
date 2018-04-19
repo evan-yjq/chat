@@ -25,9 +25,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
      */
     public static class Properties {
         public final static Property Chat_id = new Property(0, Long.class, "chat_id", true, "_id");
-        public final static Property Send_time = new Property(1, String.class, "send_time", false, "SEND_TIME");
-        public final static Property From_user_id = new Property(2, int.class, "from_user_id", false, "FROM_USER_ID");
-        public final static Property To_user_id = new Property(3, int.class, "to_user_id", false, "TO_USER_ID");
+        public final static Property Send_time = new Property(1, long.class, "send_time", false, "SEND_TIME");
+        public final static Property From_user_id = new Property(2, long.class, "from_user_id", false, "FROM_USER_ID");
+        public final static Property To_user_id = new Property(3, long.class, "to_user_id", false, "TO_USER_ID");
         public final static Property Sender = new Property(4, int.class, "sender", false, "SENDER");
         public final static Property Content = new Property(5, String.class, "content", false, "CONTENT");
     }
@@ -46,7 +46,7 @@ public class ChatDao extends AbstractDao<Chat, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CHAT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: chat_id
-                "\"SEND_TIME\" TEXT," + // 1: send_time
+                "\"SEND_TIME\" INTEGER NOT NULL ," + // 1: send_time
                 "\"FROM_USER_ID\" INTEGER NOT NULL ," + // 2: from_user_id
                 "\"TO_USER_ID\" INTEGER NOT NULL ," + // 3: to_user_id
                 "\"SENDER\" INTEGER NOT NULL ," + // 4: sender
@@ -67,11 +67,7 @@ public class ChatDao extends AbstractDao<Chat, Long> {
         if (chat_id != null) {
             stmt.bindLong(1, chat_id);
         }
- 
-        String send_time = entity.getSend_time();
-        if (send_time != null) {
-            stmt.bindString(2, send_time);
-        }
+        stmt.bindLong(2, entity.getSend_time());
         stmt.bindLong(3, entity.getFrom_user_id());
         stmt.bindLong(4, entity.getTo_user_id());
         stmt.bindLong(5, entity.getSender());
@@ -90,11 +86,7 @@ public class ChatDao extends AbstractDao<Chat, Long> {
         if (chat_id != null) {
             stmt.bindLong(1, chat_id);
         }
- 
-        String send_time = entity.getSend_time();
-        if (send_time != null) {
-            stmt.bindString(2, send_time);
-        }
+        stmt.bindLong(2, entity.getSend_time());
         stmt.bindLong(3, entity.getFrom_user_id());
         stmt.bindLong(4, entity.getTo_user_id());
         stmt.bindLong(5, entity.getSender());
@@ -114,9 +106,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
     public Chat readEntity(Cursor cursor, int offset) {
         Chat entity = new Chat( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // chat_id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // send_time
-            cursor.getInt(offset + 2), // from_user_id
-            cursor.getInt(offset + 3), // to_user_id
+            cursor.getLong(offset + 1), // send_time
+            cursor.getLong(offset + 2), // from_user_id
+            cursor.getLong(offset + 3), // to_user_id
             cursor.getInt(offset + 4), // sender
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // content
         );
@@ -126,9 +118,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
     @Override
     public void readEntity(Cursor cursor, Chat entity, int offset) {
         entity.setChat_id(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setSend_time(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setFrom_user_id(cursor.getInt(offset + 2));
-        entity.setTo_user_id(cursor.getInt(offset + 3));
+        entity.setSend_time(cursor.getLong(offset + 1));
+        entity.setFrom_user_id(cursor.getLong(offset + 2));
+        entity.setTo_user_id(cursor.getLong(offset + 3));
         entity.setSender(cursor.getInt(offset + 4));
         entity.setContent(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }

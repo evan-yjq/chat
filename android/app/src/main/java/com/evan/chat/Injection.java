@@ -18,6 +18,10 @@ package com.evan.chat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.evan.chat.chat.domain.usecase.SendMessage;
+import com.evan.chat.data.source.Chat.ChatLocalDataSource;
+import com.evan.chat.data.source.Chat.ChatRemoteDataSource;
+import com.evan.chat.data.source.Chat.ChatRepository;
 import com.evan.chat.data.source.Friend.FriendLocalDataSource;
 import com.evan.chat.data.source.Friend.FriendRemoteDataSource;
 import com.evan.chat.data.source.Friend.FriendRepository;
@@ -52,6 +56,14 @@ public class Injection {
                         database.getFriendDao()));
     }
 
+    public static ChatRepository provideChatRepository(@NonNull Context context) {
+        checkNotNull(context);
+        DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
+        return ChatRepository.getInstance(ChatRemoteDataSource.getInstance(new AppExecutors()),
+                ChatLocalDataSource.getInstance(new AppExecutors(),
+                        database.getChatDao()));
+    }
+
     public static UseCaseHandler provideUseCaseHandler() {
         return UseCaseHandler.getInstance();
     }
@@ -66,5 +78,9 @@ public class Injection {
 
     public static GetFriends provideGetFriends(@NonNull Context context){
         return new GetFriends(provideFriendRepository(context));
+    }
+
+    public static SendMessage provideSendMessage(@NonNull Context context){
+        return new SendMessage(provideChatRepository(context));
     }
 }

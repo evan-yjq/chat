@@ -6,6 +6,8 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
 /**

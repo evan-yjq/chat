@@ -61,7 +61,7 @@ dependencies {
     //gson
     compile 'com.google.code.gson:gson:2.8.0'
     //fastjson Java上一个快速的JSON解析器/生成器
-//    compile 'com.alibaba:fastjson:1.1.56.android'
+    //    compile 'com.alibaba:fastjson:1.1.56.android'
     //数据库greendao
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'

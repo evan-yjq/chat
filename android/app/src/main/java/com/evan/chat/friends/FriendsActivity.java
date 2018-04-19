@@ -32,6 +32,7 @@ public class FriendsActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
 
     private FriendsPresenter mFriendsPresenter;
+    public static final String EXTRA_FRIEND_ID = "EXTRA_FRIEND_ID";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

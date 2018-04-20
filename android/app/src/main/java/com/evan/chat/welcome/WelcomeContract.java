@@ -4,6 +4,7 @@ package com.evan.chat.welcome;
 import android.graphics.Bitmap;
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
+import com.evan.chat.data.source.User.model.User;
 
 /**
  * Created by IntelliJ IDEA
@@ -21,13 +22,13 @@ public interface WelcomeContract {
 
         void showMessage(String msg);
 
-        void showLogView();
+        void showNextView();
     }
 
     interface Presenter extends BasePresenter {
 
-        Long getAutoUserId();
+        User getAutoUser();
 
-        void timeStop();
+        void timeStop() throws InterruptedException;
     }
 }

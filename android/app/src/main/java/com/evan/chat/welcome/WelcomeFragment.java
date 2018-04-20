@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.evan.chat.R;
+import com.evan.chat.friends.FriendsActivity;
 import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.logreg.LogRegActivity_;
 
@@ -34,7 +35,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
 
     }
 
-    public static WelcomeFragment newInstance(){
+    static WelcomeFragment newInstance(){
         return new WelcomeFragment();
     }
 
@@ -58,7 +59,11 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
         titleTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.timeStop();
+                try {
+                    presenter.timeStop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         return root;
@@ -75,9 +80,14 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
     }
 
     @Override
-    public void showLogView() {
-        Intent intent = new Intent(getContext(), LogRegActivity_.class);
-        intent.putExtra(LogRegActivity.EXTRA_USER_ID, presenter.getAutoUserId());
+    public void showNextView() {
+        Intent intent;
+        if (presenter.getAutoUser()==null)
+            intent = new Intent(getContext(), LogRegActivity_.class);
+        else {
+            intent = new Intent(getContext(), FriendsActivity.class);
+            intent.putExtra(LogRegActivity.EXTRA_USER_ID, presenter.getAutoUser().getId());
+        }
         startActivity(intent);
         getActivity().finish();
     }

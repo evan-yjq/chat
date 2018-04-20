@@ -1,9 +1,11 @@
 package com.evan.chat.welcome;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
@@ -15,6 +17,7 @@ import org.androidannotations.annotations.Fullscreen;
  * Date: 2018/2/19
  * Time: 下午1:23
  */
+@SuppressLint("Registered")
 @Fullscreen
 @EActivity(R.layout.welcome_act)
 public class WelcomeActivity extends AppCompatActivity {
@@ -31,6 +34,9 @@ public class WelcomeActivity extends AppCompatActivity {
             welcomeFragment = WelcomeFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),welcomeFragment,R.id.contentFrame);
         }
-        new WelcomePresenter(welcomeFragment);
+        new WelcomePresenter(welcomeFragment,
+                Injection.provideGetAutoUser(getApplicationContext()),
+                Injection.provideUseCaseHandler(),
+                Injection.provideSignInUser(getApplicationContext()));
     }
 }

@@ -2,7 +2,6 @@ package com.evan.chat.data.source.User;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.data.source.User.model.User;
-import com.evan.chat.logreg.domain.usecase.RegisterUser;
 
 import java.util.List;
 

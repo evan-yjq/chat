@@ -30,17 +30,19 @@ import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
 import com.evan.chat.friends.domain.usecase.GetFriends;
+import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
 import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.GreenDaoUtils;
+import com.evan.chat.welcome.domain.usecase.GetAutoUser;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
 
 public class Injection {
 
-    public static UserRepository provideUserRepository(@NonNull Context context) {
+    private static UserRepository provideUserRepository(@NonNull Context context) {
         checkNotNull(context);
         DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
         return UserRepository.getInstance(UserRemoteDataSource.getInstance(new AppExecutors()),
@@ -48,7 +50,7 @@ public class Injection {
                         database.getUserDao()));
     }
 
-    public static FriendRepository provideFriendRepository(@NonNull Context context) {
+    private static FriendRepository provideFriendRepository(@NonNull Context context) {
         checkNotNull(context);
         DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
         return FriendRepository.getInstance(FriendRemoteDataSource.getInstance(new AppExecutors()),
@@ -56,7 +58,7 @@ public class Injection {
                         database.getFriendDao()));
     }
 
-    public static ChatRepository provideChatRepository(@NonNull Context context) {
+    private static ChatRepository provideChatRepository(@NonNull Context context) {
         checkNotNull(context);
         DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
         return ChatRepository.getInstance(ChatRemoteDataSource.getInstance(new AppExecutors()),
@@ -82,5 +84,13 @@ public class Injection {
 
     public static SendMessage provideSendMessage(@NonNull Context context){
         return new SendMessage(provideChatRepository(context));
+    }
+
+    public static GetAutoUser provideGetAutoUser(@NonNull Context context){
+        return new GetAutoUser(provideUserRepository(context));
+    }
+
+    public static DeleteAllUser provideDeleteAllUser(@NonNull Context context){
+        return new DeleteAllUser(provideUserRepository(context));
     }
 }

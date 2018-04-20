@@ -12,9 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
+import com.evan.chat.UseCase;
+import com.evan.chat.logreg.LogRegActivity_;
+import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
 
@@ -48,9 +52,11 @@ public class FriendsActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle(R.string.friends_list_title);
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setTitle(R.string.friends_list_title);
+        }
 
         FriendsFragment friendsFragment = (FriendsFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
@@ -90,7 +96,10 @@ public class FriendsActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.sign_out_menu_item:
-//                        mFriendsPresenter.signOut();???
+                        signOut();
+                        break;
+                    case R.id.bind_face_menu_item:
+                        //todo bindFace();
                         break;
                     default:
                         break;
@@ -101,12 +110,37 @@ public class FriendsActivity extends AppCompatActivity{
         });
     }
 
+    private void signOut(){
+        Injection.provideUseCaseHandler().execute(Injection.provideDeleteAllUser(getApplicationContext()),
+                new DeleteAllUser.RequestValues(), new UseCase.UseCaseCallback<DeleteAllUser.ResponseValue>() {
+                    @Override
+                    public void onSuccess(DeleteAllUser.ResponseValue response) {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+        Intent intent = new Intent(this,LogRegActivity_.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-            mDrawerLayout.closeDrawers();
-            return;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            return true;
         }
-        super.onBackPressed();
+        return super.onKeyDown(keyCode, event);
     }
 }

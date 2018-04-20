@@ -38,7 +38,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
 
     }
 
-    public static LogFragment newInstance(){
+    static LogFragment newInstance(){
         return new LogFragment();
     }
 
@@ -102,7 +102,6 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
         intent.putExtra(EXTRA_USER_ID, id);
         startActivity(intent);
         getActivity().finish();
-//        showMessage("验证成功");
     }
 
     @Override

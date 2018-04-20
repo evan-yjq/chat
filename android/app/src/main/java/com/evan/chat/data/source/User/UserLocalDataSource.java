@@ -84,7 +84,14 @@ public class UserLocalDataSource implements UserDataSource {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mUserDao.save(user);
+                List<User> users = mUserDao.loadAll();
+                boolean b = false;
+                for (User u : users) {
+                    if (u.equals(user))
+                        b = true;
+                }
+                if (b) mUserDao.update(user);
+                else mUserDao.insert(user);
             }
         });
     }

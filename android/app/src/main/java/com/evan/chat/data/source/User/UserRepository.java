@@ -3,6 +3,8 @@ package com.evan.chat.data.source.User;
 import android.support.annotation.NonNull;
 import com.evan.chat.data.source.User.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.evan.chat.util.Objects.checkNotNull;
@@ -17,9 +19,9 @@ public class UserRepository implements UserDataSource {
 
     private static UserRepository INSTANCE = null;
 
-    private final UserDataSource mUserLocalDataSource;
+    private final UserDataSource local;
 
-    private final UserDataSource mUserRemoteDataSource;
+    private final UserDataSource remote;
 
     private User user;
 
@@ -27,8 +29,8 @@ public class UserRepository implements UserDataSource {
 
     private UserRepository(@NonNull UserDataSource userLocalDataSource,
                            @NonNull UserDataSource userRemoteDataSource) {
-        mUserLocalDataSource = checkNotNull(userLocalDataSource);
-        mUserRemoteDataSource = checkNotNull(userRemoteDataSource);
+        local = checkNotNull(userLocalDataSource);
+        remote = checkNotNull(userRemoteDataSource);
     }
 
     public static UserRepository getInstance(@NonNull UserDataSource userRemoteDataSource,
@@ -41,7 +43,13 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void getUsers(@NonNull LoadAllUserCallback callback) {
-
+        checkNotNull(callback);
+        if (user!=null){
+            List<User> users = new ArrayList<>();
+            users.add(user);
+            callback.onAllUserLoaded(users);
+        }else
+            local.getUsers(callback);
     }
 
     @Override
@@ -61,7 +69,7 @@ public class UserRepository implements UserDataSource {
 
     @Override
     public void deleteAllUser() {
-
+        local.deleteAllUser();
     }
 
     @Override
@@ -69,22 +77,11 @@ public class UserRepository implements UserDataSource {
         checkNotNull(account);
         checkNotNull(password);
         checkNotNull(callback);
-//        if () {
-            mUserRemoteDataSource.check(account, password, callback);
-//        } else {
-//            mUserLocalDataSource.check(account, password, callback);
-//        }
-    }
-
-    @Override
-    public void register(@NonNull String account, @NonNull String password, @NonNull String email, @NonNull final Callback callback) {
-        checkNotNull(account);
-        checkNotNull(password);
-        checkNotNull(callback);
-        mUserRemoteDataSource.register(account, password, email, new Callback() {
+        remote.check(account, password, new Callback() {
             @Override
-            public void onSuccess(User user) {
-                mUserLocalDataSource.saveUser(user);
+            public void onSuccess(User u) {
+                user = u;
+                local.saveUser(user);
                 callback.onSuccess(user);
             }
 
@@ -93,6 +90,14 @@ public class UserRepository implements UserDataSource {
                 callback.onFail(log);
             }
         });
+    }
+
+    @Override
+    public void register(@NonNull String account, @NonNull String password, @NonNull String email, @NonNull final Callback callback) {
+        checkNotNull(account);
+        checkNotNull(password);
+        checkNotNull(callback);
+        remote.register(account, password, email, callback);
     }
 
     @Override

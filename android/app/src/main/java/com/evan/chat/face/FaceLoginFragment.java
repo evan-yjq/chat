@@ -214,7 +214,7 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
                             FileOutputStream fos = new FileOutputStream(pictureFile);
                             saveBMPpicture(fos, bit);
                             fos.close();
-                            String str = UploadUtil.uploadFile(pictureFile, "http://115.28.216.244:3000/user/face_upload");
+                            String str = UploadUtil.uploadFile(pictureFile, PropertiesUtils.getInstance().getProperty("face_upload",true));
                             if (str.equals("ok"))uploadSuccessNum++;
                         } catch (Exception error) {
                             showMessage("拍照失败");

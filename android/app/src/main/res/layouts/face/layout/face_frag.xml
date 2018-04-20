@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/all"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <SurfaceView
+                android:id="@+id/my_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <RelativeLayout
+            android:id="@+id/homecamera_bottom_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+            <Button
+                    android:id="@+id/bind_button"
+                    android:text="@string/start_bind_face"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+            <!-- Login progress -->
+            <ProgressBar
+                    android:id="@+id/bind_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:progress="10"
+                    android:max="100"
+                    android:visibility="gone"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

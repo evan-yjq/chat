@@ -31,6 +31,7 @@ android {
                     'src/main/res/layouts/welcome',
                     'src/main/res/layouts/logreg',
                     'src/main/res/layouts/friends',
+                    'src/main/res/layouts/face',
                     'src/main/res/layouts/chat',
                     'src/main/res'
             ]

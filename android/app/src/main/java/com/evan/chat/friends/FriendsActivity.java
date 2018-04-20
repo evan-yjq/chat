@@ -17,11 +17,15 @@ import android.view.MenuItem;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
+import com.evan.chat.face.FaceAcitivity;
 import com.evan.chat.logreg.LogRegActivity_;
 import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
 
+import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_LOGIN;
+import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_REGISTER;
+import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_VIEW;
 import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 
 /**
@@ -34,6 +38,7 @@ import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 public class FriendsActivity extends AppCompatActivity{
 
     private DrawerLayout mDrawerLayout;
+    private Long userId;
 
     private FriendsPresenter mFriendsPresenter;
     public static final String EXTRA_FRIEND_ID = "EXTRA_FRIEND_ID";
@@ -46,7 +51,7 @@ public class FriendsActivity extends AppCompatActivity{
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        Long userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
+        userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -94,13 +99,22 @@ public class FriendsActivity extends AppCompatActivity{
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.sign_out_menu_item:
                         signOut();
                         break;
                     case R.id.bind_face_menu_item:
-                        //todo bindFace();
+                        intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
+                        intent.putExtra(EXTRA_USER_ID,userId);
+                        intent.putExtra(EXTRA_FACE_VIEW,EXTRA_FACE_REGISTER);
+                        startActivity(intent);
                         break;
+                    case R.id.judg_face_menu_item:
+                        intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
+                        intent.putExtra(EXTRA_USER_ID,userId);
+                        intent.putExtra(EXTRA_FACE_VIEW,EXTRA_FACE_LOGIN);
+                        startActivity(intent);
                     default:
                         break;
                 }

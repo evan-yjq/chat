@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.evan.chat">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -32,6 +37,8 @@
         <activity android:name=".friends.FriendsActivity"/>
 
         <activity android:name=".chat.ChatActivity"/>
+
+        <activity android:name=".face.FaceAcitivity"/>
 
     </application>
 

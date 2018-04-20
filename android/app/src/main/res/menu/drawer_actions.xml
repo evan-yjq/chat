@@ -7,11 +7,12 @@
             android:icon="@drawable/ic_face_black_24dp"
             android:title="@string/bind_face" />
     <item
+            android:id="@+id/judg_face_menu_item"
+            android:icon="@drawable/ic_enhanced_encryption_black_24dp"
+            android:title="@string/judg_face" />
+    <item
         android:id="@+id/sign_out_menu_item"
         android:icon="@drawable/ic_sign_out_black_24dp"
         android:title="@string/sign_out" />
-    <!--<item-->
-        <!--android:id="@+id/settings_navigation_menu_item"-->
-        <!--android:icon="@drawable/ic_settings"-->
-        <!--android:title="@string/settings_list_title" />-->
+
 </menu>

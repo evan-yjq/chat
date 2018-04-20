@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', user);
 app.use('/search', search);
+app.use(bodyParser({uploadDir:'./faceId'}));
 
 // catch 404 and forward to error handler
 app.use(function (req, res) {

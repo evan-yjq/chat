@@ -45,6 +45,7 @@ router.route('/face_dist').post(function(req, res){
             console.log('exec error: ' + error);
         }
         var arr = stdout.split('\n');
+        console.log(arr);
         res.send(arr[arr.length-1]);
     });
 });

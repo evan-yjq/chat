@@ -117,6 +117,7 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
                         Thread.sleep(500);
                     }
                     bind.sendEmptyMessageDelayed(2, 0);
+                    uploadSuccessNum=0;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -142,12 +143,14 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
 
                             @Override
                             public void onResponse(String s, int i) {
+                                System.out.println(s);
                                 if ("true".equals(s)) {
                                     showMessage("鉴定成功");
                                 }else{
                                     showMessage("不是本人");
                                 }
                                 showProgress(false);
+                                barNum=0;
                             }
                         });
             }

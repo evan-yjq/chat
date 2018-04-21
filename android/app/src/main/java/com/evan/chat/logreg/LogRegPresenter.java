@@ -166,7 +166,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
 
     //设定密码长度
     private boolean isPasswordValid(String password) {
-        return password.length() > 2;
+        return password.length() >= 6;
     }
 
     //检测邮箱格式

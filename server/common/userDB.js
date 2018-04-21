@@ -37,7 +37,7 @@ function search(keyword) {
 
 //新增用户
 function put(account, password, email) {
-    promiseQuery(sql.CHECK,[account,email])
+    return promiseQuery(sql.CHECK,[account,email])
         .then(function (re) {
             if (re === undefined || re.length === 0){
                 return promiseQuery(sql.INSERT, [account, password, email]);
@@ -72,7 +72,7 @@ function update(id, account, password, email) {
     if (a === '') {
         return Promise.reject('未作任何修改');
     } else {
-        promiseQuery(sql.SELECT2, [username, id])
+        return promiseQuery(sql.SELECT2, [username, id])
             .then(function (data) {
                 if (data.length > 0) {
                     return Promise.reject('用户名已存在');

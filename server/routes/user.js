@@ -10,7 +10,7 @@ router.route('/sign_in').post(function (req, res) {
                 res.send(data[0]);
             }
         }).catch(function () {
-
+            res.send(null)
         });
 });
 
@@ -22,7 +22,7 @@ router.route('/register').post(function (req, res) {
                 res.send(data.insertId+"");
             }
         }).catch(function () {
-
+            res.send(null)
         })
 });
 
@@ -33,7 +33,7 @@ router.route('/get_friends').post(function (req, res) {
                 res.send(data);
             }
         }).catch(function () {
-
+            res.send(null)
         })
 });
 

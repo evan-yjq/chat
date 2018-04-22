@@ -32,7 +32,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     private final SignInUser signInUser;
     private final UseCaseHandler useCaseHandler;
 
-    private boolean mFirstStart = true;
+    private boolean mAutoSignLock = true;
     private User autoUser;
 
     private AppExecutors appExecutors;
@@ -95,13 +95,13 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
                                     @Override
                                     public void onSuccess(SignInUser.ResponseValue response) {
                                         autoUser = response.getUser();
-                                        mFirstStart = false;
+                                        mAutoSignLock = false;
                                     }
 
                                     @Override
                                     public void onError() {
                                         autoUser = null;
-                                        mFirstStart = false;
+                                        mAutoSignLock = false;
                                     }
                                 });
                     }
@@ -109,7 +109,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
                     @Override
                     public void onError() {
                         autoUser = null;
-                        mFirstStart = false;
+                        mAutoSignLock = false;
                     }
                 });
     }
@@ -133,7 +133,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
 
     @Override
     public void timeStop() throws InterruptedException {
-        while(mFirstStart)
+        while(mAutoSignLock)
             Thread.sleep(300);
         timer.cancel();
         if (view.isActive())

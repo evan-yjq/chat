@@ -21,11 +21,9 @@ import com.evan.chat.face.FaceAcitivity;
 import com.evan.chat.logreg.LogRegActivity_;
 import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
 import com.evan.chat.util.ActivityUtils;
-import org.androidannotations.annotations.EActivity;
-
-import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_LOGIN;
-import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_REGISTER;
 import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_VIEW;
+import static com.evan.chat.face.FaceFragment.DIST;
+import static com.evan.chat.face.FaceFragment.TRAIN;
 import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 
 /**
@@ -107,13 +105,13 @@ public class FriendsActivity extends AppCompatActivity{
                     case R.id.bind_face_menu_item:
                         intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
                         intent.putExtra(EXTRA_USER_ID,userId);
-                        intent.putExtra(EXTRA_FACE_VIEW,EXTRA_FACE_REGISTER);
+                        intent.putExtra(EXTRA_FACE_VIEW,TRAIN);
                         startActivity(intent);
                         break;
                     case R.id.judg_face_menu_item:
                         intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
                         intent.putExtra(EXTRA_USER_ID,userId);
-                        intent.putExtra(EXTRA_FACE_VIEW,EXTRA_FACE_LOGIN);
+                        intent.putExtra(EXTRA_FACE_VIEW,DIST);
                         startActivity(intent);
                     default:
                         break;

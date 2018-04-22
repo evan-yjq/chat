@@ -1,40 +1,28 @@
 package com.evan.chat.face;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import com.evan.chat.R;
-import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.CameraUtil;
-import com.evan.chat.util.PropertiesUtils;
-import com.evan.chat.util.UploadUtil;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-import okhttp3.Call;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static android.content.ContentValues.TAG;
-import static com.evan.chat.face.FaceRegisterFragment.DIST;
-import static com.evan.chat.face.FaceRegisterFragment.saveBMPpicture;
 
 /**
  * Created by IntelliJ IDEA
@@ -42,28 +30,32 @@ import static com.evan.chat.face.FaceRegisterFragment.saveBMPpicture;
  * Date: 2018/4/20
  * Time: 11:54
  */
-public class FaceLoginFragment extends Fragment implements FaceContratct.View , SurfaceHolder.Callback{
+public class FaceFragment extends Fragment implements FaceContratct.View , SurfaceHolder.Callback{
+
+    public final static int TRAIN = 1;
+    public final static int DIST = 2;
 
     private FaceContratct.Presenter presenter;
 
     private SurfaceView surfaceView;
     private RelativeLayout all;
-    private Button startBind;
+    private Button button;
     private ProgressBar bar;
 
     private SurfaceHolder mHolder;
 
     private Camera mCamera;
     private int mCameraId = 1;
-    //屏幕宽高
     private int screenWidth;
 
-    public FaceLoginFragment(){
+    private int type;
 
+    public FaceFragment(int type){
+        this.type = type;
     }
 
-    public static FaceLoginFragment getInstance(){
-        return new FaceLoginFragment();
+    public static FaceFragment getInstance(int type){
+        return new FaceFragment(type);
     }
 
     @Nullable
@@ -72,113 +64,50 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
         View root = inflater.inflate(R.layout.face_frag,container,false);
         surfaceView= root.findViewById(R.id.my_view);
         all = root.findViewById(R.id.all);
-        startBind = root.findViewById(R.id.bind_button);
-        startBind.setText("开始鉴定");
+        button = root.findViewById(R.id.button);
+        if (type == TRAIN) button.setText("开始绑定");
+        else button.setText("开始鉴定");
         bar = root.findViewById(R.id.bind_progress);
 
         mHolder = surfaceView.getHolder();
         mHolder.addCallback(this);
         initData();
 
-        startBind.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgress(true);
-                upload();
+                presenter.buttonOnClick(type);
             }
         });
         return root;
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler bind = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    captrue();
-                    setAnimation(bar, 50, 2500);
-                    break;
-                case 2:
-                    dist();
-                    setAnimation(bar,50,5000);
-                    break;
-            }
-        }
-    };
-
-    private void upload(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    bind.sendEmptyMessageDelayed(1,0);
-                    while(uploadSuccessNum != 1) {
-                        Thread.sleep(500);
-                    }
-                    bind.sendEmptyMessageDelayed(2, 0);
-                    uploadSuccessNum=0;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private int uploadSuccessNum = 0;
-    private AppExecutors appExecutors = new AppExecutors();
-    private void dist(){
-        appExecutors.networkIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                OkHttpUtils.post()
-                        .url(PropertiesUtils.getInstance().getProperty("face_dist", true))
-                        .addParams("userId",presenter.getUserId()+"")
-                        .addParams("type",DIST+"").build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int i) {
-                                showMessage("人脸不够清晰");
-                            }
-
-                            @Override
-                            public void onResponse(String s, int i) {
-                                System.out.println(s);
-                                if ("true".equals(s)) {
-                                    showMessage("鉴定成功");
-                                }else{
-                                    showMessage("不是本人");
-                                }
-                                showProgress(false);
-                                barNum=0;
-                            }
-                        });
-            }
-        });
-    }
-
-    private int barNum = 0;
-    private void setAnimation(final ProgressBar view, final int mProgressBar, int millis) {
+    private int barNum;
+    @Override
+    public void setAnimation(final int mProgressBar, int millis) {
         ValueAnimator animator = ValueAnimator.ofInt(barNum, barNum+mProgressBar).setDuration(millis);
         barNum += mProgressBar;
 
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                view.setProgress((int) valueAnimator.getAnimatedValue());
+                bar.setProgress((int) valueAnimator.getAnimatedValue());
             }
         });
         animator.start();
     }
 
-    private void showProgress(boolean show) {
-        startBind.setVisibility(show ? View.GONE : View.VISIBLE);
+    @Override
+    public void showProgress(boolean show) {
+        button.setVisibility(show ? View.GONE : View.VISIBLE);
         bar.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (show)barNum = 0;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        presenter.start();
         if (mCamera == null) {
             mCamera = getCamera(mCameraId);
             if (mHolder != null) {
@@ -193,11 +122,13 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
         releaseCamera();
     }
 
-    private void showMessage(String msg){
+    @Override
+    public void showMessage(String msg){
         Snackbar.make(all,msg, Snackbar.LENGTH_LONG).show();
     }
 
-    private void captrue() {
+    @Override
+    public void captrue() {
         mCamera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
@@ -205,27 +136,7 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
                 final Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 // 创建并保存图片文件
                 final File pictureFile = new File(getDir(), presenter.getUserId()+"-get.bmp");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Matrix matrix = new Matrix();
-                            matrix.setScale(0.4f, 0.4f);
-//                         将得到的照片进行270°旋转，使其竖直
-                            matrix.preRotate(270);
-                            Bitmap bit = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                            FileOutputStream fos = new FileOutputStream(pictureFile);
-                            saveBMPpicture(fos, bit);
-                            fos.close();
-                            String str = UploadUtil.uploadFile(pictureFile, PropertiesUtils.getInstance().getProperty("face_upload",true));
-                            if (str.equals("ok"))uploadSuccessNum++;
-                        } catch (Exception error) {
-                            showMessage("拍照失败");
-                            Log.i(TAG, "保存照片失败" + error.toString());
-                            error.printStackTrace();
-                        }
-                    }
-                }).start();
+                presenter.upload(bitmap, pictureFile);
             }
         });
     }
@@ -257,9 +168,7 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
         return isAdded();
     }
 
-    /**
-     * 设置
-     */
+    // 设置
     private void setupCamera(Camera camera) {
         Camera.Parameters parameters = camera.getParameters();
 
@@ -277,40 +186,36 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
 
         camera.setParameters(parameters);
 
-        /**
+        /*
          * 设置surfaceView的尺寸 因为camera默认是横屏，所以取得支持尺寸也都是横屏的尺寸
          * 我们在startPreview方法里面把它矫正了过来，但是这里我们设置设置surfaceView的尺寸的时候要注意 previewSize.height<previewSize.width
          * previewSize.width才是surfaceView的高度
          * 一般相机都是屏幕的宽度 这里设置为屏幕宽度 高度自适应 你也可以设置自己想要的大小
-         *
          */
 
         int picHeight = (screenWidth * pictrueSize.width) / pictrueSize.height;
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, (screenWidth * pictrueSize.width) / pictrueSize.height);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, picHeight);
         //这里当然可以设置拍照位置 比如居中 我这里就置顶了
         //params.gravity = Gravity.CENTER;
         surfaceView.setLayoutParams(params);
     }
 
-    /**
-     * 获取Camera实例
-     *
-     * @return
-     */
+    // 获取Camera实例
     private Camera getCamera(int id) {
         Camera camera = null;
+        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
         try {
             camera = Camera.open(id);
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
+            getActivity().finish();
         }
         return camera;
     }
 
-    /**
-     * 释放相机资源
-     */
+     // 释放相机资源
     private void releaseCamera() {
         if (mCamera != null) {
             mCamera.setPreviewCallback(null);
@@ -320,9 +225,7 @@ public class FaceLoginFragment extends Fragment implements FaceContratct.View , 
         }
     }
 
-    /**
-     * 预览相机
-     */
+    // 预览相机
     private void startPreview(Camera camera, SurfaceHolder holder) {
         try {
             setupCamera(camera);

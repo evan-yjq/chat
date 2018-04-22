@@ -1,7 +1,10 @@
 package com.evan.chat.face;
 
+import android.graphics.Bitmap;
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
+
+import java.io.File;
 
 /**
  * Created by IntelliJ IDEA
@@ -14,9 +17,21 @@ public interface FaceContratct {
 
     interface View extends BaseView<Presenter>{
 
+        void showProgress(boolean show);
+
+        void showMessage(String msg);
+
+        void captrue();
+
+        void setAnimation(int mProgressBar, int millis);
     }
 
     interface Presenter extends BasePresenter {
+
         long getUserId();
+
+        void buttonOnClick(int type);
+
+        void upload(Bitmap bitmap, File pictureFile);
     }
 }

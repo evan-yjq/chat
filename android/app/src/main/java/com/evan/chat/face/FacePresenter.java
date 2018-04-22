@@ -3,6 +3,7 @@ package com.evan.chat.face;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.PropertiesUtils;
 import com.evan.chat.util.UploadUtil;
@@ -30,9 +31,10 @@ public class FacePresenter implements FaceContratct.Presenter{
     private AppExecutors appExecutors;
     private int uploadSuccessNum;
 
-    FacePresenter(@NonNull FaceContratct.View view, long userId){
+    FacePresenter(@NonNull FaceContratct.View view, @NonNull User user){
         this.view = checkNotNull(view,"view cannot be null!");
-        this.userId = userId;
+        checkNotNull(user,"user cannot be null!");
+        this.userId = user.getId();
         view.setPresenter(this);
     }
 

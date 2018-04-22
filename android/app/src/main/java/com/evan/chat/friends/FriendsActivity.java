@@ -14,17 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
-import com.evan.chat.face.FaceAcitivity;
-import com.evan.chat.logreg.LogRegActivity_;
+import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.face.FaceActivity_;
+import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
+import com.evan.chat.settings.SettingsActivity;
 import com.evan.chat.util.ActivityUtils;
-import static com.evan.chat.face.FaceAcitivity.EXTRA_FACE_VIEW;
+import static com.evan.chat.face.FaceActivity.EXTRA_FACE_VIEW;
 import static com.evan.chat.face.FaceFragment.DIST;
 import static com.evan.chat.face.FaceFragment.TRAIN;
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -36,10 +41,10 @@ import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
 public class FriendsActivity extends AppCompatActivity{
 
     private DrawerLayout mDrawerLayout;
-    private Long userId;
+    private User user;
 
     private FriendsPresenter mFriendsPresenter;
-    public static final String EXTRA_FRIEND_ID = "EXTRA_FRIEND_ID";
+    public static final String EXTRA_FRIEND = "EXTRA_FRIEND";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class FriendsActivity extends AppCompatActivity{
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
+        user = (User) getIntent().getSerializableExtra(EXTRA_USER);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -71,7 +76,7 @@ public class FriendsActivity extends AppCompatActivity{
         mFriendsPresenter = new FriendsPresenter(friendsFragment,
                 Injection.provideUseCaseHandler(),
                 Injection.provideGetFriends(getApplicationContext()),
-                userId);
+                user);
 
         //设置侧边栏
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -79,6 +84,14 @@ public class FriendsActivity extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
+            View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+            TextView text = headerLayout.findViewById(R.id.nav_header_text);
+            String nickname = user.getNickname();
+            if (nickname==null||nickname.isEmpty()){
+                text.setText(user.getAccount());
+            }else{
+                text.setText(nickname);
+            }
         }
     }
 
@@ -103,15 +116,19 @@ public class FriendsActivity extends AppCompatActivity{
                         signOut();
                         break;
                     case R.id.bind_face_menu_item:
-                        intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
-                        intent.putExtra(EXTRA_USER_ID,userId);
+                        intent = new Intent(FriendsActivity.this, FaceActivity_.class);
+                        intent.putExtra(EXTRA_USER,user);
                         intent.putExtra(EXTRA_FACE_VIEW,TRAIN);
                         startActivity(intent);
                         break;
                     case R.id.judg_face_menu_item:
-                        intent = new Intent(FriendsActivity.this, FaceAcitivity.class);
-                        intent.putExtra(EXTRA_USER_ID,userId);
+                        intent = new Intent(FriendsActivity.this, FaceActivity_.class);
+                        intent.putExtra(EXTRA_USER,user);
                         intent.putExtra(EXTRA_FACE_VIEW,DIST);
+                        startActivity(intent);
+                        break;
+                    case R.id.settings_menu_item:
+                        intent = new Intent(FriendsActivity.this, SettingsActivity.class);
                         startActivity(intent);
                     default:
                         break;
@@ -135,7 +152,7 @@ public class FriendsActivity extends AppCompatActivity{
 
                     }
                 });
-        Intent intent = new Intent(this,LogRegActivity_.class);
+        Intent intent = new Intent(this,LogRegActivity.class);
         startActivity(intent);
         finish();
     }

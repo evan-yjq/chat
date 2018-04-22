@@ -11,6 +11,7 @@ import com.evan.chat.UseCaseHandler;
 import com.evan.chat.logreg.domain.usecase.RegisterUser;
 import com.evan.chat.logreg.domain.usecase.SignInUser;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,26 +35,21 @@ public class LogRegPresenter implements LogRegContract.Presenter{
 
     private final UseCaseHandler mUseCaseHandler;
 
-    private final Long userId;
-
     LogRegPresenter(@NonNull LogRegContract.LogView logView, @NonNull LogRegContract.RegView regView,
                     @NonNull SignInUser signInUser, @NonNull RegisterUser registerUser,
-                    @NonNull UseCaseHandler useCaseHandler, Long userId) {
+                    @NonNull UseCaseHandler useCaseHandler) {
         this.logView = checkNotNull(logView,"LogView cannot be null!");
         this.regView = checkNotNull(regView,"RegView cannot be null!");
         this.signInUser = checkNotNull(signInUser,"signInUser cannot be null!");
         this.registerUser = checkNotNull(registerUser,"registerUser cannot be null!");
         mUseCaseHandler = checkNotNull(useCaseHandler,"useCaseHandler cannot be null!");
-        this.userId = checkNotNull(userId,"userId cannot be null!");
         logView.setPresenter(this);
         regView.setPresenter(this);
     }
 
     @Override
     public void start() {
-//        if (userId != 0){
-            // todo 1.从本地获取账号信息 2.if(联网){然后执行attemptLog()}，else{登陆本地账号}
-//        }
+
     }
 
     //切换登陆注册界面
@@ -61,14 +57,14 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     public void Switching(String key){
         if (LOG_FRAG.equals(key)){
             FragmentManager mManager = ((Fragment)regView).getFragmentManager();
-            FragmentTransaction ft = mManager.beginTransaction();
+            FragmentTransaction ft = Objects.requireNonNull(mManager).beginTransaction();
             ft.setCustomAnimations(R.anim.in_from_left,R.anim.out_to_right);
             ft.replace(R.id.contentFrame, (Fragment) logView);
             ft.commit();
             LOG_REG_SWITCH = (Fragment) regView;
         }else if(REG_FRAG.equals(key)){
             FragmentManager mManager = ((Fragment)logView).getFragmentManager();
-            FragmentTransaction ft = mManager.beginTransaction();
+            FragmentTransaction ft = Objects.requireNonNull(mManager).beginTransaction();
             ft.setCustomAnimations(R.anim.in_from_right,R.anim.out_to_left);
             ft.replace(R.id.contentFrame, (Fragment) regView);
             ft.commit();
@@ -80,7 +76,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     @Override
     public void attemptLog(String account, String password) {
         boolean cancel = false;
-        if (!isPasswordValid(password)) {
+        if (isPasswordNotValid(password)) {
             logView.showPasswordError(R.string.error_invalid_password);
             cancel = true;
         }
@@ -100,7 +96,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     @Override
     public void attemptReg(String account, String password, String email) {
         boolean cancel = false;
-        if (!isPasswordValid(password)) {
+        if (isPasswordNotValid(password)) {
             regView.showPasswordError(R.string.error_invalid_password);
             cancel = true;
         }
@@ -127,7 +123,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                     @Override
                     public void onSuccess(SignInUser.ResponseValue response) {
                         if (logView.isActive()){
-                            logView.signInSuccess(response.getUser().getId());
+                            logView.signInSuccess(response.getUser());
                             logView.showProgress(false);
                         }
                     }
@@ -165,8 +161,8 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     }
 
     //设定密码长度
-    private boolean isPasswordValid(String password) {
-        return password.length() >= 6;
+    private boolean isPasswordNotValid(String password) {
+        return password.length() < 6;
     }
 
     //检测邮箱格式

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.evan.chat.R;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.friends.FriendsActivity;
 
 import java.util.Objects;
 
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
 
 /**
@@ -54,7 +56,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.log_frag,container,false);
         mAccountView = root.findViewById(R.id.account);
         mPasswordView = root.findViewById(R.id.password);
@@ -97,11 +99,11 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     }
 
     @Override
-    public void signInSuccess(Long id) {
+    public void signInSuccess(User user) {
         Intent intent = new Intent(getContext(), FriendsActivity.class);
-        intent.putExtra(EXTRA_USER_ID, id);
+        intent.putExtra(EXTRA_USER, user);
         startActivity(intent);
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @Override

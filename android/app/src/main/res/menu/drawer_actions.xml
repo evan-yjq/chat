@@ -3,13 +3,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/bind_face_menu_item"
-            android:icon="@drawable/ic_face_black_24dp"
-            android:title="@string/bind_face" />
+        android:id="@+id/bind_face_menu_item"
+        android:icon="@drawable/ic_face_black_24dp"
+        android:title="@string/bind_face" />
     <item
-            android:id="@+id/judg_face_menu_item"
-            android:icon="@drawable/ic_enhanced_encryption_black_24dp"
-            android:title="@string/judg_face" />
+        android:id="@+id/judg_face_menu_item"
+        android:icon="@drawable/ic_enhanced_encryption_black_24dp"
+        android:title="@string/judg_face" />
+
+    <item
+        android:id="@+id/settings_menu_item"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings"/>
+
     <item
         android:id="@+id/sign_out_menu_item"
         android:icon="@drawable/ic_sign_out_black_24dp"

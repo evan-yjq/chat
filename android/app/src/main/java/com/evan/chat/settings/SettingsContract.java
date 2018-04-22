@@ -1,5 +1,8 @@
 package com.evan.chat.settings;
 
+import com.evan.chat.BasePresenter;
+import com.evan.chat.BaseView;
+
 /**
  * Created by IntelliJ IDEA
  * User: Evan
@@ -7,4 +10,12 @@ package com.evan.chat.settings;
  * Time: 14:54
  */
 public interface SettingsContract {
+
+    interface View extends BaseView<Presenter>{
+
+    }
+
+    interface Presenter extends BasePresenter{
+
+    }
 }

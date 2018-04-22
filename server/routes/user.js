@@ -8,6 +8,8 @@ router.route('/sign_in').post(function (req, res) {
         .then(function (data) {
             if (data.length > 0 && data[0].password === req.body.password) {
                 res.send(data[0]);
+            }else{
+                res.send(null)
             }
         }).catch(function () {
             res.send(null)
@@ -20,6 +22,8 @@ router.route('/register').post(function (req, res) {
         .then(function (data) {
             if (data !== undefined){
                 res.send(data.insertId+"");
+            }else{
+                res.send(null)
             }
         }).catch(function () {
             res.send(null)
@@ -31,6 +35,8 @@ router.route('/get_friends').post(function (req, res) {
         .then(function (data) {
             if (data !== undefined && data.length > 0){
                 res.send(data);
+            }else{
+                res.send(null)
             }
         }).catch(function () {
             res.send(null)
@@ -40,7 +46,7 @@ router.route('/get_friends').post(function (req, res) {
 var process = require('child_process');
 
 router.route('/face_dist').post(function(req, res){
-    process.exec('/home/face/cmake-build-debug/face '+req.body.userId+' '+ req.body.type,function (error, stdout, stderr) {
+    process.exec('/home/face/cmake-build-debug/face '+req.body.userId+' '+ req.body.type,function (error, stdout) {
         if (error !== null) {
             console.log('exec error: ' + error);
         }
@@ -63,7 +69,6 @@ router.post('/face_upload',function (req,res) {
     form.maxFilesSize = 10 * 1024 * 1024;
     //上传后处理
     form.parse(req, function(err, fields, files) {
-        var filesTemp = JSON.stringify(files, null, 2);
         if(err) {
             console.log('parse error:' + err);
         }else {

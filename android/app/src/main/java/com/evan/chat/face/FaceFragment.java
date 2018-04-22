@@ -7,21 +7,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.*;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.*;
 import com.evan.chat.R;
 import com.evan.chat.util.CameraUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 
 /**
@@ -38,7 +36,6 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     private FaceContratct.Presenter presenter;
 
     private SurfaceView surfaceView;
-    private RelativeLayout all;
     private Button button;
     private ProgressBar bar;
 
@@ -54,16 +51,15 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
         this.type = type;
     }
 
-    public static FaceFragment getInstance(int type){
+    public static FaceFragment newInstance(int type){
         return new FaceFragment(type);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.face_frag,container,false);
         surfaceView= root.findViewById(R.id.my_view);
-        all = root.findViewById(R.id.all);
         button = root.findViewById(R.id.button);
         if (type == TRAIN) button.setText("开始绑定");
         else button.setText("开始鉴定");
@@ -124,7 +120,9 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
 
     @Override
     public void showMessage(String msg){
-        Snackbar.make(all,msg, Snackbar.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(getContext(), msg, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -143,7 +141,7 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
 
     // 获取文件夹
     private File getDir() {
-        File filesDir = getActivity().getFilesDir();
+        File filesDir = Objects.requireNonNull(getActivity()).getFilesDir();
 
         if (filesDir.exists()) {
             return filesDir;
@@ -154,7 +152,7 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     }
 
     private void initData() {
-        DisplayMetrics dm = getActivity().getResources().getDisplayMetrics();
+        DisplayMetrics dm = Objects.requireNonNull(getActivity()).getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
     }
 
@@ -204,8 +202,10 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     // 获取Camera实例
     private Camera getCamera(int id) {
         Camera camera = null;
-        if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        if(ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
         try {
             camera = Camera.open(id);

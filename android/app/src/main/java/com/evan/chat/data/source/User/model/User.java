@@ -2,6 +2,7 @@ package com.evan.chat.data.source.User.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import org.greenrobot.greendao.annotation.Generated;
@@ -14,8 +15,8 @@ import org.greenrobot.greendao.annotation.Id;
  * Time: 下午1:37
  */
 @Entity
-public class User {
-
+public class User implements Serializable {
+    private static final long serialVersionUID = 2L;
     @Id
     private Long id;
     private String account;

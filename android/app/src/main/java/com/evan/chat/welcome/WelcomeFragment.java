@@ -3,6 +3,7 @@ package com.evan.chat.welcome;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,9 +15,10 @@ import android.widget.TextView;
 import com.evan.chat.R;
 import com.evan.chat.friends.FriendsActivity;
 import com.evan.chat.logreg.LogRegActivity;
-import com.evan.chat.logreg.LogRegActivity_;
 
 import java.util.Objects;
+
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -52,7 +54,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.welcome_frag,container,false);
         welcomeIV = root.findViewById(R.id.welcome_image);
         titleTV = root.findViewById(R.id.welcome_title);
@@ -83,13 +85,13 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
     public void showNextView() {
         Intent intent;
         if (presenter.getAutoUser()==null)
-            intent = new Intent(getContext(), LogRegActivity_.class);
+            intent = new Intent(getContext(), LogRegActivity.class);
         else {
             intent = new Intent(getContext(), FriendsActivity.class);
-            intent.putExtra(LogRegActivity.EXTRA_USER_ID, presenter.getAutoUser().getId());
+            intent.putExtra(EXTRA_USER, presenter.getAutoUser());
         }
         startActivity(intent);
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @Override

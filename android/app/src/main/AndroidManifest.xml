@@ -32,13 +32,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".logreg.LogRegActivity_"/>
+        <activity android:name=".logreg.LogRegActivity"/>
 
         <activity android:name=".friends.FriendsActivity"/>
 
         <activity android:name=".chat.ChatActivity"/>
 
-        <activity android:name=".face.FaceAcitivity"/>
+        <activity android:name=".face.FaceActivity_"/>
+
+        <activity android:name=".settings.SettingsActivity"/>
 
     </application>
 

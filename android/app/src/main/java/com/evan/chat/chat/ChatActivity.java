@@ -9,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.util.ActivityUtils;
 
-import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND_ID;
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER_ID;
+import java.util.Objects;
+
+import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND;
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -30,16 +33,14 @@ public class ChatActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        Friend friend = (Friend) getIntent().getBundleExtra("friend").getSerializable("friend");
-
-        Long userId = getIntent().getLongExtra(EXTRA_USER_ID,0);
-        Long friendID = getIntent().getLongExtra(EXTRA_FRIEND_ID,0);
+        User user = (User) getIntent().getSerializableExtra(EXTRA_USER);
+        Friend friend = (Friend) getIntent().getSerializableExtra(EXTRA_FRIEND);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         if ("".equals(friend.getNickname()))
             ab.setTitle(friend.getAccount());
@@ -52,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),chatFragment,R.id.contentFrame);
         }
 
-        new ChatPresenter(chatFragment, userId, friendID,
+        new ChatPresenter(chatFragment, user, friend,
                 Injection.provideSendMessage(getApplicationContext()),
                 Injection.provideUseCaseHandler());
 

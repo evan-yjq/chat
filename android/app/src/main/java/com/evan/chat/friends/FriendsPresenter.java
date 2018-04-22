@@ -3,6 +3,7 @@ package com.evan.chat.friends;
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.friends.domain.usecase.GetFriends;
 import com.evan.chat.util.AppExecutors;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -22,15 +23,20 @@ public class FriendsPresenter implements FriendsContract.Presenter{
 
     private final GetFriends getFriends;
     private final UseCaseHandler mUseCaseHandler;
-    private final Long userId;
+    private final User user;
 
     public FriendsPresenter(@NonNull FriendsContract.View view, @NonNull UseCaseHandler mUseCaseHandler,
-                            @NonNull GetFriends getFriends, Long userId){
+                            @NonNull GetFriends getFriends,@NonNull User user){
         this.view = checkNotNull(view,"view cannot be null!");
         this.mUseCaseHandler = checkNotNull(mUseCaseHandler,"mUseCaseHandler cannot be null!");
         this.getFriends = checkNotNull(getFriends,"getFriends cannot be null!");
-        this.userId = checkNotNull(userId,"userId cannot be null!");
+        this.user = checkNotNull(user,"user cannot be null!");
         view.setPresenter(this);
+    }
+
+    @Override
+    public User getUser() {
+        return user;
     }
 
     @Override
@@ -49,7 +55,7 @@ public class FriendsPresenter implements FriendsContract.Presenter{
             view.setLoadingIndicator(true);
         }
 
-        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate, userId),
+        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate, user.getId()),
                 new UseCase.UseCaseCallback<GetFriends.ResponseValue>() {
                     @Override
                     public void onSuccess(GetFriends.ResponseValue response) {

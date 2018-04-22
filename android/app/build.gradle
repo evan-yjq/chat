@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.evan.chat"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -31,6 +31,7 @@ android {
                     'src/main/res/layouts/welcome',
                     'src/main/res/layouts/logreg',
                     'src/main/res/layouts/friends',
+                    'src/main/res/layouts/settings',
                     'src/main/res/layouts/face',
                     'src/main/res/layouts/chat',
                     'src/main/res'
@@ -48,11 +49,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
-    compile 'com.android.support:cardview-v7:26.+'
-    compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support:support-v4:26.+'
+    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:design:27.1.1'
+    compile 'com.android.support:cardview-v7:27.1.1'
+    compile 'com.android.support:recyclerview-v7:27.1.1'
+    compile 'com.android.support:support-v4:27.1.1'
     testCompile 'junit:junit:4.12'
     //工具类
     compile 'com.blankj:utilcode:1.12.6'
@@ -67,7 +68,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
     //okhttp3
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
     //AndroidAnotations 快速安卓开发。易于维护
     annotationProcessor "org.androidannotations:androidannotations:4.4.0"
     compile 'org.androidannotations:androidannotations-api:4.4.0'

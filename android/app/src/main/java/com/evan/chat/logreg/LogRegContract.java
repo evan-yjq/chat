@@ -2,6 +2,7 @@ package com.evan.chat.logreg;
 
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
+import com.evan.chat.data.source.User.model.User;
 
 /**
  * Created by IntelliJ IDEA
@@ -16,7 +17,7 @@ public interface LogRegContract {
 
         void showAccountError(int errorRes);
 
-        void signInSuccess(Long id);
+        void signInSuccess(User user);
 
         void showSignInError();
 

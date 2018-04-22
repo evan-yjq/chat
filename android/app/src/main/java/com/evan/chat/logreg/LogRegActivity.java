@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
+import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
 
@@ -18,7 +19,6 @@ import org.androidannotations.annotations.EActivity;
  * Time: 下午1:28
  */
 @SuppressLint("Registered")
-@EActivity(R.layout.log_reg_act)
 public class LogRegActivity extends AppCompatActivity {
 
     static final String LOG_FRAG = "LOG_FRAG";
@@ -26,16 +26,15 @@ public class LogRegActivity extends AppCompatActivity {
 
     static Fragment LOG_REG_SWITCH;
 
-    public static final String EXTRA_USER_ID = "EXTRA_USER_ID";
+    public static final String EXTRA_USER = "EXTRA_USER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.log_reg_act);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.color6));
         }
-
-        Long userId = getIntent().getLongExtra(EXTRA_USER_ID, 0);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         RegFragment regFragment;
@@ -61,7 +60,6 @@ public class LogRegActivity extends AppCompatActivity {
                 regFragment,
                 Injection.provideSignInUser(getApplicationContext()),
                 Injection.provideRegUser(getApplicationContext()),
-                Injection.provideUseCaseHandler(),
-                userId);
+                Injection.provideUseCaseHandler());
     }
 }

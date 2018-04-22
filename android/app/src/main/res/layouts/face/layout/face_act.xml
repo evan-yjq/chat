@@ -5,7 +5,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".face.FaceAcitivity">
+        tools:context=".face.FaceActivity">
 
     <FrameLayout
             android:id="@+id/contentFrame"

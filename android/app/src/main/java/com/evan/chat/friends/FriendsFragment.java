@@ -3,6 +3,7 @@ package com.evan.chat.friends;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,9 @@ import com.evan.chat.data.source.Friend.model.Friend;
 import com.evan.chat.view.CircleImageView;
 
 import java.util.*;
+
+import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND;
+import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -60,7 +64,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.friends_frag,container,false);
 
         mNoFriendView = root.findViewById(R.id.noFriends);
@@ -71,7 +75,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.refresh_layout);
 
         swipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(getActivity(),R.color.colorPrimary),
+                ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(),R.color.colorAccent),
                 ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark)
         );
@@ -218,20 +222,21 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
                 rowView = inflater.inflate(R.layout.friend_item,viewGroup,false);
             }
             final Friend friend = getChild(i, i1);
-            CircleImageView head = rowView.findViewById(R.id.user_head);
-            TextView nickname = rowView.findViewById(R.id.nickname);
-            TextView profile = rowView.findViewById(R.id.profile);
-            TextView state = rowView.findViewById(R.id.state);
+            CircleImageView headIV = rowView.findViewById(R.id.user_head);
+            TextView nicknameTV = rowView.findViewById(R.id.nickname);
+            TextView profileTV = rowView.findViewById(R.id.profile);
+            TextView stateTV = rowView.findViewById(R.id.state);
 
-            head.setImageResource(R.mipmap.logo);
-            if ("".equals(friend.getNickname())){
-                nickname.setText(friend.getAccount());
+            headIV.setImageResource(R.mipmap.logo);
+            String nickname = friend.getNickname();
+            if (nickname==null||nickname.isEmpty()){
+                nicknameTV.setText(friend.getAccount());
             }else{
-                nickname.setText(friend.getNickname());
+                nicknameTV.setText(nickname);
             }
-            profile.setText(friend.getProfile());
-            state.setText("不在线");
-            state.setTextColor(Color.RED);
+            profileTV.setText(friend.getProfile());
+            stateTV.setText("不在线");
+            stateTV.setTextColor(Color.RED);
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -253,9 +258,8 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         @Override
         public void onClick(Friend friend) {
             Intent intent = new Intent(getActivity(),ChatActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("friend",friend);
-            intent.putExtra("friend",bundle);
+            intent.putExtra(EXTRA_USER,presenter.getUser());
+            intent.putExtra(EXTRA_FRIEND, friend);
             startActivity(intent);
         }
     };

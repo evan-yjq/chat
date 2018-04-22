@@ -1,10 +1,11 @@
-package com.evan.chat.logreg.domain.usecase;
+package com.evan.chat.domain.usecase;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
+import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.User.UserDataSource;
 import com.evan.chat.data.source.User.UserRepository;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
@@ -17,9 +18,14 @@ import static com.evan.chat.util.Objects.checkNotNull;
 public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.ResponseValue>{
 
     private final UserRepository userRepository;
+    private final GetHead getHead;
+    private final UseCaseHandler handler;
 
-    public SignInUser(@NonNull UserRepository userRepository){
+    public SignInUser(@NonNull GetHead getHead, @NonNull UserRepository userRepository,
+                      @NonNull UseCaseHandler handler){
         this.userRepository = checkNotNull(userRepository,"userRepository cannot be null!");
+        this.getHead = checkNotNull(getHead,"getHead cannot be null!");
+        this.handler = checkNotNull(handler,"handler cannot be null!");
     }
 
     @Override
@@ -28,8 +34,19 @@ public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.Resp
         String password = requestValues.getPassword();
         userRepository.check(account, password, new UserDataSource.Callback() {
             @Override
-            public void onSuccess(User user) {
-                getUseCaseCallback().onSuccess(new ResponseValue(user));
+            public void onSuccess(final User user) {
+                handler.execute(getHead, new GetHead.RequestValues(user),
+                        new UseCaseCallback<GetHead.ResponseValue>() {
+                            @Override
+                            public void onSuccess(GetHead.ResponseValue response) {
+                                getUseCaseCallback().onSuccess(new ResponseValue(user));
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
             }
 
             @Override

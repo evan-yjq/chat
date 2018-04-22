@@ -2,7 +2,7 @@ package com.evan.chat.chat;
 
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
-import com.evan.chat.data.source.Chat.model.Chat;
+import com.evan.chat.data.source.model.Chat;
 
 /**
  * Created by IntelliJ IDEA

@@ -1,5 +1,6 @@
-package com.evan.chat.data.source.User.model;
+package com.evan.chat.data.source.model;
 
+import android.graphics.Bitmap;
 import org.greenrobot.greendao.annotation.Entity;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-
+import org.greenrobot.greendao.annotation.Transient;
 /**
  * Created by IntelliJ IDEA
  * User: Evan
@@ -15,7 +16,7 @@ import org.greenrobot.greendao.annotation.Id;
  * Time: 下午1:37
  */
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, setHeadable {
     private static final long serialVersionUID = 2L;
     @Id
     private Long id;
@@ -25,6 +26,8 @@ public class User implements Serializable {
     private String password;
     private Date login_time;
     private String profile;
+    @Transient
+    private Bitmap head;
 
     public User(Long id, String account, String nickname, String email, String password, String profile) {
         this(id,account,nickname,email,password,new Date(),profile);
@@ -79,6 +82,17 @@ public class User implements Serializable {
         return Objects.hash(id, account, nickname, email, password, login_time, profile);
     }
 
+    @Override
+    public Bitmap getHead() {
+        return head;
+    }
+
+    @Override
+    public void setHead(Bitmap head) {
+        this.head = head;
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

@@ -1,7 +1,7 @@
 package com.evan.chat.data.source.User;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 import com.evan.chat.data.source.dao.UserDao;
 import com.evan.chat.util.AppExecutors;
 

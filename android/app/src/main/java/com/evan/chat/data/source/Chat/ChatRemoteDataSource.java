@@ -2,7 +2,7 @@ package com.evan.chat.data.source.Chat;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.chat.domain.model.ClientSocket;
-import com.evan.chat.data.source.Chat.model.Chat;
+import com.evan.chat.data.source.model.Chat;
 import com.evan.chat.util.AppExecutors;
 
 import java.io.IOException;

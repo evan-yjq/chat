@@ -5,25 +5,22 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
+import com.evan.chat.PublicData;
 import com.evan.chat.R;
 import com.evan.chat.chat.ChatActivity;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.view.CircleImageView;
+import com.evan.chat.view.ScrollChildSwipeRefreshLayout;
 
 import java.util.*;
-
-import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND;
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -128,6 +125,11 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     }
 
     @Override
+    public void showMessage(String msg) {
+        Snackbar.make(Objects.requireNonNull(getView()),msg, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void showAddFriends() {
         //todo
     }
@@ -227,7 +229,9 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
             TextView profileTV = rowView.findViewById(R.id.profile);
             TextView stateTV = rowView.findViewById(R.id.state);
 
-            headIV.setImageResource(R.mipmap.logo);
+            if (friend.getHead() != null)
+                headIV.setImageBitmap(friend.getHead());
+
             String nickname = friend.getNickname();
             if (nickname==null||nickname.isEmpty()){
                 nicknameTV.setText(friend.getAccount());
@@ -258,8 +262,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         @Override
         public void onClick(Friend friend) {
             Intent intent = new Intent(getActivity(),ChatActivity.class);
-            intent.putExtra(EXTRA_USER,presenter.getUser());
-            intent.putExtra(EXTRA_FRIEND, friend);
+            PublicData.friend = friend;
             startActivity(intent);
         }
     };

@@ -1,5 +1,6 @@
-package com.evan.chat.data.source.Friend.model;
+package com.evan.chat.data.source.model;
 
+import android.graphics.Bitmap;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by IntelliJ IDEA
@@ -15,7 +17,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * Time: 16:19
  */
 @Entity
-public class Friend implements Serializable {
+public class Friend implements Serializable, setHeadable {
     private static final long serialVersionUID = 1L;
     @Id
     private Long id;
@@ -25,6 +27,8 @@ public class Friend implements Serializable {
     private String relationship;
     private String classification;
     private String profile;
+    @Transient
+    private Bitmap head;
 
     public Friend(Long id, String account, String nickname, String relationship, String classification) {
         this(id,account,nickname,null,relationship,classification,null);
@@ -79,6 +83,17 @@ public class Friend implements Serializable {
         return Objects.hash(id, account, nickname, email, relationship, classification, profile);
     }
 
+    @Override
+    public Bitmap getHead() {
+        return head;
+    }
+
+    @Override
+    public void setHead(Bitmap head) {
+        this.head = head;
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

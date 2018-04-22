@@ -4,7 +4,7 @@ package com.evan.chat.welcome;
 import android.graphics.Bitmap;
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 
 /**
  * Created by IntelliJ IDEA

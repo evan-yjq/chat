@@ -8,9 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
-import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.util.ActivityUtils;
-import org.androidannotations.annotations.EActivity;
 
 /**
  * Created by IntelliJ IDEA
@@ -25,8 +23,6 @@ public class LogRegActivity extends AppCompatActivity {
     static final String REG_FRAG = "REG_FRAG";
 
     static Fragment LOG_REG_SWITCH;
-
-    public static final String EXTRA_USER = "EXTRA_USER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

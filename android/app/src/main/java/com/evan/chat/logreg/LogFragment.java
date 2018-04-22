@@ -12,13 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.evan.chat.PublicData;
 import com.evan.chat.R;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 import com.evan.chat.friends.FriendsActivity;
 
 import java.util.Objects;
 
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
 
 /**
@@ -101,7 +101,7 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     @Override
     public void signInSuccess(User user) {
         Intent intent = new Intent(getContext(), FriendsActivity.class);
-        intent.putExtra(EXTRA_USER, user);
+        PublicData.user = user;
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish();
     }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.evan.chat.friends.ScrollChildSwipeRefreshLayout
+    <com.evan.chat.view.ScrollChildSwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_above="@+id/bottom"
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
                     android:layout_height="wrap_content"
                     android:divider="@null"/>
         </LinearLayout>
-    </com.evan.chat.friends.ScrollChildSwipeRefreshLayout>
+    </com.evan.chat.view.ScrollChildSwipeRefreshLayout>
     <LinearLayout
             android:layout_alignParentBottom="true"
             android:id="@+id/bottom"

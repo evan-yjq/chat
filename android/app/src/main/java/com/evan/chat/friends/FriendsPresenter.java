@@ -3,12 +3,10 @@ package com.evan.chat.friends;
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.data.source.User.model.User;
-import com.evan.chat.friends.domain.usecase.GetFriends;
-import com.evan.chat.util.AppExecutors;
-import com.zhy.http.okhttp.OkHttpUtils;
+import com.evan.chat.domain.usecase.GetFriends;
 
 import static com.evan.chat.util.Objects.checkNotNull;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -23,20 +21,13 @@ public class FriendsPresenter implements FriendsContract.Presenter{
 
     private final GetFriends getFriends;
     private final UseCaseHandler mUseCaseHandler;
-    private final User user;
 
     public FriendsPresenter(@NonNull FriendsContract.View view, @NonNull UseCaseHandler mUseCaseHandler,
-                            @NonNull GetFriends getFriends,@NonNull User user){
+                            @NonNull GetFriends getFriends){
         this.view = checkNotNull(view,"view cannot be null!");
         this.mUseCaseHandler = checkNotNull(mUseCaseHandler,"mUseCaseHandler cannot be null!");
         this.getFriends = checkNotNull(getFriends,"getFriends cannot be null!");
-        this.user = checkNotNull(user,"user cannot be null!");
         view.setPresenter(this);
-    }
-
-    @Override
-    public User getUser() {
-        return user;
     }
 
     @Override

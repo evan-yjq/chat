@@ -64,7 +64,7 @@ router.post('/face_upload',function (req,res) {
     /* 设置编辑 */
     form.encoding = 'utf-8';
     //设置文件存储路径
-    form.uploadDir = './faceId';
+    form.uploadDir = './public/tmp';
     //设置文件大小限制
     form.maxFilesSize = 10 * 1024 * 1024;
     //上传后处理
@@ -75,7 +75,11 @@ router.post('/face_upload',function (req,res) {
             var inputFile = files.img[0];
             var uploadedPath = inputFile.path;
             var arr = inputFile.originalFilename.split('-');
-            var dstPath = './faceId/' + arr[0] + '/' + arr[1];
+            var dstPath = './public/users/' + arr[0];
+            if (!fs.existsSync(dstPath)){
+                fs.mkdirSync(dstPath);
+            }
+            dstPath = dstPath + '/' + arr[1];
             //重命名为真实文件名
             fs.rename(uploadedPath, dstPath, function(err) {
                 if(err) {

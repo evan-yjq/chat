@@ -1,9 +1,9 @@
-package com.evan.chat.chat.domain.usecase;
+package com.evan.chat.domain.usecase;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.data.source.Chat.ChatRepository;
-import com.evan.chat.data.source.Chat.model.Chat;
+import com.evan.chat.data.source.model.Chat;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 

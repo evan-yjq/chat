@@ -1,6 +1,8 @@
 package com.evan.chat.welcome;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,13 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.evan.chat.PublicData;
 import com.evan.chat.R;
 import com.evan.chat.friends.FriendsActivity;
 import com.evan.chat.logreg.LogRegActivity;
 
 import java.util.Objects;
-
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 
 /**
  * Created by IntelliJ IDEA
@@ -88,7 +89,7 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
             intent = new Intent(getContext(), LogRegActivity.class);
         else {
             intent = new Intent(getContext(), FriendsActivity.class);
-            intent.putExtra(EXTRA_USER, presenter.getAutoUser());
+            PublicData.user = presenter.getAutoUser();
         }
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish();

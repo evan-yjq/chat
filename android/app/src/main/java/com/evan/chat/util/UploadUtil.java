@@ -40,28 +40,25 @@ public class UploadUtil {
             conn.connect();
 
             if(file!=null){
-                /**
-                 * 当文件不为空，把文件包装并且上传
-                 */
+                // 当文件不为空，把文件包装并且上传
                 DataOutputStream dos = new DataOutputStream( conn.getOutputStream());
-                StringBuffer sb = new StringBuffer();
-                sb.append(PREFIX);
-                sb.append(BOUNDARY);
-                sb.append(LINE_END);
-                /**
+                /*
                  * 这里重点注意：
                  * name里面的值为服务器端需要key   只有这个key 才可以得到对应的文件
                  * filename是文件的名字，包含后缀名的   比如:abc.png
                  */
 
-                sb.append("Content-Disposition: form-data; name=\"img\"; filename=\""+file.getName()+"\""+LINE_END);
-                System.out.println(file.getName());
-                sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
-                sb.append(LINE_END);
-                dos.write(sb.toString().getBytes());
+                // System.out.println(file.getName());
+                String sb = PREFIX +
+                        BOUNDARY +
+                        LINE_END +
+                        "Content-Disposition: form-data; name=\"img\"; filename=\"" + file.getName() + "\"" + LINE_END +
+                        "Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END +
+                        LINE_END;
+                dos.write(sb.getBytes());
                 InputStream is = new FileInputStream(file);
                 byte[] bytes = new byte[1024];
-                int len = 0;
+                int len;
                 while((len=is.read(bytes))!=-1){
                     dos.write(bytes, 0, len);
                 }
@@ -70,24 +67,22 @@ public class UploadUtil {
                 byte[] end_data = (PREFIX+BOUNDARY+PREFIX+LINE_END).getBytes();
                 dos.write(end_data);
                 dos.flush();
-                /**
+                /*
                  * 获取响应码  200=成功
                  * 当响应成功，获取响应的流
                  */
                 int res = conn.getResponseCode();
                 if(res==200){
                     InputStream input =  conn.getInputStream();
-                    StringBuffer sb1= new StringBuffer();
+                    StringBuilder sb1= new StringBuilder();
                     int ss ;
                     while((ss=input.read())!=-1){
                         sb1.append((char)ss);
                     }
                     result = sb1.toString();
-                    System.out.println(result);
+//                    System.out.println(result);
                 }
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

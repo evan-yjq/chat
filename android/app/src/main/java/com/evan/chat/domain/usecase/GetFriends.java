@@ -1,10 +1,11 @@
-package com.evan.chat.friends.domain.usecase;
+package com.evan.chat.domain.usecase;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
+import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.Friend.FriendDataSource;
 import com.evan.chat.data.source.Friend.FriendRepository;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.model.Friend;
 
 import java.util.List;
 
@@ -19,9 +20,14 @@ import static com.evan.chat.util.Objects.checkNotNull;
 public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.ResponseValue>{
 
     private final FriendRepository friendRepository;
+    private final GetHead getHead;
+    private final UseCaseHandler handler;
 
-    public GetFriends(@NonNull FriendRepository friendRepository){
+    public GetFriends(@NonNull GetHead getHead, @NonNull FriendRepository friendRepository,
+                      @NonNull UseCaseHandler handler){
         this.friendRepository = checkNotNull(friendRepository,"friendRepository cannot be null!");
+        this.getHead = checkNotNull(getHead,"getHead cannot be null!");
+        this.handler = checkNotNull(handler,"handler cannot be null!");
     }
 
     @Override
@@ -33,6 +39,8 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
         friendRepository.getFriends(id, new FriendDataSource.LoadAllFriendsCallback() {
             @Override
             public void onAllFriendLoaded(List<Friend> friends) {
+                i=0;
+                getHead(friends);
                 getUseCaseCallback().onSuccess(new ResponseValue(friends));
             }
 
@@ -41,6 +49,23 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
                 getUseCaseCallback().onError();
             }
         });
+    }
+    private int i;
+    private void getHead(final List<Friend> friends){
+        if (i==friends.size())return;
+        handler.execute(getHead, new GetHead.RequestValues(friends.get(i)),
+                new UseCaseCallback<GetHead.ResponseValue>() {
+                    @Override
+                    public void onSuccess(GetHead.ResponseValue response) {
+                        i++;
+                        getHead(friends);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
     }
 
     public static final class RequestValues implements UseCase.RequestValues {

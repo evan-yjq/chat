@@ -2,6 +2,7 @@ package com.evan.chat.friends;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,21 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
-import com.evan.chat.data.source.User.model.User;
 import com.evan.chat.face.FaceActivity_;
 import com.evan.chat.logreg.LogRegActivity;
-import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
+import com.evan.chat.domain.usecase.DeleteAllUser;
 import com.evan.chat.settings.SettingsActivity;
 import com.evan.chat.util.ActivityUtils;
+
 import static com.evan.chat.face.FaceActivity.EXTRA_FACE_VIEW;
 import static com.evan.chat.face.FaceFragment.DIST;
 import static com.evan.chat.face.FaceFragment.TRAIN;
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -41,10 +42,6 @@ import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
 public class FriendsActivity extends AppCompatActivity{
 
     private DrawerLayout mDrawerLayout;
-    private User user;
-
-    private FriendsPresenter mFriendsPresenter;
-    public static final String EXTRA_FRIEND = "EXTRA_FRIEND";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +50,6 @@ public class FriendsActivity extends AppCompatActivity{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
-
-        user = (User) getIntent().getSerializableExtra(EXTRA_USER);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -73,10 +68,9 @@ public class FriendsActivity extends AppCompatActivity{
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),friendsFragment,R.id.contentFrame);
         }
 
-        mFriendsPresenter = new FriendsPresenter(friendsFragment,
+        FriendsPresenter mFriendsPresenter = new FriendsPresenter(friendsFragment,
                 Injection.provideUseCaseHandler(),
-                Injection.provideGetFriends(getApplicationContext()),
-                user);
+                Injection.provideGetFriends(getApplicationContext()));
 
         //设置侧边栏
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -86,11 +80,13 @@ public class FriendsActivity extends AppCompatActivity{
             setupDrawerContent(navigationView);
             View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
             TextView text = headerLayout.findViewById(R.id.nav_header_text);
+            ImageView image = headerLayout.findViewById(R.id.nav_header_image);
             String nickname = user.getNickname();
             if (nickname==null||nickname.isEmpty()){
                 text.setText(user.getAccount());
-            }else{
-                text.setText(nickname);
+            }else text.setText(nickname);
+            if (user.getHead() != null) {
+                image.setImageBitmap(user.getHead());
             }
         }
     }
@@ -117,13 +113,11 @@ public class FriendsActivity extends AppCompatActivity{
                         break;
                     case R.id.bind_face_menu_item:
                         intent = new Intent(FriendsActivity.this, FaceActivity_.class);
-                        intent.putExtra(EXTRA_USER,user);
                         intent.putExtra(EXTRA_FACE_VIEW,TRAIN);
                         startActivity(intent);
                         break;
                     case R.id.judg_face_menu_item:
                         intent = new Intent(FriendsActivity.this, FaceActivity_.class);
-                        intent.putExtra(EXTRA_USER,user);
                         intent.putExtra(EXTRA_FACE_VIEW,DIST);
                         startActivity(intent);
                         break;

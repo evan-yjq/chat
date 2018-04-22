@@ -3,7 +3,7 @@ package com.evan.chat.face;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.PropertiesUtils;
 import com.evan.chat.util.UploadUtil;
@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import static com.evan.chat.face.FaceFragment.TRAIN;
 import static com.evan.chat.util.Objects.checkNotNull;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -31,9 +32,8 @@ public class FacePresenter implements FaceContratct.Presenter{
     private AppExecutors appExecutors;
     private int uploadSuccessNum;
 
-    FacePresenter(@NonNull FaceContratct.View view, @NonNull User user){
+    FacePresenter(@NonNull FaceContratct.View view){
         this.view = checkNotNull(view,"view cannot be null!");
-        checkNotNull(user,"user cannot be null!");
         this.userId = user.getId();
         view.setPresenter(this);
     }
@@ -185,7 +185,7 @@ public class FacePresenter implements FaceContratct.Presenter{
 
     private static byte[] addBMP_RGB_888(int[] b, int w, int h) {
         int len = b.length;
-        System.out.println(b.length);
+//        System.out.println(b.length);
         byte[] buffer = new byte[w * h * 4];
         int offset = 0;
         for (int i = len - 1; i >= w; i -= w) {

@@ -2,8 +2,9 @@ package com.evan.chat.friends;
 
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
-import com.evan.chat.data.source.Friend.model.Friend;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.data.source.model.User;
+import com.evan.chat.data.source.model.setHeadable;
 
 import java.util.List;
 
@@ -23,13 +24,13 @@ public interface FriendsContract {
 
         void showFriends(List<Friend>friends);
 
+        void showMessage(String msg);
+
         void showAddFriends();
     }
 
     interface Presenter extends BasePresenter{
 
         void loadFriends(boolean forceUpdate);
-
-        User getUser();
     }
 }

@@ -18,7 +18,7 @@ package com.evan.chat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import com.evan.chat.chat.domain.usecase.SendMessage;
+import com.evan.chat.domain.usecase.*;
 import com.evan.chat.data.source.Chat.ChatLocalDataSource;
 import com.evan.chat.data.source.Chat.ChatRemoteDataSource;
 import com.evan.chat.data.source.Chat.ChatRepository;
@@ -29,10 +29,6 @@ import com.evan.chat.data.source.User.UserLocalDataSource;
 import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
-import com.evan.chat.friends.domain.usecase.GetFriends;
-import com.evan.chat.logreg.domain.usecase.DeleteAllUser;
-import com.evan.chat.logreg.domain.usecase.RegisterUser;
-import com.evan.chat.logreg.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.GreenDaoUtils;
 import com.evan.chat.welcome.domain.usecase.GetAutoUser;
@@ -75,11 +71,15 @@ public class Injection {
     }
 
     public static SignInUser provideSignInUser(@NonNull Context context){
-        return new SignInUser(provideUserRepository(context));
+        return new SignInUser(provideGetHead(), provideUserRepository(context), provideUseCaseHandler());
     }
 
     public static GetFriends provideGetFriends(@NonNull Context context){
-        return new GetFriends(provideFriendRepository(context));
+        return new GetFriends(provideGetHead(), provideFriendRepository(context), provideUseCaseHandler());
+    }
+
+    public static GetHead provideGetHead(){
+        return new GetHead();
     }
 
     public static SendMessage provideSendMessage(@NonNull Context context){

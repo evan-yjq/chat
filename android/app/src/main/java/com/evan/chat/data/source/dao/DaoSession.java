@@ -8,9 +8,9 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.evan.chat.data.source.Chat.model.Chat;
-import com.evan.chat.data.source.Friend.model.Friend;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.Chat;
+import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.data.source.model.User;
 
 import com.evan.chat.data.source.dao.ChatDao;
 import com.evan.chat.data.source.dao.FriendDao;

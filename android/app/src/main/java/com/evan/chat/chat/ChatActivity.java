@@ -8,14 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
-import com.evan.chat.data.source.Friend.model.Friend;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.data.source.model.User;
 import com.evan.chat.util.ActivityUtils;
 
 import java.util.Objects;
 
-import static com.evan.chat.friends.FriendsActivity.EXTRA_FRIEND;
-import static com.evan.chat.logreg.LogRegActivity.EXTRA_USER;
+import static com.evan.chat.PublicData.friend;
 
 /**
  * Created by IntelliJ IDEA
@@ -32,9 +31,6 @@ public class ChatActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
-
-        User user = (User) getIntent().getSerializableExtra(EXTRA_USER);
-        Friend friend = (Friend) getIntent().getSerializableExtra(EXTRA_FRIEND);
 
         //设置toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -53,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),chatFragment,R.id.contentFrame);
         }
 
-        new ChatPresenter(chatFragment, user, friend,
+        new ChatPresenter(chatFragment, friend,
                 Injection.provideSendMessage(getApplicationContext()),
                 Injection.provideUseCaseHandler());
 

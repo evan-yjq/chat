@@ -1,7 +1,7 @@
 package com.evan.chat.data.source.Friend;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Friend.model.Friend;
+import com.evan.chat.data.source.model.Friend;
 
 import java.util.List;
 

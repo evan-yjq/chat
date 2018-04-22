@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.logreg.domain.usecase.RegisterUser;
-import com.evan.chat.logreg.domain.usecase.SignInUser;
+import com.evan.chat.domain.usecase.RegisterUser;
+import com.evan.chat.domain.usecase.SignInUser;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

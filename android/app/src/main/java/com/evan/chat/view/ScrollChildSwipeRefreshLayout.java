@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.evan.chat.friends;
+package com.evan.chat.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;

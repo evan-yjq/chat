@@ -3,15 +3,15 @@ package com.evan.chat.chat;
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.chat.domain.usecase.SendMessage;
-import com.evan.chat.data.source.Chat.model.Chat;
-import com.evan.chat.data.source.Friend.model.Friend;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.domain.usecase.SendMessage;
+import com.evan.chat.data.source.model.Chat;
+import com.evan.chat.data.source.model.Friend;
 
 import java.util.Date;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 import static com.evan.chat.view.DialogView.MY;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -27,10 +27,9 @@ public class ChatPresenter implements ChatContract.Presenter {
     private final SendMessage sendMessage;
     private final UseCaseHandler mUseCaseHandler;
 
-    public ChatPresenter(@NonNull ChatContract.View view, @NonNull User user, @NonNull Friend friend,
+    public ChatPresenter(@NonNull ChatContract.View view, @NonNull Friend friend,
                          @NonNull SendMessage sendMessage, @NonNull UseCaseHandler useCaseHandler) {
         this.view = checkNotNull(view,"view cannot be null!");
-        checkNotNull(user,"user cannot be null!");
         checkNotNull(friend,"friend cannot be null!");
         this.sendMessage = checkNotNull(sendMessage,"sendMessage cannot be null!");
         mUseCaseHandler = checkNotNull(useCaseHandler,"useCaseHandler cannot be null!");

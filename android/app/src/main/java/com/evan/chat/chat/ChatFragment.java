@@ -1,6 +1,7 @@
 package com.evan.chat.chat;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -13,12 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.evan.chat.R;
-import com.evan.chat.data.source.Chat.model.Chat;
-import com.evan.chat.friends.ScrollChildSwipeRefreshLayout;
+import com.evan.chat.data.source.model.Chat;
+import com.evan.chat.view.ScrollChildSwipeRefreshLayout;
 import com.evan.chat.view.DialogView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
@@ -56,7 +58,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.chat_frag,container,false);
 
         ListView listView = root.findViewById(R.id.chats_list);
@@ -76,7 +78,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.refresh_layout);
 
         swipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(getActivity(),R.color.colorPrimary),
+                ContextCompat.getColor(Objects.requireNonNull(getActivity()),R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(),R.color.colorAccent),
                 ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark)
         );

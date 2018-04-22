@@ -1,10 +1,10 @@
-package com.evan.chat.logreg.domain.usecase;
+package com.evan.chat.domain.usecase;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.data.source.User.UserDataSource;
 import com.evan.chat.data.source.User.UserRepository;
-import com.evan.chat.data.source.User.model.User;
+import com.evan.chat.data.source.model.User;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 

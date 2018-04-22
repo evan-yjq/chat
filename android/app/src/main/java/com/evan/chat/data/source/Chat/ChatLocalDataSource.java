@@ -1,7 +1,7 @@
 package com.evan.chat.data.source.Chat;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.data.source.Chat.model.Chat;
+import com.evan.chat.data.source.model.Chat;
 import com.evan.chat.data.source.dao.ChatDao;
 import com.evan.chat.util.AppExecutors;
 

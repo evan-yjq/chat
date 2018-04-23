@@ -1,6 +1,7 @@
 package com.evan.chat.welcome;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import com.evan.chat.R;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
+import org.androidannotations.annotations.UiThread;
 
 /**
  * Created by IntelliJ IDEA
@@ -38,5 +40,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 Injection.provideGetAutoUser(getApplicationContext()),
                 Injection.provideUseCaseHandler(),
                 Injection.provideSignInUser(getApplicationContext()));
+        start();
+    }
+
+    @UiThread
+    public void start(){
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }

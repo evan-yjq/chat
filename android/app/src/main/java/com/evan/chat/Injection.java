@@ -34,7 +34,7 @@ import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.GreenDaoUtils;
-import com.evan.chat.welcome.domain.usecase.GetAutoUser;
+import com.evan.chat.domain.usecase.GetAutoUser;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 

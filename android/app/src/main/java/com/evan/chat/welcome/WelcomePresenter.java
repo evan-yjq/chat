@@ -8,7 +8,7 @@ import com.evan.chat.data.source.model.User;
 import com.evan.chat.domain.usecase.SignInUser;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.PropertiesUtils;
-import com.evan.chat.welcome.domain.usecase.GetAutoUser;
+import com.evan.chat.domain.usecase.GetAutoUser;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 import okhttp3.Call;

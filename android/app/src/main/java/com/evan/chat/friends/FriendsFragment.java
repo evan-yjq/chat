@@ -149,6 +149,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
         public void replaceData(List<Friend>friends){
             mFriends.clear();
+            classification.clear();
             setFriends(friends);
             notifyDataSetChanged();
         }

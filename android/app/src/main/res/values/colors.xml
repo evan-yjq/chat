@@ -42,4 +42,6 @@
     <color name="color4">#7dd700</color>
     <color name="color5">#ffbd00</color>
     <color name="color6">#0090ff</color>
+
+    <drawable name="touchFeedback">#CFD8DC</drawable>
 </resources>

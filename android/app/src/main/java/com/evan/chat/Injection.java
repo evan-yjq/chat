@@ -18,6 +18,9 @@ package com.evan.chat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.evan.chat.data.source.Settings.SettingsLocalDataSource;
+import com.evan.chat.data.source.Settings.SettingsRemoteDataSource;
+import com.evan.chat.data.source.Settings.SettingsRepository;
 import com.evan.chat.domain.usecase.*;
 import com.evan.chat.data.source.Chat.ChatLocalDataSource;
 import com.evan.chat.data.source.Chat.ChatRemoteDataSource;
@@ -61,6 +64,13 @@ public class Injection {
                 ChatLocalDataSource.getInstance(new AppExecutors(),
                         database.getChatDao()));
     }
+    private static SettingsRepository provideSettingsRepository(@NonNull Context context) {
+        checkNotNull(context);
+        DaoSession database = GreenDaoUtils.getSingleTon().getmDaoSession(context);
+        return SettingsRepository.getInstance(SettingsRemoteDataSource.getInstance(),
+                SettingsLocalDataSource.getInstance(new AppExecutors(),
+                        database.getSettingDao()));
+    }
 
     public static UseCaseHandler provideUseCaseHandler() {
         return UseCaseHandler.getInstance();
@@ -93,4 +103,13 @@ public class Injection {
     public static DeleteAllUser provideDeleteAllUser(@NonNull Context context){
         return new DeleteAllUser(provideUserRepository(context));
     }
+
+    public static EditSetting provideEditSetting(@NonNull Context context){
+        return new EditSetting(provideSettingsRepository(context));
+    }
+
+    public static GetSettings provideGetSettings(@NonNull Context context){
+        return new GetSettings(provideSettingsRepository(context));
+    }
+
 }

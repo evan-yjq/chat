@@ -66,7 +66,6 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
         bar = root.findViewById(R.id.bind_progress);
 
         mHolder = surfaceView.getHolder();
-        mHolder.addCallback(this);
         initData();
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +102,40 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     @Override
     public void onResume() {
         super.onResume();
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }else{
+            start();
+        }
+    }
+
+    private void start(){
         presenter.start();
+        mHolder.addCallback(this);
         if (mCamera == null) {
             mCamera = getCamera(mCameraId);
             if (mHolder != null) {
                 startPreview(mCamera, mHolder);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode, grantResults);
+    }
+
+    private void doNext(int requestCode, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                start();
+            }else{
+                // Permission Denied
+                Toast.makeText(getContext(), "请在应用管理中打开“相机”访问权限！", Toast.LENGTH_LONG).show();
+                Objects.requireNonNull(getActivity()).finish();
             }
         }
     }
@@ -202,15 +230,10 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     // 获取Camera实例
     private Camera getCamera(int id) {
         Camera camera = null;
-        if(ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }
         try {
             camera = Camera.open(id);
         } catch (Exception ignored) {
-            getActivity().finish();
+            Objects.requireNonNull(getActivity()).finish();
         }
         return camera;
     }

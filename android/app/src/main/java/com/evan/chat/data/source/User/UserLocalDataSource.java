@@ -87,7 +87,7 @@ public class UserLocalDataSource implements UserDataSource {
                 List<User> users = mUserDao.loadAll();
                 boolean b = false;
                 for (User u : users) {
-                    if (u.equals(user))
+                    if (u.getId().equals(user.getId()))
                         b = true;
                 }
                 if (b) mUserDao.update(user);

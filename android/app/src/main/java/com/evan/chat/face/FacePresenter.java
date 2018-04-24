@@ -29,11 +29,15 @@ public class FacePresenter implements FaceContratct.Presenter{
 
     private final FaceContratct.View view;
     private final long userId;
+    private final boolean isResult;
+    private final int type;
     private AppExecutors appExecutors;
     private int uploadSuccessNum;
 
-    FacePresenter(@NonNull FaceContratct.View view){
+    FacePresenter(@NonNull FaceContratct.View view, boolean isResult, int type){
         this.view = checkNotNull(view,"view cannot be null!");
+        this.isResult = isResult;
+        this.type = type;
         this.userId = user.getId();
         view.setPresenter(this);
     }
@@ -48,8 +52,11 @@ public class FacePresenter implements FaceContratct.Presenter{
         return userId;
     }
 
+
+    private volatile boolean stop = false;
+
     @Override
-    public void buttonOnClick(final int type) {
+    public void buttonOnClick() {
         if (view.isActive()) {
             view.showProgress(true);
         }
@@ -64,6 +71,7 @@ public class FacePresenter implements FaceContratct.Presenter{
                     final int bar = 100/(uploadNum+1);
                     for (int j = 0; j < uploadNum; j++) {
                         if (view.isActive()) {
+                            if (stop)break;
                             view.captrue();
                             appExecutors.mainThread().execute(new Runnable() {
                                 @Override
@@ -74,26 +82,33 @@ public class FacePresenter implements FaceContratct.Presenter{
                         }
                         Thread.sleep(500);
                     }
-                    while(uploadSuccessNum != uploadNum) {
-                        Thread.sleep(500);
-                    }
-                    doIt(type);
-                    if (view.isActive()) {
-                        appExecutors.mainThread().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                view.setAnimation(bar, 1500);
-                            }
-                        });
+                    if (!stop) {
+                        while (uploadSuccessNum != uploadNum) {
+                            Thread.sleep(500);
+                        }
+                        doIt();
+                        if (view.isActive()) {
+                            appExecutors.mainThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    view.setAnimation(bar, 1500);
+                                }
+                            });
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    if (view.isActive()) {
+                        view.showMessage("因不明操作中断");
+                        if (isResult) view.showResult(false);
+                        view.showProgress(false);
+                    }
                 }
             }
         }).start();
     }
 
-    private void doIt(final int type){
+    private void doIt(){
         appExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -106,6 +121,7 @@ public class FacePresenter implements FaceContratct.Presenter{
                             public void onError(Call call, Exception e, int i) {
                                 if (view.isActive()) {
                                     view.showMessage("人脸不够清晰");
+                                    if (isResult) view.showResult(false);
                                     view.showProgress(false);
                                 }
                             }
@@ -120,8 +136,10 @@ public class FacePresenter implements FaceContratct.Presenter{
                                     } else {
                                         if ("true".equals(s)) {
                                             view.showMessage("鉴定成功");
+                                            if (isResult) view.showResult(true);
                                         } else {
                                             view.showMessage("不是本人");
+                                            if (isResult) view.showResult(false);
                                         }
                                     }
                                     view.showProgress(false);
@@ -149,8 +167,11 @@ public class FacePresenter implements FaceContratct.Presenter{
                     String str = UploadUtil.uploadFile(pictureFile, PropertiesUtils.getInstance().getProperty("face_upload",true));
                     if (str.equals("ok"))uploadSuccessNum++;
                 } catch (Exception error) {
+                    stop = true;
                     if (view.isActive()) {
                         view.showMessage("拍照失败");
+                        if (isResult) view.showResult(false);
+                        view.showProgress(false);
                     }
                     error.printStackTrace();
                 }

@@ -21,6 +21,8 @@ public interface FaceContratct {
 
         void showMessage(String msg);
 
+        void showResult(boolean success);
+
         void captrue();
 
         void setAnimation(int mProgressBar, int millis);
@@ -30,7 +32,7 @@ public interface FaceContratct {
 
         long getUserId();
 
-        void buttonOnClick(int type);
+        void buttonOnClick();
 
         void upload(Bitmap bitmap, File pictureFile);
     }

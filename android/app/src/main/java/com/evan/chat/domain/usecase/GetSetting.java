@@ -50,6 +50,7 @@ public class GetSetting extends UseCase<GetSetting.RequestValues,GetSetting.Resp
             return id;
         }
     }
+
     public static final class ResponseValue implements UseCase.ResponseValue {
         private final Setting setting;
 

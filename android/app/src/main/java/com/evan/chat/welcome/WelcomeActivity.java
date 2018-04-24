@@ -39,7 +39,9 @@ public class WelcomeActivity extends AppCompatActivity {
         new WelcomePresenter(welcomeFragment,
                 Injection.provideGetAutoUser(getApplicationContext()),
                 Injection.provideUseCaseHandler(),
-                Injection.provideSignInUser(getApplicationContext()));
+                Injection.provideSignInUser(getApplicationContext()),
+                Injection.provideGetSetting(getApplicationContext()),
+                getApplicationContext());
         start();
     }
 

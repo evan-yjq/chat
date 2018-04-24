@@ -2,6 +2,8 @@ package com.evan.chat.face;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,7 +73,7 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.buttonOnClick(type);
+                presenter.buttonOnClick();
             }
         });
         return root;
@@ -151,6 +153,15 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
         Toast toast = Toast.makeText(getContext(), msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    @Override
+    public void showResult(boolean success) {
+        int resultCode;
+        if (success)resultCode = Activity.RESULT_OK;
+        else resultCode = Activity.RESULT_CANCELED;
+        Objects.requireNonNull(getActivity()).setResult(resultCode);
+        getActivity().finish();
     }
 
     @Override

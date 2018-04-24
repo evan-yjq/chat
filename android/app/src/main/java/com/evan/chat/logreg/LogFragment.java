@@ -99,9 +99,8 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
     }
 
     @Override
-    public void signInSuccess(User user) {
+    public void signInSuccess() {
         Intent intent = new Intent(getContext(), FriendsActivity.class);
-        PublicData.user = user;
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish();
     }

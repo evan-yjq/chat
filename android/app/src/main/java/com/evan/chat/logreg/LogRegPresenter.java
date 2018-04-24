@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import com.evan.chat.PublicData;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
@@ -123,7 +124,8 @@ public class LogRegPresenter implements LogRegContract.Presenter{
                     @Override
                     public void onSuccess(SignInUser.ResponseValue response) {
                         if (logView.isActive()){
-                            logView.signInSuccess(response.getUser());
+                            PublicData.user = response.getUser();
+                            logView.signInSuccess();
                             logView.showProgress(false);
                         }
                     }

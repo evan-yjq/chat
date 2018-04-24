@@ -17,7 +17,7 @@ public interface LogRegContract {
 
         void showAccountError(int errorRes);
 
-        void signInSuccess(User user);
+        void signInSuccess();
 
         void showSignInError();
 

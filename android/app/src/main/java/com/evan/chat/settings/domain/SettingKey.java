@@ -11,10 +11,10 @@ public class SettingKey {
     /**
      * 是否开启人脸登陆
      */
-    public static final Long DEFAULT_FACE_LOGIN_OPEN = 0L;
+    public static final Long FACE_LOGIN_OPEN_ID = 0L;
     /**
      * 是否开启自动登陆
      */
-    public static final Long DEFAULT_AUTO_LOGIN_OPEN = 1L;
+    public static final Long AUTO_LOGIN_OPEN_ID = 1L;
 
 }

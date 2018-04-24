@@ -83,14 +83,12 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
     }
 
     @Override
-    public void showNextView() {
-        Intent intent;
-        if (presenter.getAutoUser()==null)
-            intent = new Intent(getContext(), LogRegActivity.class);
-        else {
-            intent = new Intent(getContext(), FriendsActivity.class);
-            PublicData.user = presenter.getAutoUser();
-        }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.result(requestCode,resultCode);
+    }
+
+    @Override
+    public void showNextView(Intent intent) {
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish();
     }

@@ -112,4 +112,8 @@ public class Injection {
         return new GetSettings(provideSettingsRepository(context));
     }
 
+    public static GetSetting provideGetSetting(@NonNull Context context){
+        return new GetSetting(provideSettingsRepository(context));
+    }
+
 }

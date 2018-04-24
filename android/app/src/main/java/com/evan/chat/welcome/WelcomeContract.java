@@ -1,6 +1,8 @@
 package com.evan.chat.welcome;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
@@ -22,12 +24,14 @@ public interface WelcomeContract {
 
         void showMessage(String msg);
 
-        void showNextView();
+        void showNextView(Intent intent);
     }
 
     interface Presenter extends BasePresenter {
 
-        User getAutoUser();
+        void result(int requestCode, int resultCode);
+
+        void getNextView();
 
         void timeStop() throws InterruptedException;
     }

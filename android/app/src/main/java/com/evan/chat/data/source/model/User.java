@@ -26,16 +26,17 @@ public class User implements Serializable, setHeadable {
     private String password;
     private Date login_time;
     private String profile;
+    private boolean is_bind_face;
     @Transient
     private Bitmap head;
 
-    public User(Long id, String account, String nickname, String email, String password, String profile) {
-        this(id,account,nickname,email,password,new Date(),profile);
+    public User(Long id, String account, String nickname, String email, String password, String profile, boolean is_bind_face) {
+        this(id,account,nickname,email,password,new Date(),profile, is_bind_face);
     }
 
-    @Generated(hash = 1592699865)
-    public User(Long id, String account, String nickname, String email, String password,
-            Date login_time, String profile) {
+    @Generated(hash = 395626253)
+    public User(Long id, String account, String nickname, String email, String password, Date login_time, String profile,
+            boolean is_bind_face) {
         this.id = id;
         this.account = account;
         this.nickname = nickname;
@@ -43,6 +44,7 @@ public class User implements Serializable, setHeadable {
         this.password = password;
         this.login_time = login_time;
         this.profile = profile;
+        this.is_bind_face = is_bind_face;
     }
 
     @Generated(hash = 586692638)
@@ -59,6 +61,8 @@ public class User implements Serializable, setHeadable {
                 ", password='" + password + '\'' +
                 ", login_time=" + login_time +
                 ", profile='" + profile + '\'' +
+                ", is_bind_face=" + is_bind_face +
+                ", head=" + head +
                 '}';
     }
 
@@ -67,19 +71,21 @@ public class User implements Serializable, setHeadable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return is_bind_face == user.is_bind_face &&
+                Objects.equals(id, user.id) &&
                 Objects.equals(account, user.account) &&
                 Objects.equals(nickname, user.nickname) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(login_time, user.login_time) &&
-                Objects.equals(profile, user.profile);
+                Objects.equals(profile, user.profile) &&
+                Objects.equals(head, user.head);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, account, nickname, email, password, login_time, profile);
+        return Objects.hash(id, account, nickname, email, password, login_time, profile, is_bind_face, head);
     }
 
     @Override
@@ -147,5 +153,13 @@ public class User implements Serializable, setHeadable {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public boolean getIs_bind_face() {
+        return this.is_bind_face;
+    }
+
+    public void setIs_bind_face(boolean is_bind_face) {
+        this.is_bind_face = is_bind_face;
     }
 }

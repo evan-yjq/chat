@@ -31,6 +31,7 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Password = new Property(4, String.class, "password", false, "PASSWORD");
         public final static Property Login_time = new Property(5, java.util.Date.class, "login_time", false, "LOGIN_TIME");
         public final static Property Profile = new Property(6, String.class, "profile", false, "PROFILE");
+        public final static Property Is_bind_face = new Property(7, boolean.class, "is_bind_face", false, "IS_BIND_FACE");
     }
 
 
@@ -52,7 +53,8 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"EMAIL\" TEXT," + // 3: email
                 "\"PASSWORD\" TEXT," + // 4: password
                 "\"LOGIN_TIME\" INTEGER," + // 5: login_time
-                "\"PROFILE\" TEXT);"); // 6: profile
+                "\"PROFILE\" TEXT," + // 6: profile
+                "\"IS_BIND_FACE\" INTEGER NOT NULL );"); // 7: is_bind_face
     }
 
     /** Drops the underlying database table. */
@@ -99,6 +101,7 @@ public class UserDao extends AbstractDao<User, Long> {
         if (profile != null) {
             stmt.bindString(7, profile);
         }
+        stmt.bindLong(8, entity.getIs_bind_face() ? 1L: 0L);
     }
 
     @Override
@@ -139,6 +142,7 @@ public class UserDao extends AbstractDao<User, Long> {
         if (profile != null) {
             stmt.bindString(7, profile);
         }
+        stmt.bindLong(8, entity.getIs_bind_face() ? 1L: 0L);
     }
 
     @Override
@@ -155,7 +159,8 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // email
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // password
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // login_time
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // profile
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // profile
+            cursor.getShort(offset + 7) != 0 // is_bind_face
         );
         return entity;
     }
@@ -169,6 +174,7 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setPassword(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setLogin_time(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
         entity.setProfile(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setIs_bind_face(cursor.getShort(offset + 7) != 0);
      }
     
     @Override

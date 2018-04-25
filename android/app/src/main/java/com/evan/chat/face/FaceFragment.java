@@ -165,14 +165,14 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     }
 
     @Override
-    public void captrue() {
+    public void captrue(final String name) {
         mCamera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 startPreview(camera,mHolder);
                 final Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 // 创建并保存图片文件
-                final File pictureFile = new File(getDir(), presenter.getUserId()+"-get.bmp");
+                File pictureFile = new File(getDir(), presenter.getUserId()+"-"+name+".bmp");
                 presenter.upload(bitmap, pictureFile);
             }
         });

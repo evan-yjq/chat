@@ -72,26 +72,28 @@ public class FacePresenter implements FaceContratct.Presenter{
                     for (int j = 0; j < uploadNum; j++) {
                         if (view.isActive()) {
                             if (stop)break;
-                            view.captrue();
+                            if (type == TRAIN)
+                                view.captrue(j+"");
+                            else view.captrue("get");
                             appExecutors.mainThread().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    view.setAnimation(bar, 1000);
+                                    view.setAnimation(bar, 2500);
                                 }
                             });
                         }
-                        Thread.sleep(500);
+                        Thread.sleep(1500);
                     }
                     if (!stop) {
                         while (uploadSuccessNum != uploadNum) {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         }
                         doIt();
                         if (view.isActive()) {
                             appExecutors.mainThread().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    view.setAnimation(bar, 1500);
+                                    view.setAnimation(bar, 2500);
                                 }
                             });
                         }
@@ -132,6 +134,7 @@ public class FacePresenter implements FaceContratct.Presenter{
                                     if (type == TRAIN) {
                                         if ("ok".equals(s)) {
                                             view.showMessage("绑定完成");
+                                            user.setIs_bind_face(true);
                                         }
                                     } else {
                                         if ("true".equals(s)) {

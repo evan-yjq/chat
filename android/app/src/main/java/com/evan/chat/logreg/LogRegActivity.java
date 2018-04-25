@@ -30,7 +30,6 @@ public class LogRegActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_reg_act);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.color6));
         }

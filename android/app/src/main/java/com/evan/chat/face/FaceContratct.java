@@ -23,7 +23,7 @@ public interface FaceContratct {
 
         void showResult(boolean success);
 
-        void captrue();
+        void captrue(String name);
 
         void setAnimation(int mProgressBar, int millis);
     }

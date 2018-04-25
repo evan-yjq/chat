@@ -25,22 +25,27 @@
                  android:theme="@style/AppTheme">
 
         <activity android:name=".welcome.WelcomeActivity_"
-                  android:screenOrientation="nosensor">
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".logreg.LogRegActivity"/>
+        <activity android:name=".logreg.LogRegActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".friends.FriendsActivity"/>
+        <activity android:name=".friends.FriendsActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".chat.ChatActivity"/>
+        <activity android:name=".chat.ChatActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".face.FaceActivity_"/>
+        <activity android:name=".face.FaceActivity_"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".settings.SettingsActivity"/>
+        <activity android:name=".settings.SettingsActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

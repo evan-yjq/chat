@@ -42,11 +42,5 @@ public class WelcomeActivity extends AppCompatActivity {
                 Injection.provideSignInUser(getApplicationContext()),
                 Injection.provideGetSetting(getApplicationContext()),
                 getApplicationContext());
-        start();
-    }
-
-    @UiThread
-    public void start(){
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }

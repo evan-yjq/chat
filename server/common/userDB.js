@@ -4,6 +4,7 @@ var conn = require('./conn');
 var pool = mysql.createPool(conn);
 
 var sql = {
+    UPDATEBINDFACE:'update user set is_bind_face=? where id=?',
     SELECT: 'select * from user WHERE account=?',
     INSERT: 'insert into user(account, password) values(?, ?)',
     DELETE: 'delete form user where account=?',
@@ -57,6 +58,10 @@ function verify(account) {
     return promiseQuery(sql.CHECK, [account, account])
 }
 
+function update_bind_face(is_bind, id) {
+    return promiseQuery(sql.UPDATEBINDFACE, [is_bind, id])
+}
+
 //更新用户资料
 function update(id, account, password, email) {
     var a = '';
@@ -94,5 +99,6 @@ module.exports = {
     DEL: del,
     VERIFY: verify,
     UPDATE: update,
-    FRIENDS:get_friends
+    FRIENDS:get_friends,
+    UPDATEBINDFACE:update_bind_face
 };

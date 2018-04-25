@@ -53,6 +53,9 @@ router.route('/face_dist').post(function(req, res){
         var arr = stdout.split('\n');
         console.log(arr);
         res.send(arr[arr.length-1]);
+        if (req.body.type === 1 && arr[arr.length-1] === "ok"){
+            userDB.UPDATEBINDFACE('true', req.body.userId)
+        }
     });
 });
 

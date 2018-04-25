@@ -203,7 +203,6 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
         while(mAutoSignLock)
             Thread.sleep(300);
         timer.cancel();
-        System.out.println(1);
         getNextView();
     }
 

@@ -70,11 +70,13 @@ public class SettingsRepository implements SettingsDataSource{
 
             @Override
             public void onDataNotAvailable() {
-                mSettingsRemoteDataSource.getSetting(id, new GetSettingCallback() {
+                getSettingsFromRemoteDataSource(new LoadSettingsCallback() {
                     @Override
-                    public void onSettingLoaded(Setting setting) {
-                        mSettingsLocalDataSource.saveSetting(setting);
-                        callback.onSettingLoaded(setting);
+                    public void onSettingsLoaded(List<Setting> settings) {
+                        for (Setting setting : settings) {
+                            if (setting.getId().equals(id))
+                                callback.onSettingLoaded(setting);
+                        }
                     }
 
                     @Override

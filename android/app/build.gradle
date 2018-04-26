@@ -34,6 +34,7 @@ android {
                     'src/main/res/layouts/settings',
                     'src/main/res/layouts/face',
                     'src/main/res/layouts/chat',
+                    'src/main/res/layouts/searchfriend',
                     'src/main/res'
             ]
         }

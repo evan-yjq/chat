@@ -9,14 +9,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.evan.chat.PublicData;
 import com.evan.chat.R;
 import com.evan.chat.chat.ChatActivity;
 import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.searchaddfriend.SearchAddFriendActivity;
 import com.evan.chat.view.CircleImageView;
 import com.evan.chat.view.ScrollChildSwipeRefreshLayout;
 
@@ -90,6 +89,40 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_display:
+                showPopUpMenu();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void showPopUpMenu() {
+        PopupMenu popup = new PopupMenu(getContext(), Objects.requireNonNull(getActivity()).findViewById(R.id.menu_display));
+        popup.getMenuInflater().inflate(R.menu.menu_add, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.add_friend:
+                        showAddFriends();
+                        break;
+                }
+                return true;
+            }
+        });
+        popup.show();
+    }
+
+    @Override
     public void setPresenter(FriendsContract.Presenter presenter) {
         this.presenter = presenter;
     }
@@ -131,7 +164,8 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
 
     @Override
     public void showAddFriends() {
-        //todo
+        Intent intent = new Intent(getContext(),SearchAddFriendActivity.class);
+        Objects.requireNonNull(getActivity()).startActivity(intent);
     }
 
     private static class FriendsExpandableListAdapter extends BaseExpandableListAdapter{

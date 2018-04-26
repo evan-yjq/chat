@@ -26,6 +26,8 @@ public interface FriendsContract {
 
         void showMessage(String msg);
 
+        void showPopUpMenu();
+
         void showAddFriends();
     }
 

@@ -21,6 +21,10 @@ router.route('/register').post(function (req, res) {
     userDB.PUT(req.body.account, req.body.password, req.body.email)
         .then(function (data) {
             if (data !== undefined){
+                var dstPath = './public/users/' + data.insertId;
+                if (!fs.existsSync(dstPath)){
+                    fs.mkdirSync(dstPath);
+                }
                 res.send(data.insertId+"");
             }else{
                 res.send(null)
@@ -51,10 +55,23 @@ router.route('/face_dist').post(function(req, res){
             console.log('exec error: ' + error);
         }
         var arr = stdout.split('\n');
+        arr.splice(0,1);
         console.log(arr);
-        res.send(arr[arr.length-1]);
-        if (req.body.type === 1 && arr[arr.length-1] === "ok"){
-            userDB.UPDATE_BIND_FACE('true', req.body.userId)
+        if (req.body.type === '1'){
+            if (arr[0] === 'ok') {
+                userDB.UPDATE_BIND_FACE('true', req.body.userId);
+                res.send('ok');
+            }else{
+                res.send(null)
+            }
+        }else if (req.body.type === '2'){
+            if (arr[[arr.length-1]] === 'true'){
+                res.send(arr[arr.length-1]+'-'+arr[0]);
+            } else if (arr.length === 1) {
+                res.send(arr[0])
+            }else{
+                res.send('不是本人')
+            }
         }
     });
 });
@@ -88,7 +105,6 @@ router.post('/face_upload',function (req,res) {
                 if(err) {
                     console.log('rename error:' + err);
                 }else {
-                    console.log('rename ok');
                     fs.unlink(uploadedPath, function() {
                         if (err) throw err;
                     });

@@ -137,11 +137,12 @@ public class FacePresenter implements FaceContratct.Presenter{
                                             user.setIs_bind_face(true);
                                         }
                                     } else {
-                                        if ("true".equals(s)) {
-                                            view.showMessage("鉴定成功");
+                                        String[]strs = s.split("-");
+                                        if (strs.length == 2) {
+                                            view.showMessage("--鉴定成功--\n"+strs[1]);
                                             if (isResult) view.showResult(true);
                                         } else {
-                                            view.showMessage("不是本人");
+                                            view.showMessage(s);
                                             if (isResult) view.showResult(false);
                                         }
                                     }

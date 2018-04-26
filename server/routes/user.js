@@ -54,7 +54,7 @@ router.route('/face_dist').post(function(req, res){
         console.log(arr);
         res.send(arr[arr.length-1]);
         if (req.body.type === 1 && arr[arr.length-1] === "ok"){
-            userDB.UPDATEBINDFACE('true', req.body.userId)
+            userDB.UPDATE_BIND_FACE('true', req.body.userId)
         }
     });
 });

@@ -47,18 +47,18 @@ public class ChatPresenter implements ChatContract.Presenter {
     public boolean send(String context) {
         Chat chat = new Chat(null, new Date().getTime(), userId, friendId, MY, context);
 
-        mUseCaseHandler.execute(sendMessage, new SendMessage.RequestValues(chat),
-                new UseCase.UseCaseCallback<SendMessage.ResponseValue>() {
-                    @Override
-                    public void onSuccess(SendMessage.ResponseValue response) {
-
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
+//        mUseCaseHandler.execute(sendMessage, new SendMessage.RequestValues(chat),
+//                new UseCase.UseCaseCallback<SendMessage.ResponseValue>() {
+//                    @Override
+//                    public void onSuccess(SendMessage.ResponseValue response) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//
+//                    }
+//                });
         if (view.isActive()){
             view.addDialog(chat);
             return true;

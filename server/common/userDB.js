@@ -9,7 +9,7 @@ var sql = {
     INSERT: 'insert into user(account, password) values(?, ?)',
     DELETE: 'delete form user where account=?',
     CHECK: 'select * from user where account=? or email=?',
-    GETFRIENDS:'select u.id,u.account,u.nickname,u.profile,f.relationship,c.classification from c_friends f ' +
+    GETFRIENDS:'select u.id,u.account,u.nickname,u.email,u.profile,f.relationship,c.classification from c_friends f ' +
                 'left join c_classification c on f.user_id=c.user_id and f.classification_id=c.id ' +
                 'left join chat.user u on f.friend_id=u.id where f.user_id=?'
 };
@@ -31,8 +31,8 @@ function promiseQuery(sql, sqlParams) {
 }
 
 //根据关键词模糊查找用户
-function search(keyword) {
-    var sql = "select * from user where account like '%" + keyword + "%'";
+function search_in_all_user(keyword) {
+    var sql = "select id,account,email,profile from user where account like '%" + keyword + "%'";
     return promiseQuery(sql);
 }
 
@@ -94,11 +94,11 @@ function get_friends(id) {
 }
 
 module.exports = {
-    SEARCH: search,
+    SEARCH_IN_ALL_USER: search_in_all_user,
     PUT: put,
     DEL: del,
     VERIFY: verify,
     UPDATE: update,
     FRIENDS:get_friends,
-    UPDATEBINDFACE:update_bind_face
+    UPDATE_BIND_FACE:update_bind_face
 };

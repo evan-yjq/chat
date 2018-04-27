@@ -116,4 +116,8 @@ public class Injection {
         return new GetSetting(provideSettingsRepository(context));
     }
 
+    public static SearchInAllUser provideSearchInAllUser(){
+        return new SearchInAllUser(provideGetHead(),provideUseCaseHandler());
+    }
+
 }

@@ -2,6 +2,9 @@ package com.evan.chat.searchaddfriend;
 
 import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
+import com.evan.chat.data.source.model.Friend;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA
@@ -13,6 +16,11 @@ public interface SearchAddFriendContract {
 
     interface View extends BaseView<Presenter>{
 
+        void setLoadingIndicator(final boolean active);
+
+        void showMessage(String message);
+
+        void showFriends(List<Friend> friends);
     }
 
     interface Presenter extends BasePresenter{

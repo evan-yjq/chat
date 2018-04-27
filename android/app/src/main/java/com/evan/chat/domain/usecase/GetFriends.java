@@ -41,7 +41,6 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
             public void onAllFriendLoaded(List<Friend> friends) {
                 i=0;
                 getHead(friends);
-                getUseCaseCallback().onSuccess(new ResponseValue(friends));
             }
 
             @Override
@@ -52,7 +51,10 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
     }
     private int i;
     private void getHead(final List<Friend> friends){
-        if (i==friends.size())return;
+        if (i==friends.size()){
+            getUseCaseCallback().onSuccess(new ResponseValue(friends));
+            return;
+        }
         handler.execute(getHead, new GetHead.RequestValues(friends.get(i)),
                 new UseCaseCallback<GetHead.ResponseValue>() {
                     @Override

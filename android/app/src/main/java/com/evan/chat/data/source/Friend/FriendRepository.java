@@ -49,6 +49,7 @@ public class FriendRepository implements FriendDataSource {
 
         if (mCachedFriends != null && !mCacheIsDirty){
             callback.onAllFriendLoaded(new ArrayList<>(mCachedFriends.values()));
+            return;
         }
         if (mCacheIsDirty) {
             getFriendsFromRemoteDataSource(callback);

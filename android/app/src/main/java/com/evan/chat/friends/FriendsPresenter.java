@@ -31,12 +31,12 @@ public class FriendsPresenter implements FriendsContract.Presenter{
 
     @Override
     public void start() {
-       loadFriends(false);
+        loadFriends(false);
     }
 
     @Override
     public void loadFriends(boolean forceUpdate){
-        loadFriends(forceUpdate,true);
+        loadFriends(forceUpdate || mFirstStart,true);
         mFirstStart = false;
     }
 

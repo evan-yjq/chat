@@ -165,12 +165,16 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
             head.setImageBitmap(friend.getHead());
             account.setText(friend.getAccount());
             profile.setText(friend.getProfile());
-            addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemListener.onAddClick(friend);
-                }
-            });
+            if ("NO".equals(friend.getRelationship())){
+                addButton.setVisibility(View.GONE);
+            }else {
+                addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mItemListener.onAddClick(friend);
+                    }
+                });
+            }
             return convertView;
         }
     }

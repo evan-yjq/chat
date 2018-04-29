@@ -79,7 +79,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.loadFriends(false);
+                presenter.loadFriends(true);
             }
         });
 

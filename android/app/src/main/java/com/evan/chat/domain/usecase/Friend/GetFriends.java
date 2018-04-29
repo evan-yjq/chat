@@ -33,14 +33,19 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
 
     @Override
     protected void executeUseCase(RequestValues requestValues) {
-        if (requestValues.isForceUpdate()){
+        final boolean forceUpdate = requestValues.isForceUpdate();
+        if (forceUpdate){
             friendRepository.refreshFriends();
         }
         friendRepository.getFriends(new FriendDataSource.LoadAllFriendsCallback() {
             @Override
             public void onAllFriendLoaded(List<Friend> friends) {
-                i=0;
-                getHead(friends);
+                if (forceUpdate) {
+                    i = 0;
+                    getHead(friends);
+                }else{
+                    getUseCaseCallback().onSuccess(new ResponseValue(friends));
+                }
             }
 
             @Override
@@ -51,7 +56,7 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
     }
     private int i;
     private void getHead(final List<Friend> friends){
-        if (i==friends.size()){
+        if (i>=friends.size()){
             getUseCaseCallback().onSuccess(new ResponseValue(friends));
             return;
         }

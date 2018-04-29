@@ -47,7 +47,7 @@ public class SearchAddFriendActivity extends AppCompatActivity {
 
         presenter = new SearchAddFriendPresenter(searchAddFriendFragment,
                 Injection.provideUseCaseHandler(),
-                Injection.provideSearchInAllUser());
+                Injection.provideSearchInAllUser(getApplicationContext()));
     }
 
     @Override

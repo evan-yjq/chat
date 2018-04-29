@@ -1,9 +1,10 @@
-package com.evan.chat.domain.usecase;
+package com.evan.chat.domain.usecase.Friend;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.domain.usecase.GetHead;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.PropertiesUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -26,11 +27,13 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
     private AppExecutors appExecutors;
     private final GetHead getHead;
     private final UseCaseHandler handler;
+    private final GetFriends getFriends;
 
-    public SearchInAllUser(@NonNull GetHead getHead,@NonNull UseCaseHandler handler){
+    public SearchInAllUser(@NonNull GetHead getHead, @NonNull UseCaseHandler handler, @NonNull GetFriends getFriends){
         appExecutors = new AppExecutors();
         this.getHead = checkNotNull(getHead,"getHead cannot be null!");
         this.handler = checkNotNull(handler,"handler cannot be null!");
+        this.getFriends = checkNotNull(getFriends,"getFriends cannot be null!");
     }
 
     @Override
@@ -48,7 +51,7 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
 
                     @Override
                     public void onResponse(String s, int i) {
-                        List<Friend>friends = parseJsonArrayWithGson(s,Friend.class);
+                        final List<Friend>friends = parseJsonArrayWithGson(s,Friend.class);
                         j=0;
                         getHead(friends);
                     }
@@ -57,10 +60,33 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
         });
     }
 
+    private void LoadAllSuccess(final List<Friend>friends){
+        handler.execute(getFriends, new GetFriends.RequestValues(true),
+                new UseCaseCallback<GetFriends.ResponseValue>() {
+                    @Override
+                    public void onSuccess(GetFriends.ResponseValue response) {
+                        List<Friend>nowFriends = response.getFriends();
+                        for (Friend nowFriend : nowFriends){
+                            for (Friend friend : friends) {
+                                if (friend.getId().equals(nowFriend.getId())){
+                                    friend.setRelationship("NO");
+                                }
+                            }
+                        }
+                        getUseCaseCallback().onSuccess(new ResponseValue(friends));
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
     private int j;
     private void getHead(final List<Friend> friends){
-        if (j==friends.size()){
-            getUseCaseCallback().onSuccess(new ResponseValue(friends));
+        if (j>=friends.size()){
+            LoadAllSuccess(friends);
             return;
         }
         handler.execute(getHead, new GetHead.RequestValues(friends.get(j)),

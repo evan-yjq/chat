@@ -1,6 +1,7 @@
 package com.evan.chat.face;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +11,13 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import com.evan.chat.PublicData;
 import com.evan.chat.R;
+import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.util.ActivityUtils;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.UiThread;
 
+import static com.evan.chat.PublicData.user;
 import static com.evan.chat.face.FaceFragment.DIST;
 
 
@@ -37,11 +40,17 @@ public class FaceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (user == null){
+            Intent intent = new Intent(this, LogRegActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         int type = getIntent().getIntExtra(EXTRA_FACE_VIEW,0);
         boolean isResult = getIntent().getBooleanExtra(EXTRA_IS_RESULT, false);
-        System.out.println(PublicData.user);
         if (type == DIST && !PublicData.user.getIs_bind_face()) {
             Toast toast = Toast.makeText(this, "请先绑定", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -53,6 +62,8 @@ public class FaceActivity extends AppCompatActivity {
             view = FaceFragment.newInstance(type);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), view, R.id.contentFrame);
         }
-        new FacePresenter(view, isResult, type);
+        if (user != null) {
+            new FacePresenter(view, isResult, type);
+        }
     }
 }

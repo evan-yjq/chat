@@ -47,6 +47,12 @@ public class FriendsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_act);
 
+        if (user == null){
+            Intent intent = new Intent(this, LogRegActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
@@ -76,7 +82,7 @@ public class FriendsActivity extends AppCompatActivity{
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        if (navigationView != null) {
+        if (navigationView != null && user != null) {
             setupDrawerContent(navigationView);
             View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
             TextView text = headerLayout.findViewById(R.id.nav_header_text);

@@ -3,7 +3,7 @@ package com.evan.chat.searchaddfriend;
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.domain.usecase.SearchInAllUser;
+import com.evan.chat.domain.usecase.Friend.SearchInAllUser;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 

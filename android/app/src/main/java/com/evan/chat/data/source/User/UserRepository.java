@@ -81,7 +81,6 @@ public class UserRepository implements UserDataSource {
             public void onSuccess(User u) {
                 user = u;
                 local.saveUser(user);
-                System.out.println(u);
                 callback.onSuccess(user);
             }
 

@@ -1,5 +1,6 @@
 package com.evan.chat.chat;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +12,13 @@ import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.data.source.model.User;
+import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.util.ActivityUtils;
 
 import java.util.Objects;
 
 import static com.evan.chat.PublicData.friend;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -29,6 +32,14 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_act);
+
+        if (user == null){
+            Intent intent = new Intent(this, LogRegActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if (friend == null) onBackPressed();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
@@ -51,9 +62,10 @@ public class ChatActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),chatFragment,R.id.contentFrame);
         }
 
-        new ChatPresenter(chatFragment, friend,
-                Injection.provideSendMessage(getApplicationContext()),
-                Injection.provideUseCaseHandler());
+        if (friend != null)
+            new ChatPresenter(chatFragment, friend,
+                    Injection.provideSendMessage(getApplicationContext()),
+                    Injection.provideUseCaseHandler());
 
     }
 

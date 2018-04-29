@@ -1,4 +1,4 @@
-package com.evan.chat.domain.usecase;
+package com.evan.chat.domain.usecase.Friend;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
@@ -6,6 +6,7 @@ import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.Friend.FriendDataSource;
 import com.evan.chat.data.source.Friend.FriendRepository;
 import com.evan.chat.data.source.model.Friend;
+import com.evan.chat.domain.usecase.GetHead;
 
 import java.util.List;
 
@@ -35,8 +36,7 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
         if (requestValues.isForceUpdate()){
             friendRepository.refreshFriends();
         }
-        Long id = requestValues.getId();
-        friendRepository.getFriends(id, new FriendDataSource.LoadAllFriendsCallback() {
+        friendRepository.getFriends(new FriendDataSource.LoadAllFriendsCallback() {
             @Override
             public void onAllFriendLoaded(List<Friend> friends) {
                 i=0;
@@ -72,21 +72,14 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
 
     public static final class RequestValues implements UseCase.RequestValues {
 
-        private final Long id;
-
         private final boolean mForceUpdate;
 
-        public RequestValues(boolean forceUpdate, @NonNull Long id){
+        public RequestValues(boolean forceUpdate){
             mForceUpdate = forceUpdate;
-            this.id = checkNotNull(id,"id cannot be null!");
         }
 
         public boolean isForceUpdate() {
             return mForceUpdate;
-        }
-
-        public Long getId() {
-            return id;
         }
     }
     public static final class ResponseValue implements UseCase.ResponseValue {

@@ -40,7 +40,7 @@ public class FriendLocalDataSource implements FriendDataSource {
     }
 
     @Override
-    public void getFriends(@NonNull Long id, @NonNull final LoadAllFriendsCallback callback) {
+    public void getFriends(@NonNull final LoadAllFriendsCallback callback) {
         mAppExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {

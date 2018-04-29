@@ -1,9 +1,8 @@
 package com.evan.chat.chat;
 
 import android.support.annotation.NonNull;
-import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.domain.usecase.SendMessage;
+import com.evan.chat.domain.usecase.Chat.SendMessage;
 import com.evan.chat.data.source.model.Chat;
 import com.evan.chat.data.source.model.Friend;
 

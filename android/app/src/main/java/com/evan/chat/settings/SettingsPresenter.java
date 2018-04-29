@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.model.Setting;
-import com.evan.chat.domain.usecase.EditSetting;
-import com.evan.chat.domain.usecase.GetSettings;
+import com.evan.chat.domain.usecase.Setting.EditSetting;
+import com.evan.chat.domain.usecase.Setting.GetSettings;
 
 import java.util.List;
 

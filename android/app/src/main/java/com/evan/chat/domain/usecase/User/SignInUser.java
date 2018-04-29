@@ -1,31 +1,53 @@
-package com.evan.chat.domain.usecase;
+package com.evan.chat.domain.usecase.User;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
+import com.evan.chat.UseCaseHandler;
 import com.evan.chat.data.source.User.UserDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.model.User;
+import com.evan.chat.domain.usecase.GetHead;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 
-public class RegisterUser extends UseCase<RegisterUser.RequestValues,RegisterUser.ResponseValue> {
+/**
+ * Created by IntelliJ IDEA
+ * User: Evan
+ * Date: 2018/2/27
+ * Time: 下午1:59
+ */
+public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.ResponseValue>{
 
     private final UserRepository userRepository;
+    private final GetHead getHead;
+    private final UseCaseHandler handler;
 
-    public RegisterUser(@NonNull UserRepository userRepository){
+    public SignInUser(@NonNull GetHead getHead, @NonNull UserRepository userRepository,
+                      @NonNull UseCaseHandler handler){
         this.userRepository = checkNotNull(userRepository,"userRepository cannot be null!");
+        this.getHead = checkNotNull(getHead,"getHead cannot be null!");
+        this.handler = checkNotNull(handler,"handler cannot be null!");
     }
 
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         String account = requestValues.getAccount();
         String password = requestValues.getPassword();
-        String email = requestValues.getEmail();
-        userRepository.register(account, password, email, new UserDataSource.Callback() {
-
+        userRepository.check(account, password, new UserDataSource.Callback() {
             @Override
-            public void onSuccess(User user) {
-                getUseCaseCallback().onSuccess(new ResponseValue(user));
+            public void onSuccess(final User user) {
+                handler.execute(getHead, new GetHead.RequestValues(user),
+                        new UseCaseCallback<GetHead.ResponseValue>() {
+                            @Override
+                            public void onSuccess(GetHead.ResponseValue response) {
+                                getUseCaseCallback().onSuccess(new ResponseValue(user));
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
             }
 
             @Override
@@ -35,20 +57,13 @@ public class RegisterUser extends UseCase<RegisterUser.RequestValues,RegisterUse
         });
     }
 
-
     public static final class RequestValues implements UseCase.RequestValues {
         private final String account;
         private final String password;
-        private final String email;
 
-        public RequestValues(@NonNull String account, @NonNull String password, @NonNull String email) {
+        public RequestValues(@NonNull String account, @NonNull String password) {
             this.account = checkNotNull(account,"account cannot be null!");
             this.password = checkNotNull(password,"password cannot be null!");
-            this.email = checkNotNull(email,"email cannot be null!");
-        }
-
-        public String getEmail() {
-            return email;
         }
 
         public String getAccount() {

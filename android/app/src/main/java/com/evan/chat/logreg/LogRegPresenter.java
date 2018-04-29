@@ -9,8 +9,8 @@ import com.evan.chat.PublicData;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.domain.usecase.RegisterUser;
-import com.evan.chat.domain.usecase.SignInUser;
+import com.evan.chat.domain.usecase.User.RegisterUser;
+import com.evan.chat.domain.usecase.User.SignInUser;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

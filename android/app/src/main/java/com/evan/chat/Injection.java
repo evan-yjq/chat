@@ -32,9 +32,17 @@ import com.evan.chat.data.source.User.UserLocalDataSource;
 import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
+import com.evan.chat.domain.usecase.Chat.SendMessage;
+import com.evan.chat.domain.usecase.Friend.GetFriends;
+import com.evan.chat.domain.usecase.Setting.EditSetting;
+import com.evan.chat.domain.usecase.Setting.GetSetting;
+import com.evan.chat.domain.usecase.Setting.GetSettings;
+import com.evan.chat.domain.usecase.User.DeleteAllUser;
+import com.evan.chat.domain.usecase.User.RegisterUser;
+import com.evan.chat.domain.usecase.User.SignInUser;
 import com.evan.chat.util.AppExecutors;
 import com.evan.chat.util.GreenDaoUtils;
-import com.evan.chat.domain.usecase.GetAutoUser;
+import com.evan.chat.domain.usecase.User.GetAutoUser;
 
 import static com.evan.chat.util.Objects.checkNotNull;
 

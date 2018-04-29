@@ -27,7 +27,7 @@ public interface FriendDataSource {
         void onDataNotAvailable();
     }
 
-    void getFriends(@NonNull Long id, @NonNull LoadAllFriendsCallback callback);
+    void getFriends(@NonNull LoadAllFriendsCallback callback);
 
     void getFriend(@NonNull Long id, @NonNull LoadFriendCallback callback);
 

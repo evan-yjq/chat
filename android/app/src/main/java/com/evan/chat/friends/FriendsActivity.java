@@ -2,8 +2,6 @@ package com.evan.chat.friends;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +22,7 @@ import com.evan.chat.R;
 import com.evan.chat.UseCase;
 import com.evan.chat.face.FaceActivity_;
 import com.evan.chat.logreg.LogRegActivity;
-import com.evan.chat.domain.usecase.DeleteAllUser;
+import com.evan.chat.domain.usecase.User.DeleteAllUser;
 import com.evan.chat.settings.SettingsActivity;
 import com.evan.chat.util.ActivityUtils;
 

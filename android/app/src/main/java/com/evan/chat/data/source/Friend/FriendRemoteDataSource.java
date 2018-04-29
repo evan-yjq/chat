@@ -9,6 +9,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import okhttp3.Call;
 
 import static com.evan.chat.util.GsonUtil.parseJsonArrayWithGson;
+import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -38,13 +39,13 @@ public class FriendRemoteDataSource implements FriendDataSource {
     }
 
     @Override
-    public void getFriends(@NonNull final Long id, @NonNull final LoadAllFriendsCallback callback) {
+    public void getFriends(@NonNull final LoadAllFriendsCallback callback) {
         mAppExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
                 OkHttpUtils.post()
                         .url(PropertiesUtils.getInstance().getProperty("get_friends", true))
-                        .addParams("id",id.toString()).build()
+                        .addParams("id",user.getId().toString()).build()
                         .execute(new StringCallback() {
                             @Override
                             public void onError(Call call, Exception e, int i) {

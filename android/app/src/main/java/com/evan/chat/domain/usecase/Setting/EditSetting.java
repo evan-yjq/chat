@@ -1,4 +1,4 @@
-package com.evan.chat.domain.usecase;
+package com.evan.chat.domain.usecase.Setting;
 
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;

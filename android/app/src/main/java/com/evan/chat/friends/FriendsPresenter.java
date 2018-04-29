@@ -3,10 +3,9 @@ package com.evan.chat.friends;
 import android.support.annotation.NonNull;
 import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
-import com.evan.chat.domain.usecase.GetFriends;
+import com.evan.chat.domain.usecase.Friend.GetFriends;
 
 import static com.evan.chat.util.Objects.checkNotNull;
-import static com.evan.chat.PublicData.user;
 
 /**
  * Created by IntelliJ IDEA
@@ -46,7 +45,7 @@ public class FriendsPresenter implements FriendsContract.Presenter{
             view.setLoadingIndicator(true);
         }
 
-        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate, user.getId()),
+        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate),
                 new UseCase.UseCaseCallback<GetFriends.ResponseValue>() {
                     @Override
                     public void onSuccess(GetFriends.ResponseValue response) {

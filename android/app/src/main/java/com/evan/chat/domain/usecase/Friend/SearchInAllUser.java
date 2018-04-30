@@ -61,7 +61,7 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
     }
 
     private void LoadAllSuccess(final List<Friend>friends){
-        handler.execute(getFriends, new GetFriends.RequestValues(true),
+        handler.execute(getFriends, new GetFriends.RequestValues(false),
                 new UseCaseCallback<GetFriends.ResponseValue>() {
                     @Override
                     public void onSuccess(GetFriends.ResponseValue response) {

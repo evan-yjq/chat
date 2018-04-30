@@ -33,6 +33,7 @@ import com.evan.chat.data.source.User.UserRemoteDataSource;
 import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.dao.DaoSession;
 import com.evan.chat.domain.usecase.Chat.SendMessage;
+import com.evan.chat.domain.usecase.Friend.AddFriend;
 import com.evan.chat.domain.usecase.Friend.GetFriends;
 import com.evan.chat.domain.usecase.Friend.SearchInAllUser;
 import com.evan.chat.domain.usecase.Setting.EditSetting;
@@ -127,6 +128,10 @@ public class Injection {
 
     public static SearchInAllUser provideSearchInAllUser(@NonNull Context context){
         return new SearchInAllUser(provideGetHead(),provideUseCaseHandler(),provideGetFriends(context));
+    }
+
+    public static AddFriend provideAddFriend(@NonNull Context context){
+        return new AddFriend(provideFriendRepository(context));
     }
 
 }

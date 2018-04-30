@@ -21,9 +21,12 @@ public interface SearchAddFriendContract {
         void showMessage(String message);
 
         void showFriends(List<Friend> friends);
+
+        void addFriendSuccess();
     }
 
     interface Presenter extends BasePresenter{
 
+        void addFriend(Friend friend);
     }
 }

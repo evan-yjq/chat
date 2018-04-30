@@ -10,10 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.evan.chat.R;
 import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.view.CircleImageView;
@@ -100,7 +97,7 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
 
     @Override
     public void showMessage(String message) {
-        Snackbar.make(Objects.requireNonNull(getView()),message,Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -108,11 +105,16 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
         mAdapter.replaceData(friends);
     }
 
+    @Override
+    public void addFriendSuccess() {
+        getActivity().finish();
+    }
+
     private ListItemListener mItemListener = new ListItemListener() {
 
         @Override
         public void onAddClick(Friend friend) {
-
+            presenter.addFriend(friend);
         }
     };
 
@@ -168,6 +170,7 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
             if ("NO".equals(friend.getRelationship())){
                 addButton.setVisibility(View.GONE);
             }else {
+                addButton.setVisibility(View.VISIBLE);
                 addButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

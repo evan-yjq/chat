@@ -11,7 +11,8 @@ var sql = {
     CHECK: 'select * from user where account=? or email=?',
     GETFRIENDS:'select u.id,u.account,u.nickname,u.email,u.profile,f.relationship,c.classification from c_friends f ' +
                 'left join c_classification c on f.user_id=c.user_id and f.classification_id=c.id ' +
-                'left join chat.user u on f.friend_id=u.id where f.user_id=?'
+                'left join chat.user u on f.friend_id=u.id where f.user_id=?',
+    ADDFRIEND:'insert into c_friends(user_id, friend_id) values(?, ?)'
 };
 
 //异步操作
@@ -93,6 +94,10 @@ function get_friends(id) {
     return promiseQuery(sql.GETFRIENDS, id)
 }
 
+function add_friend(userId, friendId){
+    return promiseQuery(sql.ADDFRIEND, [userId, friendId])
+}
+
 module.exports = {
     SEARCH_IN_ALL_USER: search_in_all_user,
     PUT: put,
@@ -100,5 +105,6 @@ module.exports = {
     VERIFY: verify,
     UPDATE: update,
     FRIENDS:get_friends,
-    UPDATE_BIND_FACE:update_bind_face
+    UPDATE_BIND_FACE:update_bind_face,
+    ADD_FRIEND:add_friend
 };

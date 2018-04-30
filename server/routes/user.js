@@ -47,6 +47,19 @@ router.route('/get_friends').post(function (req, res) {
         })
 });
 
+router.route('/add_friend').post(function (req, res) {
+    userDB.ADD_FRIEND(req.body.userId,req.body.friendId)
+        .then(function () {
+            userDB.ADD_FRIEND(req.body.friendId,req.body.userId)
+                .then(function () {
+                    res.send('ok')
+                })
+        }).catch(function () {
+        res.send(null)
+    })
+
+});
+
 var process = require('child_process');
 
 router.route('/face_dist').post(function(req, res){

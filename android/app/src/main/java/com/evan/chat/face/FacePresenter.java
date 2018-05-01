@@ -14,6 +14,7 @@ import okhttp3.Call;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.evan.chat.face.FaceFragment.TRAIN;
 import static com.evan.chat.util.Objects.checkNotNull;
@@ -138,7 +139,7 @@ public class FacePresenter implements FaceContratct.Presenter{
                                         }
                                     } else {
                                         String[]strs = s.split("-");
-                                        if (strs.length >= 1) {
+                                        if (!"".equals(strs[0])) {
                                             String msg = "--鉴定成功--";
                                             if (strs.length==2)
                                                 msg = msg + "\n" + strs[1];

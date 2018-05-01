@@ -25,7 +25,10 @@ router.route('/register').post(function (req, res) {
                 if (!fs.existsSync(dstPath)){
                     fs.mkdirSync(dstPath);
                 }
-                res.send(data.insertId+"");
+                userDB.ADD_FRIEND(data.insertId,data.insertId)
+                    .then(function () {
+                        res.send(data.insertId+"");
+                    })
             }else{
                 res.send(null)
             }

@@ -11,6 +11,7 @@ import com.evan.chat.UseCase;
 import com.evan.chat.UseCaseHandler;
 import com.evan.chat.domain.usecase.User.RegisterUser;
 import com.evan.chat.domain.usecase.User.SignInUser;
+import com.evan.chat.util.MD5Util;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -119,6 +120,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
 
     //登录操作
     private void signIn(String account, String password){
+        password = MD5Util.getMD5(password);
         mUseCaseHandler.execute(signInUser, new SignInUser.RequestValues(account, password),
                 new UseCase.UseCaseCallback<SignInUser.ResponseValue>() {
                     @Override

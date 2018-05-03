@@ -45,7 +45,7 @@ public class FriendsPresenter implements FriendsContract.Presenter{
             view.setLoadingIndicator(true);
         }
 
-        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate),
+        mUseCaseHandler.execute(getFriends, new GetFriends.RequestValues(forceUpdate, view.getFile()),
                 new UseCase.UseCaseCallback<GetFriends.ResponseValue>() {
                     @Override
                     public void onSuccess(GetFriends.ResponseValue response) {

@@ -8,6 +8,8 @@ import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
 import com.evan.chat.data.source.model.User;
 
+import java.io.File;
+
 /**
  * Created by IntelliJ IDEA
  * User: Evan
@@ -25,6 +27,8 @@ public interface WelcomeContract {
         void showMessage(String msg);
 
         void showNextView(Intent intent);
+
+        File getFile();
     }
 
     interface Presenter extends BasePresenter {

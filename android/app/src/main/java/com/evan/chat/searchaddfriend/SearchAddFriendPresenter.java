@@ -42,7 +42,7 @@ public class SearchAddFriendPresenter implements SearchAddFriendContract.Present
 
     public void search(String key){
         view.setLoadingIndicator(true);
-        mUseCaseHandler.execute(searchInAllUser, new SearchInAllUser.RequestValues(key),
+        mUseCaseHandler.execute(searchInAllUser, new SearchInAllUser.RequestValues(key, view.getFile()),
                 new UseCase.UseCaseCallback<SearchInAllUser.ResponseValue>() {
                     @Override
                     public void onSuccess(SearchInAllUser.ResponseValue response) {

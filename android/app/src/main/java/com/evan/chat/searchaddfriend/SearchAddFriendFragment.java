@@ -16,6 +16,7 @@ import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.view.CircleImageView;
 import com.evan.chat.view.ScrollChildSwipeRefreshLayout;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -108,6 +109,18 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
     @Override
     public void addFriendSuccess() {
         getActivity().finish();
+    }
+
+    @Override
+    public File getFile() {
+        File filesDir = Objects.requireNonNull(getActivity()).getFilesDir();
+
+        if (filesDir.exists()) {
+            return filesDir;
+        } else {
+            filesDir.mkdirs();
+            return filesDir;
+        }
     }
 
     private ListItemListener mItemListener = new ListItemListener() {

@@ -1,9 +1,11 @@
 package com.evan.chat.data.source.Friend;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.evan.chat.data.source.model.Friend;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class FriendRepository implements FriendDataSource {
     private final FriendDataSource mFriendRemoteDataSource;
 
     private Map<Long, Friend> mCachedFriends;
+    private Map<Long, Bitmap> mHeads;
 
     private boolean mCacheIsDirty = false;
 
@@ -126,6 +129,62 @@ public class FriendRepository implements FriendDataSource {
                     getFriendFromRemoteDataSource(id, callback);
                 }
             });
+        }
+    }
+
+    @Override
+    public void saveHead(@NonNull File file, @NonNull Long id, @NonNull Bitmap bitmap) {
+        checkNotNull(file);
+        checkNotNull(id);
+        checkNotNull(bitmap);
+        mFriendLocalDataSource.saveHead(file, id, bitmap);
+    }
+
+    @Override
+    public void getHead(@NonNull final File file, @NonNull final Long id, @NonNull final HeadCallback callback) {
+        checkNotNull(file);
+        checkNotNull(id);
+        checkNotNull(callback);
+        Bitmap head = getHeadWithId(id);
+        if (head != null){
+            callback.onSuccess(head);
+            return;
+        }
+        mFriendLocalDataSource.getHead(file, id, new HeadCallback() {
+            @Override
+            public void onSuccess(Bitmap bitmap) {
+                callback.onSuccess(bitmap);
+            }
+
+            @Override
+            public void onFail() {
+                mFriendRemoteDataSource.getHead(file, id, new HeadCallback() {
+                    @Override
+                    public void onSuccess(Bitmap bitmap) {
+                        mFriendLocalDataSource.saveHead(file,id,bitmap);
+                        if (mHeads == null){
+                            mHeads = new LinkedHashMap<>();
+                        }
+                        mHeads.put(id, bitmap);
+                        callback.onSuccess(bitmap);
+                    }
+
+                    @Override
+                    public void onFail() {
+                        callback.onFail();
+                    }
+                });
+            }
+        });
+    }
+
+    @Nullable
+    private Bitmap getHeadWithId(@NonNull Long id){
+        checkNotNull(id);
+        if (mHeads == null || mHeads.isEmpty()){
+            return null;
+        }else{
+            return mHeads.get(id);
         }
     }
 

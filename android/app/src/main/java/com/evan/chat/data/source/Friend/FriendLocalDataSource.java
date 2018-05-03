@@ -1,10 +1,13 @@
 package com.evan.chat.data.source.Friend;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.data.source.dao.FriendDao;
 import com.evan.chat.util.AppExecutors;
 
+import java.io.*;
 import java.util.List;
 
 /**
@@ -75,6 +78,48 @@ public class FriendLocalDataSource implements FriendDataSource {
                         }
                     }
                 });
+            }
+        });
+    }
+
+    @Override
+    public void saveHead(@NonNull final File file, @NonNull final Long id, @NonNull final Bitmap bitmap) {
+        mAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    File picFile = new File(file, "/head/"+id+".png");
+                    FileOutputStream fos = new FileOutputStream(picFile);
+                    fos.write(Bitmap2Bytes(bitmap));
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    // Bitmap转byte数组
+    public byte[] Bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);//png类型
+        return baos.toByteArray();
+    }
+
+    @Override
+    public void getHead(@NonNull final File file, @NonNull final Long id, @NonNull final HeadCallback callback) {
+        mAppExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    File picFile = new File(file, "/head/"+id+".png");
+                    FileInputStream fis = new FileInputStream(picFile);
+                    Bitmap bitmap  = BitmapFactory.decodeStream(fis);
+                    callback.onSuccess(bitmap);
+                } catch (FileNotFoundException e) {
+                    callback.onFail();
+                }
             }
         });
     }

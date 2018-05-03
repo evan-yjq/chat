@@ -124,7 +124,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter{
     }
 
     private void signInUser(){
-        useCaseHandler.execute(signInUser, new SignInUser.RequestValues(autoUser.getAccount(), autoUser.getPassword()),
+        useCaseHandler.execute(signInUser, new SignInUser.RequestValues(autoUser.getAccount(), autoUser.getPassword(), view.getFile()),
                 new UseCase.UseCaseCallback<SignInUser.ResponseValue>() {
                     @Override
                     public void onSuccess(SignInUser.ResponseValue response) {

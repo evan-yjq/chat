@@ -8,6 +8,7 @@ import com.evan.chat.data.source.Friend.FriendRepository;
 import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.domain.usecase.GetHead;
 
+import java.io.File;
 import java.util.List;
 
 import static com.evan.chat.util.Objects.checkNotNull;
@@ -34,6 +35,7 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         final boolean forceUpdate = requestValues.isForceUpdate();
+        final File file = requestValues.getFile();
         if (forceUpdate){
             friendRepository.refreshFriends();
         }
@@ -42,7 +44,7 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
             public void onAllFriendLoaded(List<Friend> friends) {
                 if (forceUpdate) {
                     i = 0;
-                    getHead(friends);
+                    getHead(friends, file);
                 }else{
                     getUseCaseCallback().onSuccess(new ResponseValue(friends));
                 }
@@ -55,17 +57,17 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
         });
     }
     private int i;
-    private void getHead(final List<Friend> friends){
+    private void getHead(final List<Friend> friends, final File file){
         if (i>=friends.size()){
             getUseCaseCallback().onSuccess(new ResponseValue(friends));
             return;
         }
-        handler.execute(getHead, new GetHead.RequestValues(friends.get(i)),
+        handler.execute(getHead, new GetHead.RequestValues(friends.get(i), file),
                 new UseCaseCallback<GetHead.ResponseValue>() {
                     @Override
                     public void onSuccess(GetHead.ResponseValue response) {
                         i++;
-                        getHead(friends);
+                        getHead(friends, file);
                     }
 
                     @Override
@@ -78,9 +80,15 @@ public class GetFriends extends UseCase<GetFriends.RequestValues,GetFriends.Resp
     public static final class RequestValues implements UseCase.RequestValues {
 
         private final boolean mForceUpdate;
+        private final File file;
 
-        public RequestValues(boolean forceUpdate){
+        public RequestValues(boolean forceUpdate, @NonNull File file){
             mForceUpdate = forceUpdate;
+            this.file = checkNotNull(file);
+        }
+
+        public File getFile() {
+            return file;
         }
 
         public boolean isForceUpdate() {

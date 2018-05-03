@@ -4,6 +4,8 @@ import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
 import com.evan.chat.data.source.model.User;
 
+import java.io.File;
+
 /**
  * Created by IntelliJ IDEA
  * User: Evan
@@ -22,6 +24,8 @@ public interface LogRegContract {
         void showSignInError();
 
         void showProgress(boolean show);
+
+        File getFile();
     }
 
     interface RegView extends BaseView<Presenter>{

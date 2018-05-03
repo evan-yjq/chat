@@ -19,6 +19,7 @@ import com.evan.chat.R;
 import com.evan.chat.friends.FriendsActivity;
 import com.evan.chat.logreg.LogRegActivity;
 
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -91,6 +92,18 @@ public class WelcomeFragment extends Fragment implements WelcomeContract.View{
     public void showNextView(Intent intent) {
         startActivity(intent);
         Objects.requireNonNull(getActivity()).finish();
+    }
+
+    @Override
+    public File getFile() {
+        File filesDir = Objects.requireNonNull(getActivity()).getFilesDir();
+
+        if (filesDir.exists()) {
+            return filesDir;
+        } else {
+            filesDir.mkdirs();
+            return filesDir;
+        }
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.evan.chat.data.source.User.UserRepository;
 import com.evan.chat.data.source.model.User;
 import com.evan.chat.domain.usecase.GetHead;
 
+import java.io.File;
+
 import static com.evan.chat.util.Objects.checkNotNull;
 
 /**
@@ -33,10 +35,11 @@ public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.Resp
     protected void executeUseCase(RequestValues requestValues) {
         String account = requestValues.getAccount();
         String password = requestValues.getPassword();
+        final File file = requestValues.getFile();
         userRepository.check(account, password, new UserDataSource.Callback() {
             @Override
             public void onSuccess(final User user) {
-                handler.execute(getHead, new GetHead.RequestValues(user),
+                handler.execute(getHead, new GetHead.RequestValues(user,file),
                         new UseCaseCallback<GetHead.ResponseValue>() {
                             @Override
                             public void onSuccess(GetHead.ResponseValue response) {
@@ -60,10 +63,16 @@ public class SignInUser extends UseCase<SignInUser.RequestValues,SignInUser.Resp
     public static final class RequestValues implements UseCase.RequestValues {
         private final String account;
         private final String password;
+        private final File file;
 
-        public RequestValues(@NonNull String account, @NonNull String password) {
+        public RequestValues(@NonNull String account, @NonNull String password, @NonNull File file) {
             this.account = checkNotNull(account,"account cannot be null!");
             this.password = checkNotNull(password,"password cannot be null!");
+            this.file = checkNotNull(file);
+        }
+
+        public File getFile() {
+            return file;
         }
 
         public String getAccount() {

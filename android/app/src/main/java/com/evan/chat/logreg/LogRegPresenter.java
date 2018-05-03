@@ -121,7 +121,7 @@ public class LogRegPresenter implements LogRegContract.Presenter{
     //登录操作
     private void signIn(String account, String password){
         password = MD5Util.getMD5(password);
-        mUseCaseHandler.execute(signInUser, new SignInUser.RequestValues(account, password),
+        mUseCaseHandler.execute(signInUser, new SignInUser.RequestValues(account, password, logView.getFile()),
                 new UseCase.UseCaseCallback<SignInUser.ResponseValue>() {
                     @Override
                     public void onSuccess(SignInUser.ResponseValue response) {

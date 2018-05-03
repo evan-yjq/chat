@@ -11,6 +11,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 import okhttp3.Call;
 
+import java.io.File;
 import java.util.List;
 
 import static com.evan.chat.util.GsonUtil.parseJsonArrayWithGson;
@@ -39,6 +40,7 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
     @Override
     protected void executeUseCase(RequestValues requestValues) {
         final String key = requestValues.getKey();
+        final File file = requestValues.getFile();
         appExecutors.networkIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -53,15 +55,15 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
                     public void onResponse(String s, int i) {
                         final List<Friend>friends = parseJsonArrayWithGson(s,Friend.class);
                         j=0;
-                        getHead(friends);
+                        getHead(friends, file);
                     }
                 });
             }
         });
     }
 
-    private void LoadAllSuccess(final List<Friend>friends){
-        handler.execute(getFriends, new GetFriends.RequestValues(false),
+    private void LoadAllSuccess(final List<Friend>friends, File file){
+        handler.execute(getFriends, new GetFriends.RequestValues(false, file),
                 new UseCaseCallback<GetFriends.ResponseValue>() {
                     @Override
                     public void onSuccess(GetFriends.ResponseValue response) {
@@ -84,32 +86,36 @@ public class SearchInAllUser extends UseCase<SearchInAllUser.RequestValues, Sear
     }
 
     private int j;
-    private void getHead(final List<Friend> friends){
+    private void getHead(final List<Friend> friends, final File file){
         if (j>=friends.size()){
-            LoadAllSuccess(friends);
+            LoadAllSuccess(friends,file);
             return;
         }
-        handler.execute(getHead, new GetHead.RequestValues(friends.get(j)),
+        handler.execute(getHead, new GetHead.RequestValues(friends.get(j),file),
                 new UseCaseCallback<GetHead.ResponseValue>() {
                     @Override
                     public void onSuccess(GetHead.ResponseValue response) {
                         j++;
-                        getHead(friends);
+                        getHead(friends,file);
                     }
 
                     @Override
                     public void onError() {
-                        j++;
-                        getHead(friends);
                     }
                 });
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
         private final String key;
+        private final File file;
 
-        public RequestValues(@NonNull String key) {
+        public RequestValues(@NonNull String key, @NonNull File file) {
             this.key = checkNotNull(key, "key cannot be null!");
+            this.file = checkNotNull(file);
+        }
+
+        public File getFile() {
+            return file;
         }
 
         public String getKey() {

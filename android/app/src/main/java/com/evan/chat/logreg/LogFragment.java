@@ -17,6 +17,7 @@ import com.evan.chat.R;
 import com.evan.chat.data.source.model.User;
 import com.evan.chat.friends.FriendsActivity;
 
+import java.io.File;
 import java.util.Objects;
 
 import static com.evan.chat.logreg.LogRegActivity.REG_FRAG;
@@ -141,5 +142,17 @@ public class LogFragment extends Fragment implements LogRegContract.LogView {
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    @Override
+    public File getFile() {
+        File filesDir = Objects.requireNonNull(getActivity()).getFilesDir();
+
+        if (filesDir.exists()) {
+            return filesDir;
+        } else {
+            filesDir.mkdirs();
+            return filesDir;
+        }
     }
 }

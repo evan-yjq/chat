@@ -91,15 +91,15 @@ public class Injection {
     }
 
     public static SignInUser provideSignInUser(@NonNull Context context){
-        return new SignInUser(provideGetHead(), provideUserRepository(context), provideUseCaseHandler());
+        return new SignInUser(provideGetHead(context), provideUserRepository(context), provideUseCaseHandler());
     }
 
     public static GetFriends provideGetFriends(@NonNull Context context){
-        return new GetFriends(provideGetHead(), provideFriendRepository(context), provideUseCaseHandler());
+        return new GetFriends(provideGetHead(context), provideFriendRepository(context), provideUseCaseHandler());
     }
 
-    public static GetHead provideGetHead(){
-        return new GetHead();
+    public static GetHead provideGetHead(@NonNull Context context){
+        return new GetHead(provideFriendRepository(context));
     }
 
     public static SendMessage provideSendMessage(@NonNull Context context){
@@ -127,7 +127,7 @@ public class Injection {
     }
 
     public static SearchInAllUser provideSearchInAllUser(@NonNull Context context){
-        return new SearchInAllUser(provideGetHead(),provideUseCaseHandler(),provideGetFriends(context));
+        return new SearchInAllUser(provideGetHead(context),provideUseCaseHandler(),provideGetFriends(context));
     }
 
     public static AddFriend provideAddFriend(@NonNull Context context){

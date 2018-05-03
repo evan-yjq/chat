@@ -4,6 +4,7 @@ import com.evan.chat.BasePresenter;
 import com.evan.chat.BaseView;
 import com.evan.chat.data.source.model.Friend;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public interface SearchAddFriendContract {
         void showFriends(List<Friend> friends);
 
         void addFriendSuccess();
+
+        File getFile();
     }
 
     interface Presenter extends BasePresenter{

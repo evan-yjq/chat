@@ -6,6 +6,7 @@ import com.evan.chat.data.source.model.Friend;
 import com.evan.chat.data.source.model.User;
 import com.evan.chat.data.source.model.setHeadable;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public interface FriendsContract {
         void showPopUpMenu();
 
         void showAddFriends();
+
+        File getFile();
     }
 
     interface Presenter extends BasePresenter{

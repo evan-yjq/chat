@@ -1,26 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:background="@color/welcome_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <RelativeLayout
+            android:background="@color/welcome_background"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        <ImageView
+                android:id="@+id/welcome_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-    <ImageView
-            android:id="@+id/welcome_image"
+        <TextView
+                android:id="@+id/welcome_title"
+                android:background="@drawable/rounded_welcome"
+                android:text="@string/action_jump_over"
+                android:textSize="@dimen/welcome_text_size"
+                android:textColor="@color/welcome_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/welcome_bottom_margin"
+                android:layout_marginRight="@dimen/welcome_right_margin"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/r2"
+            android:layout_weight="7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    <TextView
-            android:id="@+id/welcome_title"
-            android:background="@drawable/rounded_welcome"
-            android:text="@string/action_jump_over"
-            android:textSize="@dimen/welcome_text_size"
-            android:textColor="@color/welcome_text_color"
+            android:layout_height="match_parent">
+        <ImageView
+                android:id="@+id/logo"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/dp24"
+                android:src="@mipmap/logo"/>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/welcome_bottom_margin"
-            android:layout_marginRight="@dimen/welcome_right_margin"/>
-</RelativeLayout>
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/logo"
+            android:layout_marginLeft="@dimen/dp24"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_friend_success">添加成功</string>
+    <string name="add_friend_fail">添加失败</string>
+    <string name="search_add_friend_hint">输入用户账号查找</string>
+</resources>

@@ -1,7 +1,6 @@
 package com.evan.chat.chat;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
-import com.evan.chat.data.source.model.Friend;
-import com.evan.chat.data.source.model.User;
 import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.util.ActivityUtils;
 

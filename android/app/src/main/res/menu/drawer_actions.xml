@@ -16,6 +16,10 @@
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/settings"/>
 
+    <item android:id="@+id/change_language"
+          android:icon="@drawable/ic_translate_black_24dp"
+          android:title="@string/change_language"/>
+
     <item
         android:id="@+id/sign_out_menu_item"
         android:icon="@drawable/ic_sign_out_black_24dp"

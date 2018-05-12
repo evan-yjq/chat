@@ -24,7 +24,7 @@
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme">
 
-        <activity android:name=".welcome.WelcomeActivity_"
+        <activity android:name=".welcome.WelcomeActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -41,7 +41,7 @@
         <activity android:name=".chat.ChatActivity"
                   android:screenOrientation="portrait"/>
 
-        <activity android:name=".face.FaceActivity_"
+        <activity android:name=".face.FaceActivity"
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".settings.SettingsActivity"

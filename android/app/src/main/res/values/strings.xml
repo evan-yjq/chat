@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">chat</string>
+    <string name="app_name">Chat</string>
+    <string name="app_language">语言</string>
+    <string name="pref_locale">lang</string>
     <!--top-->
     <string name="search">查找</string>
     <string name="message">消息</string>
@@ -19,10 +21,10 @@
 
     <string name="sign_out">登出</string>
     <string name="bind_face">绑定人脸</string>
-    <string name="start_bind_face">开始绑定</string>
     <string name="judg_face">人脸鉴定</string>
     <string name="settings">设置</string>
+    <string name="change_language">切换中英文</string>
     <string name="menu_title">添加</string>
-    <string name="navigation_view_header_title">chat</string>
+    <string name="navigation_view_header_title">Chat</string>
 
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bind_first">请先绑定</string>
+    <string name="start_bind">开始绑定</string>
+    <string name="start_identify">开始鉴定</string>
+    <string name="no_camera_permission">请在应用管理中打开“相机”访问权限！</string>
+    <string name="operation_interrupted">因不明原因操作中断</string>
+    <string name="not_clear_enough">人脸不够清晰</string>
+    <string name="binding_completed">绑定完成</string>
+    <string name="identify_success">鉴定成功</string>
+    <string name="confidence">置信度</string>
+    <string name="not_me">不是本人</string>
+    <string name="take_photo_fail">拍照失败</string>
+</resources>

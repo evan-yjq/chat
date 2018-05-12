@@ -24,6 +24,7 @@ public interface SearchAddFriendContract {
         void showFriends(List<Friend> friends);
 
         void addFriendSuccess();
+        void addFriendFail();
 
         File getFile();
     }

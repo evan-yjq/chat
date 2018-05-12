@@ -3,7 +3,6 @@ package com.evan.chat.face;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -49,22 +48,23 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
 
     private int type;
 
-    public FaceFragment(int type){
-        this.type = type;
+    public FaceFragment(){
+
     }
 
-    public static FaceFragment newInstance(int type){
-        return new FaceFragment(type);
+    public static FaceFragment newInstance(){
+        return new FaceFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.face_frag,container,false);
+        this.type = presenter.getType();
         surfaceView= root.findViewById(R.id.my_view);
         button = root.findViewById(R.id.button);
-        if (type == TRAIN) button.setText("开始绑定");
-        else button.setText("开始鉴定");
+        if (type == TRAIN) button.setText(getString(R.string.start_bind));
+        else button.setText(getString(R.string.start_identify));
         bar = root.findViewById(R.id.bind_progress);
 
         mHolder = surfaceView.getHolder();
@@ -136,7 +136,7 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
                 start();
             }else{
                 // Permission Denied
-                Toast.makeText(getContext(), "请在应用管理中打开“相机”访问权限！", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.no_camera_permission), Toast.LENGTH_LONG).show();
                 Objects.requireNonNull(getActivity()).finish();
             }
         }
@@ -156,9 +156,44 @@ public class FaceFragment extends Fragment implements FaceContratct.View , Surfa
     }
 
     @Override
-    public void showResult(boolean success) {
+    public void showInterrupted() {
+        showMessage(getString(R.string.operation_interrupted));
+        if (presenter.getResult()) showResult(false);
+    }
+
+    @Override
+    public void showNotClear() {
+        showMessage(getString(R.string.not_clear_enough));
+        if (presenter.getResult()) showResult(false);
+    }
+
+    @Override
+    public void bindingCompleted() {
+        showMessage(getString(R.string.binding_completed));
+    }
+
+    @Override
+    public void identifySuccess(String confidence) {
+        showMessage("--"+getString(R.string.identify_success)+"--\n"+getString(R.string.confidence)+":"+confidence);
+        if (presenter.getResult()) showResult(true);
+    }
+
+    @Override
+    public void identifyFail() {
+        showMessage(getString(R.string.not_me));
+        if (presenter.getResult()) showResult(false);
+    }
+
+    @Override
+    public void takePhotoFail() {
+        showMessage(getString(R.string.take_photo_fail));
+        if (presenter.getResult()) showResult(false);
+    }
+
+    //    @Override
+    private void showResult(boolean result) {
         int resultCode;
-        if (success)resultCode = Activity.RESULT_OK;
+        if (result)resultCode = Activity.RESULT_OK;
         else resultCode = Activity.RESULT_CANCELED;
         Objects.requireNonNull(getActivity()).setResult(resultCode);
         getActivity().finish();

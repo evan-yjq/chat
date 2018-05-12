@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_account_or_email">Account or email</string>
+    <string name="prompt_account">Account</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_reg">Register</string>
+    <string name="action_forget_password">forget password</string>
+    <string name="action_no_account">No account? , Go to register</string>
+    <string name="action_have_account">Already have an account? , Go to login</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_account">Invalid account</string>
+    <string name="error_invalid_account_or_email">Account or email has been registered</string>
+    <string name="error_invalid_password">The password is too short</string>
+    <string name="error_incorrect">Incorrect account or password</string>
+    <string name="error_field_required">Required</string>
+</resources>

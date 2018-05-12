@@ -58,7 +58,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
                     @Override
                     public void onError() {
-                        mSettingsView.showMessage("修改失败");
+                        mSettingsView.showEditFail();
                     }
                 });
     }
@@ -96,7 +96,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
                         if (showLoadingUI){
                             mSettingsView.setLoadingIndicator(false);
                         }
-                        mSettingsView.showMessage("加载设置失败");
+                        mSettingsView.showLoadFail();
                     }
                 });
 

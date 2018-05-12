@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bind_first">Please bind first</string>
+    <string name="start_bind">Start binding</string>
+    <string name="start_identify">Start identification</string>
+    <string name="no_camera_permission">Please open \"camera\" access in App Management!</string>
+    <string name="operation_interrupted">Unexpected operation interruption</string>
+    <string name="not_clear_enough">Face is not clear enough</string>
+    <string name="binding_completed">Binding completed</string>
+    <string name="identify_success">Successfully identified</string>
+    <string name="confidence">Confidence</string>
+    <string name="not_me">Not me</string>
+    <string name="take_photo_fail">Failed to take a picture</string>
+</resources>

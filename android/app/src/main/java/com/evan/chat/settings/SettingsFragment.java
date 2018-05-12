@@ -112,6 +112,16 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
         Snackbar.make(Objects.requireNonNull(getView()),message,Snackbar.LENGTH_LONG).show();
     }
 
+    @Override
+    public void showEditFail() {
+        showMessage(getString(R.string.edit_fail));
+    }
+
+    @Override
+    public void showLoadFail() {
+        showMessage(getString(R.string.load_fail));
+    }
+
     private ListItemListener mItemListener = new ListItemListener() {
 
         @Override

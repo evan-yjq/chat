@@ -108,7 +108,13 @@ public class SearchAddFriendFragment extends Fragment implements SearchAddFriend
 
     @Override
     public void addFriendSuccess() {
+        showMessage(getString(R.string.add_friend_success));
         getActivity().finish();
+    }
+
+    @Override
+    public void addFriendFail() {
+        showMessage(getString(R.string.add_friend_fail));
     }
 
     @Override

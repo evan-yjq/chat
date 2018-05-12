@@ -88,7 +88,11 @@ public class FriendLocalDataSource implements FriendDataSource {
             @Override
             public void run() {
                 try {
-                    File picFile = new File(file, "/head/"+id+".png");
+                    File headFile = new File(file, "/head/");
+                    if (!headFile.exists()) {
+                        headFile.mkdirs();
+                    }
+                    File picFile = new File(headFile,id+".png");
                     FileOutputStream fos = new FileOutputStream(picFile);
                     fos.write(Bitmap2Bytes(bitmap));
                     fos.flush();

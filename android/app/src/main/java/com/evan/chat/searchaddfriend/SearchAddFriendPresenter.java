@@ -70,7 +70,6 @@ public class SearchAddFriendPresenter implements SearchAddFriendContract.Present
                     public void onSuccess(AddFriend.ResponseValue response) {
                         if (view.isActive()) {
                             view.setLoadingIndicator(false);
-                            view.showMessage("添加成功");
                             view.addFriendSuccess();
                         }
                     }
@@ -79,7 +78,7 @@ public class SearchAddFriendPresenter implements SearchAddFriendContract.Present
                     public void onError() {
                         if (view.isActive()){
                             view.setLoadingIndicator(false);
-                            view.showMessage("添加失败");
+                            view.addFriendFail();
                         }
                     }
                 });

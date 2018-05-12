@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="edit_fail">Fail to edit</string>
+    <string name="load_fail">Failed to load settings</string>
+    <string name="face_login">Face Login</string>
+    <string name="restart_application">Effective after restarting the application</string>
+    <string name="auto_login">Auto Login</string>
+</resources>

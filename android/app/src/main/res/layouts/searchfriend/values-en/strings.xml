@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_add_friend_hint">Enter user account search</string>
+    <string name="add_friend_success">Added successfully</string>
+    <string name="add_friend_fail">Add failed</string>
+</resources>

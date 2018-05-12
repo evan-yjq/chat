@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_friends">You don\'t have any friends yet</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="friends_list_title">Friends List</string>
+    <string name="default_group">default group</string>
+    <string name="not_online">not online</string>
+</resources>

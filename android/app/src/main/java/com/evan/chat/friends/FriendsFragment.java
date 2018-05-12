@@ -181,7 +181,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         Objects.requireNonNull(getActivity()).startActivity(intent);
     }
 
-    private static class FriendsExpandableListAdapter extends BaseExpandableListAdapter{
+    private class FriendsExpandableListAdapter extends BaseExpandableListAdapter{
 
         private Map<String,List<Friend>>mFriends;
         private List<String>classification;
@@ -204,7 +204,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
         private void setFriends(List<Friend>friends){
             for (Friend friend : friends) {
                 String classify = friend.getClassification();
-                if (classify == null) classify = "默认";
+                if (classify == null) classify = FriendsFragment.this.getString(R.string.default_group);
                 List<Friend>f = null;
                 if (classification.contains(classify)) {
                     f = mFriends.get(classify);
@@ -287,7 +287,7 @@ public class FriendsFragment extends Fragment implements FriendsContract.View {
                 nicknameTV.setText(nickname);
             }
             profileTV.setText(friend.getProfile());
-            stateTV.setText("不在线");
+            stateTV.setText(FriendsFragment.this.getString(R.string.not_online));
             stateTV.setTextColor(Color.RED);
 
             rowView.setOnClickListener(new View.OnClickListener() {

@@ -16,21 +16,26 @@ public interface FaceContratct {
 
 
     interface View extends BaseView<Presenter>{
-
         void showProgress(boolean show);
-
         void showMessage(String msg);
-
-        void showResult(boolean success);
-
+        void showInterrupted();
+        void showNotClear();
+        void bindingCompleted();
+        void identifySuccess(String confidence);
+        void identifyFail();
+        void takePhotoFail();
+//        void showResult(boolean success);
         void captrue(String name);
-
         void setAnimation(int mProgressBar, int millis);
     }
 
     interface Presenter extends BasePresenter {
 
         long getUserId();
+
+        int getType();
+
+        boolean getResult();
 
         void buttonOnClick();
 

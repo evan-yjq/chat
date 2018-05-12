@@ -25,9 +25,9 @@ public class SettingsRemoteDataSource implements SettingsDataSource{
 
     static {
         SETTINGS_SERVICE_DATA = new LinkedHashMap<>(1);
-        addSetting(SettingKey.FACE_LOGIN_OPEN_ID,"人脸登陆",
+        addSetting(SettingKey.FACE_LOGIN_OPEN_ID,"人脸登录",
                 "false", "重启应用后生效", SettingDisplay.CAPTION_SWITCH_ITEM);
-        addSetting(SettingKey.AUTO_LOGIN_OPEN_ID, "自动登陆",
+        addSetting(SettingKey.AUTO_LOGIN_OPEN_ID, "自动登录",
                 "true", "", SettingDisplay.SWITCH_ITEM);
     }
 

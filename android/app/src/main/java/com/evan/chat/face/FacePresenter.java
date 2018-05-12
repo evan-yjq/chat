@@ -53,6 +53,16 @@ public class FacePresenter implements FaceContratct.Presenter{
         return userId;
     }
 
+    @Override
+    public int getType() {
+        return this.type;
+    }
+
+    @Override
+    public boolean getResult() {
+        return this.isResult;
+    }
+
 
     private volatile boolean stop = false;
 
@@ -102,8 +112,8 @@ public class FacePresenter implements FaceContratct.Presenter{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     if (view.isActive()) {
-                        view.showMessage("因不明操作中断");
-                        if (isResult) view.showResult(false);
+                        view.showInterrupted();
+//                        if (isResult) view.showResult(false);
                         view.showProgress(false);
                     }
                 }
@@ -123,8 +133,8 @@ public class FacePresenter implements FaceContratct.Presenter{
                             @Override
                             public void onError(Call call, Exception e, int i) {
                                 if (view.isActive()) {
-                                    view.showMessage("人脸不够清晰");
-                                    if (isResult) view.showResult(false);
+                                    view.showNotClear();
+//                                    if (isResult) view.showResult(false);
                                     view.showProgress(false);
                                 }
                             }
@@ -134,20 +144,20 @@ public class FacePresenter implements FaceContratct.Presenter{
                                 if (view.isActive()) {
                                     if (type == TRAIN) {
                                         if ("ok".equals(s)) {
-                                            view.showMessage("绑定完成");
+                                            view.bindingCompleted();
                                             user.setIs_bind_face(true);
                                         }
                                     } else {
                                         String[]strs = s.split("-");
                                         if (!"".equals(strs[0])) {
-                                            String msg = "--鉴定成功--";
+                                            String msg="";
                                             if (strs.length==2)
-                                                msg = msg + "\n" + strs[1];
-                                            view.showMessage(msg);
-                                            if (isResult) view.showResult(true);
+                                                msg = strs[1];
+                                            view.identifySuccess(msg);
+//                                            if (isResult) view.showResult(true);
                                         } else {
-                                            view.showMessage("不是本人");
-                                            if (isResult) view.showResult(false);
+                                            view.identifyFail();
+//                                            if (isResult) view.showResult(false);
                                         }
                                     }
                                     view.showProgress(false);
@@ -177,9 +187,8 @@ public class FacePresenter implements FaceContratct.Presenter{
                 } catch (Exception error) {
                     stop = true;
                     if (view.isActive()) {
-                        view.showMessage("拍照失败");
-                        if (isResult) view.showResult(false);
-                        view.showProgress(false);
+                        view.takePhotoFail();
+//                        if (isResult) view.showResult(false);
                     }
                     error.printStackTrace();
                 }

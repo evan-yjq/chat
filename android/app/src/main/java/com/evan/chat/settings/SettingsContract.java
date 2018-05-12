@@ -22,6 +22,8 @@ public interface SettingsContract {
         void showSettings(List<Setting> settings);
 
         void showMessage(String message);
+        void showEditFail();
+        void showLoadFail();
 
     }
 

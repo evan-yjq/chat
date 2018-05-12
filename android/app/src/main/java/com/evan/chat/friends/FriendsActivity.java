@@ -2,8 +2,10 @@ package com.evan.chat.friends;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -20,11 +22,12 @@ import android.widget.TextView;
 import com.evan.chat.Injection;
 import com.evan.chat.R;
 import com.evan.chat.UseCase;
-import com.evan.chat.face.FaceActivity_;
+import com.evan.chat.face.FaceActivity;
 import com.evan.chat.logreg.LogRegActivity;
 import com.evan.chat.domain.usecase.User.DeleteAllUser;
 import com.evan.chat.settings.SettingsActivity;
 import com.evan.chat.util.ActivityUtils;
+import com.evan.chat.wrapper.LanguageContextWrapper;
 
 import static com.evan.chat.face.FaceActivity.EXTRA_FACE_VIEW;
 import static com.evan.chat.face.FaceFragment.DIST;
@@ -118,18 +121,32 @@ public class FriendsActivity extends AppCompatActivity{
                         signOut();
                         break;
                     case R.id.bind_face_menu_item:
-                        intent = new Intent(FriendsActivity.this, FaceActivity_.class);
+                        intent = new Intent(FriendsActivity.this, FaceActivity.class);
                         intent.putExtra(EXTRA_FACE_VIEW,TRAIN);
                         startActivity(intent);
                         break;
                     case R.id.judg_face_menu_item:
-                        intent = new Intent(FriendsActivity.this, FaceActivity_.class);
+                        intent = new Intent(FriendsActivity.this, FaceActivity.class);
                         intent.putExtra(EXTRA_FACE_VIEW,DIST);
+                        startActivity(intent);
+                        break;
+                    case R.id.change_language:
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        String lang = preferences.getString(getString(R.string.pref_locale), "zh_CN");
+                        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = preferences.edit();
+                        if (lang.equals("zh_CN"))lang = "en";
+                        else lang = "zh_CN";
+                        editor.putString(getString(R.string.pref_locale),lang);
+                        editor.apply();
+                        LanguageContextWrapper.wrap(getApplicationContext(),lang);
+                        intent = new Intent(FriendsActivity.this, FriendsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         break;
                     case R.id.settings_menu_item:
                         intent = new Intent(FriendsActivity.this, SettingsActivity.class);
                         startActivity(intent);
+                        break;
                     default:
                         break;
                 }

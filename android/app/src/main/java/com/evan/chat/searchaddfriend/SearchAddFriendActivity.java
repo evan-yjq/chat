@@ -64,7 +64,7 @@ public class SearchAddFriendActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setIconified(false);
-        searchView.setQueryHint("输入用户账号查找");
+        searchView.setQueryHint(getString(R.string.search_add_friend_hint));
         searchView.setSubmitButtonEnabled(true);//显示提交按钮
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

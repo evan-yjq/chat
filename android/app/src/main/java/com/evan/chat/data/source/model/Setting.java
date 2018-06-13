@@ -1,11 +1,10 @@
 package com.evan.chat.data.source.model;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Keep;
 
 import java.util.Objects;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by IntelliJ IDEA

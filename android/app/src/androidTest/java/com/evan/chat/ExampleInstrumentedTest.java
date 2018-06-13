@@ -20,6 +20,7 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
+        System.out.println(appContext.getPackageName());
 
         assertEquals("com.evan.chat", appContext.getPackageName());
     }

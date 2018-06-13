@@ -116,6 +116,8 @@ public class FriendsActivity extends AppCompatActivity{
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String lang = preferences.getString(getString(R.string.pref_locale), "zh_CN");
                 switch (item.getItemId()){
                     case R.id.sign_out_menu_item:
                         signOut();
@@ -131,8 +133,6 @@ public class FriendsActivity extends AppCompatActivity{
                         startActivity(intent);
                         break;
                     case R.id.change_language:
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        String lang = preferences.getString(getString(R.string.pref_locale), "zh_CN");
                         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = preferences.edit();
                         if (lang.equals("zh_CN"))lang = "en";
                         else lang = "zh_CN";
@@ -142,9 +142,11 @@ public class FriendsActivity extends AppCompatActivity{
                         intent = new Intent(FriendsActivity.this, FriendsActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         break;
                     case R.id.settings_menu_item:
                         intent = new Intent(FriendsActivity.this, SettingsActivity.class);
+                        intent.putExtra("lan",lang);
                         startActivity(intent);
                         break;
                     default:
